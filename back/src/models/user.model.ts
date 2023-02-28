@@ -1,4 +1,4 @@
-const { Schema, model, SchemaTypes } = require("mongoose");
+import { Schema, model, SchemaTypes } from "mongoose";
 
 const userSchema = new Schema(
   {
