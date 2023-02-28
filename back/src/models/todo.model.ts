@@ -1,6 +1,7 @@
 import { Schema, model, SchemaTypes } from 'mongoose'
+import { TodoInterface } from '../@types/todo.type'
 
-const todoSchema = new Schema(
+const todoSchema = new Schema<TodoInterface>(
   {
     listId: {
       type: SchemaTypes.ObjectId,
@@ -14,7 +15,6 @@ const todoSchema = new Schema(
     },
     description: {
       type: String,
-      unique: true,
     },
     isDone:{
         type: Boolean,

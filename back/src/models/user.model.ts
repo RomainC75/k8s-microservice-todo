@@ -1,6 +1,7 @@
 import { Schema, model, SchemaTypes } from "mongoose";
+import { MongoUserInterface } from "../@types/userInterface";
 
-const userSchema = new Schema(
+const userSchema = new Schema<MongoUserInterface>(
   {
     email: {
       type: String,

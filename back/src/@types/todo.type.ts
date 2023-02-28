@@ -1,9 +1,11 @@
 import { ObjectId } from "mongoose"
 
-export interface ListInterface {
+export interface TodoInterface {
   _id: ObjectId
+  listId: ObjectId
   name: string
-  userId: ObjectId
+  description?: string
+  isDone: boolean
   createdAt: string
   updatedAt: string
   __v: number

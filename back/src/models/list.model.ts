@@ -1,6 +1,7 @@
 import { Schema, model, SchemaTypes } from 'mongoose'
+import { ListInterface } from '../@types/list'
 
-const listSchema = new Schema(
+const listSchema = new Schema<ListInterface>(
   {
     name: {
       type: String,
