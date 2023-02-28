@@ -5,7 +5,8 @@ import { createList, deleteList, getAllLists, putList } from '../controllers/lis
 const authentication = require('../middlewares/authentication')
 
 router.get('/list',authentication,getAllLists)
-router.delete('/list/:id', authentication, deleteList)
-router.put('/list/:id', authentication, putList)
 router.post('/list',authentication, createList)
+router.put('/list/:listId', authentication, putList)
+router.delete('/list/:listId', authentication, deleteList)
+
 module.exports = router
