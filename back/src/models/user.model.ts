@@ -8,8 +8,8 @@ const userSchema = new Schema(
       required: true,
     },
     password: { type: SchemaTypes.String, required: true },
-    firstName: String,
-    lastName: String,
+    firstname: String,
+    lastname: String,
 
     // isMailValidated: {
     //   type: Boolean,
