@@ -5,6 +5,7 @@ var app = require('../app');
 var debug = require('debug')('back:server');
 var http = require('http');
 require('dotenv').config()
+require('../db/index')
 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
