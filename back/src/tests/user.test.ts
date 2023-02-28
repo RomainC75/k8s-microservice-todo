@@ -5,16 +5,20 @@ const expect = require('chai').expect
 // const { before, after, afterAll, describe, it } = require('mocha')
 import { describe, it, after } from 'mocha'
 import {
-   MongoUserInterface,
+  MongoUserInterface,
   UserCredentialsInterface,
   UserInterface,
 } from '../@types/userInterface'
+import { SigninResponseInterface } from '../@types/signinResponse'
+
 import { AxiosResponse } from 'axios'
 let chai = require('chai')
 let should = chai.should()
 
 require('../db')
 const User = require('../models/user.model')
+
+
 
 describe('/auth/signup Route : ', () => {
   it('should return an error if firstname is missing', async () => {
@@ -176,12 +180,54 @@ describe('/auth/signin Route : ', () => {
     )
 
     const foundUser = await User.findOne({ email: new_user_info.email })
-    
+
     expect(response.status).to.be.equal(200)
     expect(response.data.token).to.be.an('string')
     expect(response.data.userId).to.be.an('string')
-    expect(response.data).to.have.all.keys("userId","token")
+    expect(response.data).to.have.all.keys('userId', 'token')
     expect(response.data.userId).to.be.equal(foundUser._id.toString())
+  })
+})
+
+let headers
+let responseSI: AxiosResponse|undefined
+let data:SigninResponseInterface|undefined
+
+describe('/auth/verify Route : ', () => {
+  beforeEach(async () => {
+    const credentials: UserCredentialsInterface = {
+      email: new_user_info.email,
+      password: new_user_info.password,
+    }
+    responseSI = await axios.post(
+      `${API_URL}/auth/signin`,
+      credentials
+    )
+    data = responseSI.data
+    headers= {
+      Authorization:`Bearer ${data.token}`
+    }
+  })
+
+  it('should return an error if there is no token', async () => {
+    try {
+      const response: AxiosResponse = await axios.get(`${API_URL}/auth/verify`)
+      console.log('=========>', response.status)
+    } catch (error) {
+      expect(error.response.status).to.be.equal(422)
+      expect(error.response.data).to.be.an('object')
+      expect(error.response.data).to.have.all.keys('message')
+      expect(error.response.data.message).to.be.equal('cannot get the token')
+    }
+  })
+
+  it('should return the user Id', async () => {    
+      const response: AxiosResponse = await axios.get(
+        `${API_URL}/auth/verify`,
+        {headers}
+      )
+      expect(response.data).to.be.an('object')
+      expect(response.data.id).to.be.equal(data.userId)
   })
 
   after(async () => {

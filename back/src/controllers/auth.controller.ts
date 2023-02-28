@@ -2,6 +2,7 @@ import express, { Express, Request, Response, NextFunction } from 'express'
 const User = require('../models/user.model')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+import { AuthenticatedRequest } from "../@types/authenticatedRequest";
 
 export const postSignup = async (
   req: Request,
@@ -34,7 +35,7 @@ export const postSignin = async (
   next: NextFunction
 ) => {
   const { body } = req
-    console.log("signin:",body)
+  console.log('signin:', body)
   try {
     const foundUser = await User.findOne({ email: body.email })
     if (!foundUser) {
@@ -51,14 +52,24 @@ export const postSignin = async (
     }
 
     res.status(200).json({
-        userId: foundUser._id,
-        token: jwt.sign({ userId: foundUser._id }, process.env.TOKEN_SECRET, {
-          expiresIn: "10h",
-        }),
-    });
-
+      userId: foundUser._id,
+      token: jwt.sign({ userId: foundUser._id, email:foundUser.email }, process.env.TOKEN_SECRET, {
+        expiresIn: '10h',
+      }),
+    })
   } catch (error) {
     console.log(error)
     next(error)
   }
+}
+
+export const verify = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  if(req.user){
+    res.status(200).json(req.user)
+  }
+  
 }

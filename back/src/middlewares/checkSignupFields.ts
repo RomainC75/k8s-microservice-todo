@@ -2,10 +2,10 @@ import express, { Express, Request, Response, NextFunction } from "express"
 var router = express.Router();
 
 router.use((req:Request,res:Response,next:NextFunction)=>{
-    const fields = ["firstname", "lastname", "email", "password"]
+    const fields:string[] = ["firstname", "lastname", "email", "password"]
     const {body} = req
-    console.log('BODY : ', body)
-    const isEachFieldInBody = fields.every((field) => field in body)
+    
+    const isEachFieldInBody:boolean = fields.every((field) => field in body)
         if (!isEachFieldInBody) {
             return res
                 .status(422)
@@ -14,7 +14,7 @@ router.use((req:Request,res:Response,next:NextFunction)=>{
                         "the request needs 4 fields : firstname, lastname, email, password",
                 })
         }
-        const isEachFieldAString = fields.every(field=> typeof body[field]==="string")
+        const isEachFieldAString:boolean = fields.every(field=> typeof body[field]==="string")
         if (!isEachFieldAString) {
             return res
                 .status(422)
