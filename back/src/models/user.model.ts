@@ -27,6 +27,6 @@ const userSchema = new Schema<MongoUserInterface>(
   }
 );
 
-const User = model("User", userSchema);
+const User = model<MongoUserInterface>("User", userSchema);
 
 module.exports = User;

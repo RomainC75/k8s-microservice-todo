@@ -42,7 +42,7 @@ export const postSignin = async (
       return res.status(403).json({ message: 'wrong email or password' })
     }
 
-    const isPasswordValid = await bcrypt.compare(
+    const isPasswordValid:boolean = await bcrypt.compare(
       body.password,
       foundUser.password
     )
@@ -53,7 +53,7 @@ export const postSignin = async (
 
     res.status(200).json({
       userId: foundUser._id,
-      token: jwt.sign({ userId: foundUser._id, email:foundUser.email }, process.env.TOKEN_SECRET, {
+      token: jwt.sign({ userId: foundUser._id.toString(), email:foundUser.email }, process.env.TOKEN_SECRET, {
         expiresIn: '10h',
       }),
     })

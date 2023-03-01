@@ -16,6 +16,9 @@ const todoSchema = new Schema<TodoInterface>(
     description: {
       type: String,
     },
+    deadLine:{
+      type:Date
+    },
     isDone:{
         type: Boolean,
         default: false
@@ -26,6 +29,6 @@ const todoSchema = new Schema<TodoInterface>(
   }
 )
 
-const Todo = model('Todo', todoSchema)
+const Todo = model<TodoInterface>('Todo', todoSchema)
 
 module.exports = Todo

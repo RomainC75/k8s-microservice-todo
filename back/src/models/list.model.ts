@@ -19,6 +19,6 @@ const listSchema = new Schema<ListInterface>(
   }
 )
 
-const List = model('List', listSchema)
+const List = model<ListInterface>('List', listSchema)
 
 module.exports = List
