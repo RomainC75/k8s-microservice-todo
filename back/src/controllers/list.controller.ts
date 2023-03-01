@@ -1,6 +1,7 @@
 import express, { Express, Request, Response, NextFunction } from 'express'
 const User = require('../models/user.model')
 const List = require('../models/list.model')
+const Todo = require('../models/todo.model')
 
 import { AuthenticatedRequest } from '../@types/authenticatedRequest'
 import { ListInterface } from '../@types/list'
@@ -104,12 +105,9 @@ export const deleteList = async (
     if (foundList.userId.toString() !== userId) {
       return res.status(401).json({ message: 'unauthorized' })
     }
-    ///
-    //
-    // ==> DELETE TODOS !!
-    //
-    //
-    //
+    
+    await Todo.deleteMany({listId})
+
     const ans = await List.findByIdAndDelete(listId)
     res.status(202).json({message: 'list deleted'})
   } catch (error) {

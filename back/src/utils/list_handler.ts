@@ -1,13 +1,28 @@
-import { UpdatableTodoDataInterface } from "../@types/todo.type"
+import { UpdatableTodoDataInterface } from '../@types/todo.type'
 
-// the user is not supposed to modify theses 4 keys ONLY
-export const listUpdateFilter = (rawUpdateData:Object):UpdatableTodoDataInterface => {
+// The object is supposed to have 4 keys
+export const verifyAndCleanTodoUpdateData = (
+  rawUpdateData: any
+): UpdatableTodoDataInterface | null => {
+    console.log("raw",rawUpdateData)
+  const neededKeys: string[] = ['name', 'isDone', 'deadLine']
+  const authorizedKeys: string[] = ['name', 'isDone', 'description', 'deadLine']
 
-  const updatedTodo = {}
-  const keys:string[] = ['name', 'isDone', 'description', 'deadLine']
-  const filteredTodoKeys:string[] = keys.filter((key) => rawUpdateData[key])
-  filteredTodoKeys.forEach((key) => (updatedTodo[key] = rawUpdateData[key]))
+  const isEachNeededKeyInData: boolean = neededKeys.every(
+    (key: string) => rawUpdateData[key]!==undefined
+  )
+  if (!isEachNeededKeyInData) {
+    return null
+  }
 
-  console.log('==>', updatedTodo)
-    return  updatedTodo
+  // clean the other keys
+  Object.keys(rawUpdateData).forEach((key: string) => {
+    if (!authorizedKeys.includes(key)) {
+      delete rawUpdateData[key]
+    }
+  })
+
+  console.log('==>rawUpdateData', rawUpdateData)
+
+  return rawUpdateData
 }
