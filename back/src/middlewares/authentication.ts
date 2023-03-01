@@ -10,12 +10,12 @@ router.use((req:AuthenticatedRequest,res:Response,next:NextFunction)=>{
             return res.status(422).json({message:"cannot get the token"})
         }
         const token:string|undefined = req.headers.authorization.split(' ')[1]
-        console.log('token', token)
+        console.log('==> token', token)
         if(!token){
             return res.status(422).json({message:"cannot get the token"})
         }
         const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
-        console.log('token : ', decoded)
+        console.log('===> decodedtoken : ', decoded)
         req.user={
             id:decoded.userId,
             email:decoded.email
