@@ -5,7 +5,6 @@ const listSchema = new Schema<ListInterface>(
   {
     name: {
       type: String,
-      unique: true,
       required: true,
     },
     userId: {
