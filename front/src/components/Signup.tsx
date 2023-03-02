@@ -14,7 +14,7 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { isEmailValidFn, isPasswordValidFn } from "../utils/signugFieldsTests";
+import { detailsAboutNeededCharactersInPass, isEmailValidFn, isPasswordValidFn } from "../utils/signugFieldsTests";
 
 const Signup = (): JSX.Element => {
   const { authenticateUser, isLoading, isLoggedIn, user, API_URL, storeToken } =
@@ -130,7 +130,7 @@ const Signup = (): JSX.Element => {
           variant="outlined"
           value={inputsState.password}
           onChange={handleInputs}
-          helperText={!isPasswordValid && "need at least 8 characters whith 1 digit, 1upper case and [*+,-./:;()<=>?@] )"}
+          helperText={!isPasswordValid && detailsAboutNeededCharactersInPass(inputsState.password)}
           error={!isPasswordValid}
         />
 

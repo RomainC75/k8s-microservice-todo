@@ -36,4 +36,22 @@ export const isEmailValidFn = (pass:string): boolean =>{
   return match ? true : false
 }
 
+export const detailsAboutNeededCharactersInPass = (pass:string):string=>{
+  let str = "need at least "
+  if(!isMoreThan8Characters(pass)){
+    str+="8 characters "
+  }
+  str+='( '
+  if(!isNumericPresent(pass)){
+    str+='1digit, '
+  }
+  if(!isUpperCasePresent(pass)){
+    str+='1 upper case '
+  }
+  if(!isSpecialCharPresent(pass)){
+    str+='and 1 special char ([*+,-./:;()<=>?@])'
+  }
 
+  str+=')'
+  return str
+} 
