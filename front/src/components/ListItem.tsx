@@ -5,14 +5,15 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 interface ListItemInterface{
     listItem:ListInterface
+    handleDeleteList: (id:string)=>void 
 }
 
+const ListItem = ({listItem, handleDeleteList}:ListItemInterface) => {
 
-const ListItem = ({listItem}:ListItemInterface) => {
   return (
     <div className="ListItem">
         <p>{listItem.name}</p>
-        <FontAwesomeIcon icon={faTrash} />
+        <FontAwesomeIcon icon={faTrash} onClick={()=>handleDeleteList(listItem._id)}/>
     </div>
   )
 }
