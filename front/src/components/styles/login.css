@@ -1,0 +1,13 @@
+.Login h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.Login form {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  margin: 0 auto;
+}
+.Login form * {
+  margin-bottom: 5px;
+}/*# sourceMappingURL=login.css.map */

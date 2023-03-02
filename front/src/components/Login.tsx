@@ -4,16 +4,18 @@ import "./styles/login.css";
 import { LoginInterface, UserInterface } from "../@types/authContext.type";
 import { AuthContext } from "../context/auth.context";
 import { AuthContextInterface } from "../@types/authContext.type";
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const LoginPage = (): JSX.Element => {
-  const { authenticateUser, isLoading, isLoggedIn, user, API_URL, storeToken } = useContext(
-    AuthContext
-  ) as AuthContextInterface;
-  const navigate = useNavigate()
+import { PurpleTextField, PurpleButton } from "../utils/mui-custom-colors";
+
+
+const Login = (): JSX.Element => {
+  const { authenticateUser, isLoading, isLoggedIn, user, API_URL, storeToken } =
+    useContext(AuthContext) as AuthContextInterface;
+  const navigate = useNavigate();
   const [inputsState, setInputsState] = useState<LoginInterface>({
     email: "",
     password: "",
@@ -25,7 +27,7 @@ const LoginPage = (): JSX.Element => {
     e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
     if (e.target && "value" in e.target && "name" in e.target) {
-        setIsLoginError(false)
+      setIsLoginError(false);
       const newValues: LoginInterface = {
         ...inputsState,
         [e.target.name]: e.target.value,
@@ -44,49 +46,49 @@ const LoginPage = (): JSX.Element => {
     axios
       .post(`${API_URL}/auth/signin`, inputsState)
       .then((ans) => {
-        storeToken(ans.data.token)
-        authenticateUser()
-        navigate('/')
+        storeToken(ans.data.token);
+        authenticateUser();
+        navigate("/");
       })
       .catch((err) => {
-        setIsLoginError(true)
+        setIsLoginError(true);
       });
   };
 
   return (
-    <div className="LoginPage">
-      <h1>LoginPage</h1>
+    <div className="Login">
+      <h1>Login page</h1>
       <form onSubmit={handleForm}>
-        <TextField
+        <PurpleTextField
           id="email"
           name="email"
           label="email"
-          variant="filled"
+          variant="outlined"
           value={inputsState.email}
           onChange={handleInputs}
         />
-        <TextField
+        <PurpleTextField
           id="password"
           name="password"
           label="password"
           type="password"
           autoComplete="current-password"
-          variant="filled"
+          variant="outlined"
           value={inputsState.password}
           onChange={handleInputs}
         />
-        <Button variant="contained" type="submit" disabled={!isLoginValid}>
+        <PurpleButton variant="contained" type="submit" disabled={!isLoginValid}>
           Login
-        </Button>
-        {isLoginError && 
-        <Alert severity="error">
-        <AlertTitle>Error</AlertTitle>
-        wrong email or password
-      </Alert>
-      }
+        </PurpleButton>
+        {isLoginError && (
+          <Alert severity="error">
+            <AlertTitle>Error</AlertTitle>
+            wrong email or password
+          </Alert>
+        )}
       </form>
     </div>
   );
 };
 
-export default LoginPage;
+export default Login;

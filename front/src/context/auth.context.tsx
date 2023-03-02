@@ -15,7 +15,8 @@ const AuthProviderWrapper = (props: PropsWithChildren):JSX.Element => {
   
   const storeToken = (token: string): void => {
     localStorage.setItem("authToken", token);
-  };
+  }
+  
   const removeToken = () =>{
     localStorage.removeItem('authToken')
     setUser(null)

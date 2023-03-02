@@ -5,7 +5,9 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { AuthProviderWrapper } from "./context/auth.context";
 import { Router, BrowserRouter, Routes, Route } from "react-router-dom";
-import LoginPage from "./pages/login.page";
+import LoginPage from "./components/Login";
+import SignupPage from "./components/Signup";
+import AuthPage from "./pages/Auth.page";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -16,7 +18,8 @@ root.render(
       <AuthProviderWrapper>
         <Routes>
           <Route path="/" element={<App />}/>
-          <Route path="/login" element={<LoginPage/>}/> 
+          <Route path="/auth" element={<AuthPage/>}/> 
+          
         
         </Routes>
       </AuthProviderWrapper>

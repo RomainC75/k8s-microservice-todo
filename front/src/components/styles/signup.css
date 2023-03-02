@@ -1,13 +1,13 @@
-.LoginPage h1 {
+.Signup h1 {
   text-align: center;
   margin-bottom: 30px;
 }
-.LoginPage form {
+.Signup form {
   display: flex;
   flex-direction: column;
   max-width: 300px;
   margin: 0 auto;
 }
-.LoginPage form * {
+.Signup form * {
   margin-bottom: 5px;
-}/*# sourceMappingURL=login.css.map */
+}/*# sourceMappingURL=signup.css.map */

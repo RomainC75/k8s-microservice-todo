@@ -1,0 +1,46 @@
+.AuthPage {
+  background-color: #D3D0DF;
+  height: 100vh;
+}
+.AuthPage > .container {
+  width: 90%;
+  height: 500px;
+  max-width: 1000px;
+  background-color: white;
+  display: flex;
+  margin: 100px auto;
+  border-radius: 0.5em;
+  overflow: hidden;
+}
+.AuthPage > .container > .content.left, .AuthPage > .container > .animation.right {
+  width: 50%;
+}
+.AuthPage > .container > .animation.right {
+  background-color: #F3F5F9;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.AuthPage > .container > .animation.right > .sunContainer {
+  position: relative;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+.AuthPage > .container > .animation.right > .sunContainer .sun {
+  width: 200px;
+  height: 200px;
+  border-radius: 100%;
+  background-color: #633DBA;
+  position: absolute;
+}
+.AuthPage > .container > .animation.right > .sunContainer .sun.top {
+  bottom: -40%;
+}
+.AuthPage > .container > .animation.right > .sunContainer .sun.bottom {
+  top: -40%;
+}
+.AuthPage > .container > .animation.right > .sunContainer.bottom {
+  filter: blur(15px);
+}/*# sourceMappingURL=auth.css.map */
