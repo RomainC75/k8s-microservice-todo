@@ -15,7 +15,7 @@ const AuthPage = (): JSX.Element => {
     <div className="AuthPage">
       <div className="container">
         <div className="content left">
-          {isLoginNotSignup ? <Login /> : <Signup />}
+          {isLoginNotSignup ? <Login /> : <Signup setIsLoginNotSignup={setIsLoginNotSignup}/>}
           <div className="center">
                 <p>
                   { isLoginNotSignup ? "Don't h" : "H"}ave an account ?{" "}

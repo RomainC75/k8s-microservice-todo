@@ -22,7 +22,7 @@ const isUpperCasePresent = (pass: string): boolean => {
 };
 
 const isMoreThan8Characters = (pass: string): boolean => {
-  return pass.length>7 ? true : false;
+  return pass.length > 7 ? true : false;
 };
 
 const isSpecialCharPresent = (pass: string): boolean => {
@@ -30,28 +30,27 @@ const isSpecialCharPresent = (pass: string): boolean => {
   return match ? true : false;
 };
 
+export const isEmailValidFn = (pass: string): boolean => {
+  const match: string[] | null = pass.match(
+    /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
+  );
+  return match ? true : false;
+};
 
-export const isEmailValidFn = (pass:string): boolean =>{
-  const match: string[]|null = pass.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)
-  return match ? true : false
-}
-
-export const detailsAboutNeededCharactersInPass = (pass:string):string=>{
-  let str = "need at least "
-  if(!isMoreThan8Characters(pass)){
-    str+="8 characters "
+export const detailsAboutNeededCharactersInPass = (pass: string): string => {
+  let str = "need at least ";
+  if (!isMoreThan8Characters(pass)) {
+    str += "8 characters including : ";
   }
-  str+='( '
-  if(!isNumericPresent(pass)){
-    str+='1digit, '
+  if (!isNumericPresent(pass)) {
+    str += "1digit, ";
   }
-  if(!isUpperCasePresent(pass)){
-    str+='1 upper case '
+  if (!isUpperCasePresent(pass)) {
+    str += "1 upper case, ";
   }
-  if(!isSpecialCharPresent(pass)){
-    str+='and 1 special char ([*+,-./:;()<=>?@])'
+  if (!isSpecialCharPresent(pass)) {
+    str += "1 special char []*+,-./:;()<=>?@";
   }
-
-  str+=')'
-  return str
-} 
+  str += ")";
+  return str;
+};

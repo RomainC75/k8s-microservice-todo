@@ -16,7 +16,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { detailsAboutNeededCharactersInPass, isEmailValidFn, isPasswordValidFn } from "../utils/signugFieldsTests";
 
-const Signup = (): JSX.Element => {
+interface SignupComponentInterface{
+  setIsLoginNotSignup: (isLoginNotSignup:boolean)=>void
+}
+
+const Signup = ({setIsLoginNotSignup}:SignupComponentInterface): JSX.Element => {
   const { authenticateUser, isLoading, isLoggedIn, user, API_URL, storeToken } =
     useContext(AuthContext) as AuthContextInterface;
   const navigate = useNavigate();
@@ -28,7 +32,7 @@ const Signup = (): JSX.Element => {
     emailConf: "",
     passwordConf: "",
   });
-  // const [isSignupValid, setIsSignupValid] = useState<boolean>(false);
+  const [signupErrorMessage, setSignupErrorMessage] = useState<string>("")
   const [isSignupError, setIsSignupError] = useState<boolean>(false);
 
   const [isFirstNameValid, setIsFirstNameValid] = useState<boolean>(true);
@@ -57,9 +61,7 @@ const Signup = (): JSX.Element => {
       setIsEmailsEquals(newValues.email === newValues.emailConf);
 
       setIsPasswordValid(isPasswordValidFn(newValues.password));
-      setIsPasswordsEquals(newValues.password === newValues.passwordConf);
-      console.log('new Value : ', newValues)
-      console.log('==<=', isFirstNameValid, isLastNameValid, isEmailValid, isEmailsEquals)
+      setIsPasswordsEquals(newValues.password === newValues.passwordConf); 
     }
   };
 
@@ -68,12 +70,12 @@ const Signup = (): JSX.Element => {
     axios
       .post(`${API_URL}/auth/signup`, inputsState)
       .then((ans) => {
-        storeToken(ans.data.token);
-        authenticateUser();
-        navigate("/");
+        console.log('signup',ans.data)
+        setIsLoginNotSignup(true)
       })
       .catch((err) => {
         setIsSignupError(true);
+        console.log('err : ', err)
       });
   };
 
@@ -133,7 +135,6 @@ const Signup = (): JSX.Element => {
           helperText={!isPasswordValid && detailsAboutNeededCharactersInPass(inputsState.password)}
           error={!isPasswordValid}
         />
-
         <PurpleTextField
           id="passwordConf"
           name="passwordConf"
