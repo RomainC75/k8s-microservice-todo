@@ -81,9 +81,10 @@ describe('/auth/signup Route : ', () => {
   it('should return "user created"', async () => {
     try {
       const completeUser = { ...new_user_info }
+      console.log('complete user : ', completeUser)
       const response: AxiosResponse = await axios.post(
         `${API_URL}/auth/signup`,
-        new_user_info
+        completeUser
       )
 
       expect(response.status).to.be.equal(201)

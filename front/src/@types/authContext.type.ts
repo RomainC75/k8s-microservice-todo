@@ -17,3 +17,13 @@ export interface LoginInterface{
   email:string
   password: string
 }
+
+export interface SignupInterface extends LoginInterface{
+  firstname:string
+  lastname:string
+}
+
+export interface SignupFullInterface extends SignupInterface{
+  emailConf:string
+  passwordConf: string
+}

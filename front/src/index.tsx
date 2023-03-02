@@ -17,8 +17,8 @@ root.render(
     <BrowserRouter>
       <AuthProviderWrapper>
         <Routes>
-          <Route path="/" element={<App />}/>
           <Route path="/auth" element={<AuthPage/>}/> 
+          <Route path="/" element={<App />}/>
           
         
         </Routes>

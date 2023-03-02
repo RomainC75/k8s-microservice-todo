@@ -57,7 +57,7 @@ const Login = (): JSX.Element => {
 
   return (
     <div className="Login">
-      <h1>Login page</h1>
+      <h1>Login</h1>
       <form onSubmit={handleForm}>
         <PurpleTextField
           id="email"

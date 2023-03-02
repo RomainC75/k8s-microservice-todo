@@ -1,5 +1,5 @@
-import { Schema, model, SchemaTypes } from "mongoose";
-import { MongoUserInterface } from "../@types/userInterface";
+import { Schema, model, SchemaTypes } from 'mongoose'
+import { MongoUserInterface } from '../@types/userInterface'
 
 const userSchema = new Schema<MongoUserInterface>(
   {
@@ -9,8 +9,8 @@ const userSchema = new Schema<MongoUserInterface>(
       required: true,
     },
     password: { type: SchemaTypes.String, required: true },
-    firstname: String,
-    lastname: String,
+    firstname: { type: String, required: true },
+    lastname: { type: String, required: true },
 
     // isMailValidated: {
     //   type: Boolean,
@@ -25,8 +25,8 @@ const userSchema = new Schema<MongoUserInterface>(
   {
     timestamps: true,
   }
-);
+)
 
-const User = model<MongoUserInterface>("User", userSchema);
+const User = model<MongoUserInterface>('User', userSchema)
 
-module.exports = User;
+module.exports = User

@@ -3,6 +3,8 @@ const User = require('../models/user.model')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 import { AuthenticatedRequest } from "../@types/authenticatedRequest";
+import {isEveryStringKeyPresentFn} from '../utils/isEveryStringKeysPresent';
+
 
 export const postSignup = async (
   req: Request,
@@ -11,6 +13,7 @@ export const postSignup = async (
 ) => {
   try {
     const { body } = req
+
     const foundUser = await User.findOne({ email: body.email })
     if (foundUser) {
       return res.status(409).json({ message: 'user already exists' })

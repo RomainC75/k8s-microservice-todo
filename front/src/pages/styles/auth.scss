@@ -1,13 +1,14 @@
 .AuthPage{
     background-color: #D3D0DF;
     height:100vh;
+    padding-top:100px;
     & > .container{
         width:90%;
-        height:500px;
+        height:700px;
         max-width: 1000px;
         background-color: white;
         display:flex;
-        margin:100px auto;
+        margin:0 auto;
         border-radius:0.5em;
         overflow: hidden;
         & > .content.left, & > .animation.right{
@@ -32,15 +33,15 @@
                     background-color: #633DBA;
                     position:absolute;
                     &.top{
-                        bottom:-40%;
+                        bottom:-30%;
                     }
                     &.bottom{
-                        top:-40%;
+                        top:-30%;
                     }
                     
                 }
                 &.bottom{
-                    filter:blur(15px);
+                    filter:blur(8px);
 
                 }
             }

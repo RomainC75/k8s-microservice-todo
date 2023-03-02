@@ -1,94 +1,174 @@
 import React, { FormEvent, useState, ChangeEvent, useContext } from "react";
-import { TextField, Button } from "@mui/material";
+// import { TextField, Button } from "@mui/material";
+import { PurpleButton, PurpleTextField } from "../utils/mui-custom-colors";
 import "./styles/signup.css";
-import { LoginInterface, UserInterface } from "../@types/authContext.type";
+import {
+  LoginInterface,
+  SignupFullInterface,
+  SignupInterface,
+  UserInterface,
+} from "../@types/authContext.type";
 import { AuthContext } from "../context/auth.context";
 import { AuthContextInterface } from "../@types/authContext.type";
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { isEmailValidFn, isPasswordValidFn } from "../utils/signugFieldsTests";
 
-const Signup
- = (): JSX.Element => {
-  const { authenticateUser, isLoading, isLoggedIn, user, API_URL, storeToken } = useContext(
-    AuthContext
-  ) as AuthContextInterface;
-  const navigate = useNavigate()
-  const [inputsState, setInputsState] = useState<LoginInterface>({
+const Signup = (): JSX.Element => {
+  const { authenticateUser, isLoading, isLoggedIn, user, API_URL, storeToken } =
+    useContext(AuthContext) as AuthContextInterface;
+  const navigate = useNavigate();
+  const [inputsState, setInputsState] = useState<SignupFullInterface>({
     email: "",
     password: "",
+    firstname: "",
+    lastname: "",
+    emailConf: "",
+    passwordConf: "",
   });
-  const [isLoginValid, setIsLoginValid] = useState<boolean>(false);
-  const [isLoginError, setIsLoginError] = useState<boolean>(false);
+  // const [isSignupValid, setIsSignupValid] = useState<boolean>(false);
+  const [isSignupError, setIsSignupError] = useState<boolean>(false);
+
+  const [isFirstNameValid, setIsFirstNameValid] = useState<boolean>(true);
+  const [isLastNameValid, setIsLastNameValid] = useState<boolean>(true);
+
+  const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
+  const [isPasswordValid, setIsPasswordValid] = useState<boolean>(true);
+  const [isPasswordsEquals, setIsPasswordsEquals] = useState<boolean>(true);
+  const [isEmailsEquals, setIsEmailsEquals] = useState<boolean>(true);
 
   const handleInputs = (
     e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
     if (e.target && "value" in e.target && "name" in e.target) {
-        setIsLoginError(false)
-      const newValues: LoginInterface = {
+      setIsSignupError(false);
+      const newValues: SignupFullInterface = {
         ...inputsState,
         [e.target.name]: e.target.value,
       };
       setInputsState(newValues);
-      if (Object.values(newValues).includes("")) {
-        setIsLoginValid(false);
-      } else {
-        setIsLoginValid(true);
-      }
+
+      setIsFirstNameValid(newValues.firstname.length > 0);
+      setIsLastNameValid(newValues.lastname.length > 0);
+
+      setIsEmailValid(isEmailValidFn(newValues.email));
+      setIsEmailsEquals(newValues.email === newValues.emailConf);
+
+      setIsPasswordValid(isPasswordValidFn(newValues.password));
+      setIsPasswordsEquals(newValues.password === newValues.passwordConf);
+      console.log('new Value : ', newValues)
+      console.log('==<=', isFirstNameValid, isLastNameValid, isEmailValid, isEmailsEquals)
     }
   };
 
   const handleForm = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     axios
-      .post(`${API_URL}/auth/signin`, inputsState)
+      .post(`${API_URL}/auth/signup`, inputsState)
       .then((ans) => {
-        storeToken(ans.data.token)
-        authenticateUser()
-        navigate('/')
+        storeToken(ans.data.token);
+        authenticateUser();
+        navigate("/");
       })
       .catch((err) => {
-        setIsLoginError(true)
+        setIsSignupError(true);
       });
   };
 
   return (
     <div className="Signup">
-      <h1>Signup page</h1>
+      <h1>Signup</h1>
       <form onSubmit={handleForm}>
-        <TextField
+        <PurpleTextField
+          id="firstname"
+          name="firstname"
+          label="firstname"
+          variant="outlined"
+          value={inputsState.firstname}
+          onChange={handleInputs}
+          helperText={!isFirstNameValid && "need a first name"}
+          error={!isFirstNameValid}
+        />
+        <PurpleTextField
+          id="lastname"
+          name="lastname"
+          label="lastname"
+          variant="outlined"
+          value={inputsState.lastname}
+          onChange={handleInputs}
+          helperText={!isLastNameValid && "need a last name"}
+          error={!isLastNameValid}
+        />
+        <PurpleTextField
           id="email"
           name="email"
           label="email"
-          variant="filled"
+          variant="outlined"
           value={inputsState.email}
           onChange={handleInputs}
+          helperText={!isEmailValid && "need a valid email"}
+          error={!isEmailValid}
         />
-        <TextField
+        <PurpleTextField
+          id="emailConf"
+          name="emailConf"
+          label="email confirmation"
+          variant="outlined"
+          value={inputsState.emailConf}
+          onChange={handleInputs}
+          helperText={!isEmailsEquals && "need the same email"}
+          error={!isEmailsEquals}
+        />
+        <PurpleTextField
           id="password"
           name="password"
           label="password"
           type="password"
           autoComplete="current-password"
-          variant="filled"
+          variant="outlined"
           value={inputsState.password}
           onChange={handleInputs}
+          helperText={!isPasswordValid && "need at least 8 characters whith 1 digit, 1upper case and [*+,-./:;()<=>?@] )"}
+          error={!isPasswordValid}
         />
-        <Button variant="contained" type="submit" disabled={!isLoginValid}>
+
+        <PurpleTextField
+          id="passwordConf"
+          name="passwordConf"
+          label="password confirmation"
+          type="password"
+          autoComplete="current-passwordConf"
+          variant="outlined"
+          value={inputsState.passwordConf}
+          onChange={handleInputs}
+          helperText={!isPasswordsEquals && "need the same password"}
+          error={!isPasswordsEquals}
+        />
+        <PurpleButton
+          variant="contained"
+          type="submit"
+          disabled={
+            !isFirstNameValid ||
+            !isLastNameValid ||
+            !isEmailValid ||
+            !isEmailsEquals ||
+            !isPasswordValid ||
+            !isPasswordsEquals
+          }
+        >
           Login
-        </Button>
-        {isLoginError && 
-        <Alert severity="error">
-        <AlertTitle>Error</AlertTitle>
-        wrong email or password
-      </Alert>
-      }
+        </PurpleButton>
+        {isSignupError && (
+          <Alert severity="error">
+            <AlertTitle>Error</AlertTitle>
+            wrong email or password
+          </Alert>
+        )}
       </form>
     </div>
   );
 };
 
-export default Signup
-;
+export default Signup;
