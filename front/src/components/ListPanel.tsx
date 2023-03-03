@@ -4,7 +4,7 @@ import { AuthContext } from "../context/auth.context";
 import { AuthContextInterface } from "../@types/authContext.type";
 import { Navigate } from "react-router-dom";
 import { ListInterface } from "../@types/list.type";
-import { createList, deleteList, getLists } from "../utils/axios-helper";
+import { createList, deleteList, getLists } from "../utils/lists-helper";
 import ListItem from "./ListItem";
 import CreateNewList from "./CreateNewList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -26,7 +26,6 @@ const ListPanel = () => {
 
   const handleGetLists = () => {
     getLists().then((ans) => {
-      console.log("====>", ans);
       if (ans.status === 200) {
         setLists(ans.data);
       }
@@ -42,7 +41,12 @@ const ListPanel = () => {
   }, []);
 
   const handleCreateNewList = (name: string) => {
-    createList(name).then((ans) => handleGetLists());
+    createList(name).then((ans) => {
+      // select the new created list. No async problem ???
+      setSelectedListId(ans.data.list._id)
+      handleGetLists()
+
+    });
   };
 
   return (
