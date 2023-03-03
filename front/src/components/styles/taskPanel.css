@@ -13,8 +13,4 @@
 .TaskPanel h3 {
   margin-left: 15px;
   text-align: left;
-}
-.TaskPanel ul.unDone {
-  display: flex;
-  flex-wrap: wrap;
 }/*# sourceMappingURL=taskPanel.css.map */

@@ -1,23 +1,27 @@
-.TodoItem{
-    display:flex;
-    flex-direction: column;
-    background:white;
-    margin:10px;
-    width:200px;
-    border-radius:1.5em;
-    padding: 7px;
-    box-shadow: 1px 1px 6px #d9dce1;
-    &.selected{
-        box-shadow: 1px 1px 6px #a0a4a8;
-    }
-    & > div{
-        & p{
-            margin:5px;
-        }
-        & p:nth-child(1){
-            font-weight: bold;
-            text-align: left;
-        }
-    }
-
+.TodoItem {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  margin: 10px;
+  width: 40%;
+  border-radius: 0.5em;
+  padding: 7px;
+  box-shadow: 1px 1px 6px #d9dce1;
+  cursor: pointer;
+  &.selected {
+    box-shadow: 1px 1px 8px #a0a4a8;
+  }
+  & > .name{
+    font-weight:bold;
+    display:inline-block;
+    font-size:1.3em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  
+  & p {
+    margin: 5px;
+    text-align:left;
+  }
 }

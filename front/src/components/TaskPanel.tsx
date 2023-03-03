@@ -4,6 +4,7 @@ import { DataContextInterface } from "../@types/dataContext.type";
 import TodoItem from "./TodoItem";
 
 import "./styles/taskPanel.css";
+import TodosList from "./TodosList";
 
 const TaskPanel = (): JSX.Element => {
   const { selectedListId, setSelectedListId, todos, isLoadingTodos } =
@@ -28,16 +29,12 @@ const TaskPanel = (): JSX.Element => {
 
               <section className="unDone">
                 <h3>Undone</h3>
-                <ul className="unDone">
-                  {todos &&
-                    todos
-                      .filter((todo) => !todo.isDone)
-                      .map((todo) => <TodoItem todo={todo} />)}
-                </ul>
+                  <TodosList todos={todos.filter(todo=>!todo.isDone)}/>
               </section>
 
               <div className="done">
                 <h3>done</h3>
+                <TodosList todos={todos.filter(todo=>todo.isDone)}/>
               </div>
             </>
           ) : (

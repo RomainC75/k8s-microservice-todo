@@ -3,18 +3,24 @@
   flex-direction: column;
   background: white;
   margin: 10px;
-  width: 200px;
-  border-radius: 1.5em;
+  width: 40%;
+  border-radius: 0.5em;
   padding: 7px;
   box-shadow: 1px 1px 6px #d9dce1;
+  cursor: pointer;
 }
 .TodoItem.selected {
-  box-shadow: 1px 1px 6px #a0a4a8;
+  box-shadow: 1px 1px 8px #a0a4a8;
 }
-.TodoItem > div p {
-  margin: 5px;
-}
-.TodoItem > div p:nth-child(1) {
+.TodoItem > .name {
   font-weight: bold;
+  display: inline-block;
+  font-size: 1.3em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.TodoItem p {
+  margin: 5px;
   text-align: left;
 }/*# sourceMappingURL=todoItem.css.map */
