@@ -1,0 +1,56 @@
+.ListPanel{
+    height:100%;
+    padding-top:50px;
+    border-right: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    position:relative;
+    width:250px;
+    transition: all 1s;
+    &.hide{
+        transform: translateX(-250px);
+        &  .fa-chevron-left{
+            transform: rotate(180deg);
+        }
+    }
+    & h2{
+        margin-top:0;
+    }
+    & > ul{
+        list-style-type: none;
+        padding-left: 0;
+        margin-right:5px;
+        
+        & > li{
+            display:flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top-right-radius: 2em;
+            border-bottom-right-radius: 2em;
+            padding-left: 10px;
+            padding-right: 30px;
+            transition: all 0.3s;
+            & .trash, & p{
+                cursor: pointer;
+            }
+            &.selected{
+                background-color: #633DBA;
+                color:white;
+            }
+        }
+        
+    }
+    & > .showHideIcon{
+        position:absolute;
+        bottom:15px;
+        right:-15px;
+        border:1px solid black;
+        width:15px;
+        height:15px;
+        & > .fa-chevron-left{
+            transition: all 0.5s;;
+            cursor:pointer
+        }
+    }
+    
+}

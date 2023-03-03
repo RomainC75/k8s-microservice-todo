@@ -9,6 +9,7 @@ import LoginPage from "./components/Login";
 import SignupPage from "./components/Signup";
 import AuthPage from "./pages/Auth.page";
 import IsPrivate from "./components/isPrivate";
+import { DataProviderWrapper } from "./context/data.context";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -17,12 +18,19 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProviderWrapper>
-        <Routes>
-          <Route path="/auth" element={<AuthPage/>}/> 
-          <Route path="/" element={<IsPrivate><App /></IsPrivate>}/>
-          
-        
-        </Routes>
+        <DataProviderWrapper>
+          <Routes>
+            <Route path="/auth" element={<AuthPage />} />
+            <Route
+              path="/"
+              element={
+                <IsPrivate>
+                  <App />
+                </IsPrivate>
+              }
+            />
+          </Routes>
+        </DataProviderWrapper>
       </AuthProviderWrapper>
     </BrowserRouter>
   </React.StrictMode>

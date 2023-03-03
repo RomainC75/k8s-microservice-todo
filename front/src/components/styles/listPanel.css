@@ -1,0 +1,53 @@
+.ListPanel {
+  height: 100%;
+  padding-top: 50px;
+  border-right: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 250px;
+  transition: all 1s;
+}
+.ListPanel.hide {
+  transform: translateX(-250px);
+}
+.ListPanel.hide .fa-chevron-left {
+  transform: rotate(180deg);
+}
+.ListPanel h2 {
+  margin-top: 0;
+}
+.ListPanel > ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin-right: 5px;
+}
+.ListPanel > ul > li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top-right-radius: 2em;
+  border-bottom-right-radius: 2em;
+  padding-left: 10px;
+  padding-right: 30px;
+  transition: all 0.3s;
+}
+.ListPanel > ul > li .trash, .ListPanel > ul > li p {
+  cursor: pointer;
+}
+.ListPanel > ul > li.selected {
+  background-color: #633DBA;
+  color: white;
+}
+.ListPanel > .showHideIcon {
+  position: absolute;
+  bottom: 15px;
+  right: -15px;
+  border: 1px solid black;
+  width: 15px;
+  height: 15px;
+}
+.ListPanel > .showHideIcon > .fa-chevron-left {
+  transition: all 0.5s;
+  cursor: pointer;
+}/*# sourceMappingURL=listPanel.css.map */
