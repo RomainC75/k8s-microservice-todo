@@ -58,3 +58,33 @@ export const createTodo = async (listId:string, newTodo:NewTodoInterface): Promi
         }
     })
 }
+
+
+export const putTodo = async (listId:string, newTodo:NewTodoInterface): Promise<any> =>{
+
+    const token:string|null = localStorage.getItem('authToken')
+    if(!token){
+        return null
+    }
+    console.log('todo to send :  : ', newTodo)
+    return await axios({
+        method:"put",
+        url: `${API_URL}/todo/task/${listId}`,
+        headers:{
+            Authorization: `Bearer ${token}`
+        },
+        data:newTodo
+    }).then ((response) =>{
+        console.log('==> putTodo',response)
+        return {
+            status: response.status,
+            data: response.data
+        }
+    }).catch((error) =>{
+        console.log("ERROR putTodo",error)
+        return {
+            status: error.status,
+            data: error.response
+        }
+    })
+}
