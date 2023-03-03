@@ -5,6 +5,7 @@ import { AuthContext } from './context/auth.context';
 import { AuthContextInterface } from './@types/authContext.type';
 import ListPanel from './components/ListPanel';
 import TaskPanel from './components/TaskPanel';
+import DetailsPanel from './components/DetailsPanel';
 
 function App() {
 
@@ -16,7 +17,7 @@ function App() {
     <div className="App">
       <ListPanel/>
       <TaskPanel/>
-      <h1>App</h1>
+      <DetailsPanel/>
     </div>
   );
 }

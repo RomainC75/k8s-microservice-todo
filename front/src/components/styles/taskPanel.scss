@@ -1,0 +1,9 @@
+.TaskPanel{
+    flex-grow: 2;
+    
+    &  ul.unDone{
+        display:flex;
+        flex-wrap: wrap;
+        
+    }
+}

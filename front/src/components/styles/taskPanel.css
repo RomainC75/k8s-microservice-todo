@@ -1,0 +1,7 @@
+.TaskPanel {
+  flex-grow: 2;
+}
+.TaskPanel ul.unDone {
+  display: flex;
+  flex-wrap: wrap;
+}/*# sourceMappingURL=taskPanel.css.map */
