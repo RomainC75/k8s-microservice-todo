@@ -6,10 +6,13 @@ import TodoItem from "./TodoItem";
 import "./styles/taskPanel.css";
 import TodosList from "./TodosList";
 import CreateNewTodo from "./CreateNewTodo";
+import { TodoInterface } from "../@types/todo.type";
 
 const TaskPanel = (): JSX.Element => {
   const { selectedListId, setSelectedListId, todos, isLoadingTodos } =
     useContext(DataContext) as DataContextInterface;
+  
+
 
   return (
     <div className="TaskPanel backgroundColor2">
