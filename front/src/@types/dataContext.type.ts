@@ -6,4 +6,6 @@ export interface DataContextInterface{
     todos: TodoInterface[]
     isLoadingTodos: boolean
     isTodosError: boolean
+    setSelectedTodoId:(id:string|null)=>void
+    selectedTodoId: string|null
 }

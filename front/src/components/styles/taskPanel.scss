@@ -1,6 +1,18 @@
 .TaskPanel{
     flex-grow: 2;
-    
+    & > .title{
+        display: flex;
+        align-items: center;
+        height:50px;
+        background: white;
+        & h2{
+            margin:0 0 0 15px;
+        }
+    }
+    & h3{
+        margin-left:15px;
+        text-align: left;
+    }
     &  ul.unDone{
         display:flex;
         flex-wrap: wrap;

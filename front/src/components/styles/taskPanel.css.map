@@ -1,1 +1,1 @@
-{"version":3,"sources":["taskPanel.scss","taskPanel.css"],"names":[],"mappings":"AAAA;EACI,YAAA;ACCJ;ADCI;EACI,aAAA;EACA,eAAA;ACCR","file":"taskPanel.css"}
+{"version":3,"sources":["taskPanel.scss","taskPanel.css"],"names":[],"mappings":"AAAA;EACI,YAAA;ACCJ;ADAI;EACI,aAAA;EACA,mBAAA;EACA,YAAA;EACA,iBAAA;ACER;ADDQ;EACI,kBAAA;ACGZ;ADAI;EACI,iBAAA;EACA,gBAAA;ACER;ADAI;EACI,aAAA;EACA,eAAA;ACER","file":"taskPanel.css"}
