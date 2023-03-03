@@ -37,7 +37,6 @@ const CreateNewTodo = () => {
     e.preventDefault();
     console.log("==>", newTodo);
     selectedListId && createTodo(selectedListId,newTodo).then(ans=>{
-      console.log("==> ans : ", ans)
       updateTodos()
     })
   };

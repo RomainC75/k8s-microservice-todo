@@ -1,6 +1,6 @@
 .TodoItem {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   background: white;
   margin: 10px;
   width: 40%;
@@ -11,13 +11,17 @@
   &.selected {
     box-shadow: 1px 1px 8px #a0a4a8;
   }
-  & > .name{
-    font-weight:bold;
-    display:inline-block;
-    font-size:1.3em;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+  & > .infos{
+    max-width: 80%;
+    & > .name{
+      width:100%;
+      font-weight:bold;
+      display:inline-block;
+      font-size:1.3em;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
   }
   
   & p {

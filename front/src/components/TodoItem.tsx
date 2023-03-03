@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { TodoInterface } from "../@types/todo.type";
 import { DataContext } from "../context/data.context";
 import { DataContextInterface } from "../@types/dataContext.type";
+import Button from '@mui/material/Button';
 
 import "./styles/todoItem.css";
 import { extractSimpleDate } from "../utils/common";
@@ -27,8 +28,13 @@ const TodoItem = ({ todo }: TodoItemInterface): JSX.Element => {
       }`}
       onClick={() => setSelectedTodoId(todo._id.toString())}
     >
-      <p className="name">{todo.name}</p>
-      <p className="date color3">{extractSimpleDate(todo.createdAt)}</p>
+      <div className="infos">
+        <p className="name">{todo.name}</p>
+        <p className="date color3">{extractSimpleDate(todo.createdAt)}</p>
+      </div>
+      <Button variant="outlined" size="small" color={todo.isDone ? "secondary" : "success"}>
+          {todo.isDone ? "unDone" : "Done"}
+        </Button>
     </li>
   );
 };

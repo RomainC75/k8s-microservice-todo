@@ -1,6 +1,6 @@
 .TodoItem {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   background: white;
   margin: 10px;
   width: 40%;
@@ -12,7 +12,11 @@
 .TodoItem.selected {
   box-shadow: 1px 1px 8px #a0a4a8;
 }
-.TodoItem > .name {
+.TodoItem > .infos {
+  max-width: 80%;
+}
+.TodoItem > .infos > .name {
+  width: 100%;
   font-weight: bold;
   display: inline-block;
   font-size: 1.3em;
