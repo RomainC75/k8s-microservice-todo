@@ -5,7 +5,7 @@ export interface TodoInterface {
   listId: ObjectId
   name: string
   description?: string
-  deadLine: Date
+  deadLine: Date 
   isDone: boolean
   createdAt: string
   updatedAt: string
@@ -15,6 +15,6 @@ export interface TodoInterface {
 export interface UpdatableTodoDataInterface{
   name: string
   description?: string
-  deadLine: Date
+  deadLine: Date | string
   isDone: boolean
 }

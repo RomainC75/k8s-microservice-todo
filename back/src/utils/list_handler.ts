@@ -1,16 +1,20 @@
 import { UpdatableTodoDataInterface } from '../@types/todo.type'
 
 // The object is supposed to have 4 keys
+export const verifyNeededKeysInTodo = (rawData:any):boolean =>{
+  const neededKeys: string[] = ['name', 'isDone', 'deadLine']
+  return neededKeys.every(
+    (key: string) => rawData[key]!==undefined
+  )
+} 
+
 export const verifyAndCleanTodoUpdateData = (
   rawUpdateData: any
 ): UpdatableTodoDataInterface | null => {
     console.log("raw",rawUpdateData)
-  const neededKeys: string[] = ['name', 'isDone', 'deadLine']
+  // const neededKeys: string[] = ['name', 'isDone', 'deadLine']
   const authorizedKeys: string[] = ['name', 'isDone', 'description', 'deadLine']
-
-  const isEachNeededKeyInData: boolean = neededKeys.every(
-    (key: string) => rawUpdateData[key]!==undefined
-  )
+  const isEachNeededKeyInData: boolean = verifyNeededKeysInTodo(rawUpdateData)
   if (!isEachNeededKeyInData) {
     return null
   }
@@ -26,3 +30,5 @@ export const verifyAndCleanTodoUpdateData = (
 
   return rawUpdateData
 }
+
+
