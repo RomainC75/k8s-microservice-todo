@@ -6,16 +6,16 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons'
 interface ListItemInterface{
     listItem:ListInterface
     handleDeleteList: (id:string)=>void 
-    setSelectedId:(id:string)=>void
-    selectedId:string|null
+    setSelectedListId:(id:string)=>void
+    selectedListId:string|null
 }
 
-const ListItem = ({listItem, handleDeleteList, setSelectedId, selectedId}:ListItemInterface) => {
+const ListItem = ({listItem, handleDeleteList, setSelectedListId, selectedListId}:ListItemInterface) => {
   
 
   return (
-    <li className={`ListItem ${listItem._id===selectedId && "selected"}`}>
-        <p onClick={()=>setSelectedId(listItem._id)}>{listItem.name}</p>
+    <li className={`ListItem ${listItem._id===selectedListId && "selected"}`}>
+        <p onClick={()=>setSelectedListId(listItem._id)}>{listItem.name}</p>
         <FontAwesomeIcon className="trash" icon={faTrash} onClick={()=>handleDeleteList(listItem._id)}/>
     </li>
   )

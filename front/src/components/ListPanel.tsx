@@ -12,14 +12,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./styles/listPanel.css";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { DataContext } from "../context/data.context";
+import { DataContextInterface } from "../@types/dataContext.type";
 
 const ListPanel = () => {
   const { authenticateUser, isLoading, isLoggedIn, user } = useContext(
     AuthContext
   ) as AuthContextInterface;
-  
+  const {selectedListId, setSelectedListId} = useContext(DataContext) as DataContextInterface
+
   const [lists, setLists] = useState<ListInterface[]>([]);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
     const [hidePanel, setHidePanel] = useState<boolean>(false)
 
   const handleGetLists = () => {
@@ -54,8 +56,8 @@ const ListPanel = () => {
             key={list._id}
             listItem={list}
             handleDeleteList={handleDeleteList}
-            selectedId={selectedId}
-            setSelectedId={setSelectedId}
+            selectedListId={selectedListId}
+            setSelectedListId={setSelectedListId}
           />
         ))}
       </ul>
