@@ -31,6 +31,10 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
   const [todos, setTodos] = useState<TodoInterface[]>([]);
 
   useEffect(() => {
+    updateTodos()
+  }, [selectedListId]);
+
+  const updateTodos = () =>{
     console.log("selected List id : ", selectedListId);
     if (isLoggedIn && selectedListId) {
       setIsLoadingTodos(true);
@@ -47,7 +51,7 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
           setIsTodosError(true);
         });
     }
-  }, [selectedListId]);
+  }
 
   return (
     <DataContext.Provider
@@ -58,7 +62,8 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
         isLoadingTodos,
         isTodosError,
         selectedTodoId,
-        setSelectedTodoId
+        setSelectedTodoId,
+        updateTodos
       }}
     >
       {props.children}

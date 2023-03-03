@@ -8,4 +8,5 @@ export interface DataContextInterface{
     isTodosError: boolean
     setSelectedTodoId:(id:string|null)=>void
     selectedTodoId: string|null
+    updateTodos:()=>void
 }

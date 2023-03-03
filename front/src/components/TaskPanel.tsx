@@ -5,6 +5,7 @@ import TodoItem from "./TodoItem";
 
 import "./styles/taskPanel.css";
 import TodosList from "./TodosList";
+import CreateNewTodo from "./CreateNewTodo";
 
 const TaskPanel = (): JSX.Element => {
   const { selectedListId, setSelectedListId, todos, isLoadingTodos } =
@@ -24,7 +25,8 @@ const TaskPanel = (): JSX.Element => {
           {selectedListId ? (
             <>
               <div>
-                <h3>add new Todo</h3>
+                <h3>Add Todo</h3>
+                <CreateNewTodo/>
               </div>
 
               <section className="unDone">

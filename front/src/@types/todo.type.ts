@@ -1,13 +1,16 @@
-import { ObjectId } from "mongoose"
+import { ObjectId } from "mongoose";
 
-export interface TodoInterface {
-    _id: ObjectId
-    listId: ObjectId
-    name: string
-    description?: string
-    deadLine: Date
-    isDone: boolean
-    createdAt: string
-    updatedAt: string
-    __v: number
-  }
+export interface NewTodoInterface {
+  name: string;
+  description?: string;
+  deadLine: string;
+  isDone: boolean;
+}
+
+export interface TodoInterface extends NewTodoInterface {
+  _id: ObjectId;
+  listId: ObjectId;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}

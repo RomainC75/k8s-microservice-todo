@@ -12,7 +12,7 @@ const TodosList = ({ todos }: TodosListInterface): JSX.Element => {
   return (
     <ul className="TodosList unDone">
       {todos &&
-        todos.map((todo) => <TodoItem todo={todo} />)}
+        todos.map((todo) => <TodoItem key={todo._id.toString()} todo={todo} />)}
     </ul>
   );
 };
