@@ -45,6 +45,8 @@ const CreateNewList = ({
         className="cursor"
         icon={faPlus}
         onClick={() => !isNameAlreadyUsed && handleCreation()}
+        size="xl"
+        style={{color:"#635FC7"}}
       />
     </div>
   );

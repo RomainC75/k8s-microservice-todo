@@ -1,3 +1,9 @@
 .CreateNewList {
+  padding: 10px 5px;
   border-top: 1px solid #E4EBFA;
+  display: flex;
+  flex-direction: column;
+}
+.CreateNewList .cursor {
+  margin-top: 5px;
 }/*# sourceMappingURL=createNewList.css.map */
