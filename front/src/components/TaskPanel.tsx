@@ -27,7 +27,7 @@ const TaskPanel = (): JSX.Element => {
       }`}
     >
       <div className="title">
-        <h2>Task Panel</h2>
+        <h2>TASK PANEL</h2>
       </div>
       {isLoadingTodos ? (
         <div className="loading">
@@ -38,21 +38,21 @@ const TaskPanel = (): JSX.Element => {
           {selectedListId ? (
             <>
               <div>
-                <h3>Add Todo</h3>
+                <h3>ADD TODO</h3>
                 <ScrollingSection isOpenedByDefault>
                   <CreateNewTodo />
                 </ScrollingSection>
               </div>
 
               <section className="unDone">
-                <h3>Undone</h3>
+                <h3>UNDONE</h3>
                 <ScrollingSection isOpenedByDefault>
                   <TodosList todos={todos.filter((todo) => !todo.isDone)} />
                 </ScrollingSection>
               </section>
 
               <div className="done">
-                <h3>done</h3>
+                <h3>DONE</h3>
                 <ScrollingSection>
                   <TodosList todos={todos.filter((todo) => todo.isDone)} />
                 </ScrollingSection>

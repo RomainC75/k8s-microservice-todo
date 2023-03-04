@@ -4,8 +4,8 @@
     background-color: $color9;
     flex-grow: 2;
     transition: all 0.5s;
-    padding:15px;
-    overflow: scroll;
+    padding:0 15px;
+    overflow-Y: scroll;
     // scrollbar-width: thin;
     &.showListPanel{
         margin-left:250px;
@@ -19,8 +19,9 @@
         height:50px;
         
     }
-    & h3{
-        
+    & h2, & h3{
         text-align: left;
+        letter-spacing: 1.5px;
+        color:$color7;
     }
 }
