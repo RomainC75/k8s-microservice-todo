@@ -1,1 +1,1 @@
-{"version":3,"sources":[],"names":[],"mappings":"","file":"todoDetails.css"}
+{"version":3,"sources":["todoDetails.scss","todoDetails.css","_colors.scss"],"names":[],"mappings":"AAEA;EACI,eAAA;ACDJ;ADEI;EACI,qBAAA;EACA,iBAAA;EACA,cEDA;ADCR","file":"todoDetails.css"}

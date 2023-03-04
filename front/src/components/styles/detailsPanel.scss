@@ -11,8 +11,9 @@
     height:100%;
     border-left: 1px solid $color8;
     background-color: $color10;
-    padding-top:$navbarHeight;
+    margin-top:$navbarHeight;
     transition: width 0.5s;
+    overflow-y: scroll;
     &.hide{
         width:0px;
         border-right: none;

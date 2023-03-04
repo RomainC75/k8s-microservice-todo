@@ -1,1 +1,8 @@
-/*# sourceMappingURL=todoDetails.css.map */
+.TodoDetails {
+  padding: 0 10px;
+}
+.TodoDetails > div > p:first-child {
+  letter-spacing: 2.4px;
+  font-size: 0.9rem;
+  color: #828FA3;
+}/*# sourceMappingURL=todoDetails.css.map */

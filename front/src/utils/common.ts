@@ -9,3 +9,11 @@ export const getRealYYYMMDD = (date:string):string =>{
     console.log("parts", parts)
     return parts.join("-")
 }
+
+export const extractDisplayableDate = (strDate:string):string =>{
+    const date = new Date(strDate)
+    return `${date.getDate()} ${monthConvertor[date.getMonth()]} ${date.getFullYear()}`
+    
+}
+
+const monthConvertor = ['Jan.','Feb.','Mar.','Apr.','May.','Jun.','Jul.','Aug.','Sept.','Oct.','Nov.','Dec.']

@@ -20,6 +20,7 @@ const TodoItem = ({ todo }: TodoItemInterface): JSX.Element => {
     isLoadingTodos,
     selectedTodoId,
     setSelectedTodoId,
+    setIsDetailsPanelDisplayed,
     updateTodos
   } = useContext(DataContext) as DataContextInterface;
 
@@ -34,12 +35,17 @@ const TodoItem = ({ todo }: TodoItemInterface): JSX.Element => {
     })
   }
 
+  const handleClickOnTodo = () =>{
+    setSelectedTodoId(todo._id.toString())
+    setIsDetailsPanelDisplayed(true)
+  }
+
   return (
     <li
       className={`TodoItem ${
         selectedTodoId === todo._id.toString() ? "selected" : ""
       }`}
-      onClick={() => setSelectedTodoId(todo._id.toString())}
+      onClick={() => handleClickOnTodo()}
     >
       <div className="infos">
         <p className="name">{todo.name}</p>

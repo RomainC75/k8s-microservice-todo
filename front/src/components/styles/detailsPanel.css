@@ -8,8 +8,9 @@
   height: 100%;
   border-left: 1px solid #E4EBFA;
   background-color: #FFFFFF;
-  padding-top: 80px;
+  margin-top: 80px;
   transition: width 0.5s;
+  overflow-y: scroll;
 }
 .DetailsPanel.hide {
   width: 0px;

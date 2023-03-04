@@ -1,0 +1,10 @@
+@import 'colors';
+
+.TodoDetails{
+    padding : 0 10px;
+    & > div > p:first-child{
+        letter-spacing: 2.4px;
+        font-size:0.9rem;
+        color:$color7;
+    }
+}
