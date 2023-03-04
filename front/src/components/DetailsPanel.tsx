@@ -22,10 +22,10 @@ const DetailsPanel = () => {
   },[selectedTodoId])
 
   return (
-    <div className="DetailsPanel">
+    <section className="DetailsPanel">
       <h3>Details Panel</h3>
       { selectedTodo && <TodoDetails todo={selectedTodo}/> }
-    </div>
+    </section>
   );
 };
 

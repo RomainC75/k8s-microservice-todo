@@ -6,14 +6,15 @@ import { PurpleButton, PurpleTextField } from "../utils/mui-custom-colors";
 import { TextField } from "@mui/material";
 import { Textarea } from "@mui/joy";
 import { extractSimpleDate, getRealYYYMMDD } from "../utils/common";
-import { createTodo } from "../utils/todos-helper";
+import { createTodo, isNameAlreadyUsedFn } from "../utils/todos-helper";
 
 import './styles/createNewTodo.css'
 
 const CreateNewTodo = () => {
   const { selectedListId, setSelectedListId, todos, isLoadingTodos, updateTodos } =
     useContext(DataContext) as DataContextInterface;
-  const [isNameValid, setIdNameValid] = useState<boolean>(true);
+  const [isNameAlreadyUsed, setIsNameAlreadyUsed] = useState<boolean>(true);
+  const [isNameEmpty, setIsNameEmpty] = useState<boolean>(true)
 
   const [newTodo, setNewTodo] = useState<NewTodoInterface>({
     name: "",
@@ -33,6 +34,18 @@ const CreateNewTodo = () => {
     };
     console.log("=>handleInputs", e.target.value);
     setNewTodo(newTodoBuffer);
+    console.log('xxxx : ', newTodoBuffer)
+    if(newTodoBuffer.name.length===0){
+      setIsNameEmpty(true)
+    }else{
+      setIsNameEmpty(false)
+      console.log("===> NAME : ",todos, newTodoBuffer.name, isNameAlreadyUsedFn(todos,newTodoBuffer.name))
+      if(isNameAlreadyUsedFn(todos,newTodoBuffer.name)){
+        setIsNameAlreadyUsed(true)
+      }else{
+        setIsNameAlreadyUsed(false)
+      }
+    }
   };
 
   const handleForm = (e: FormEvent<HTMLFormElement>) => {
@@ -53,8 +66,8 @@ const CreateNewTodo = () => {
           variant="outlined"
           value={newTodo.name}
           onChange={handleInputs}
-          helperText={!isNameValid && "need a name"}
-          error={!isNameValid}
+          helperText={(isNameEmpty && "need a name") || (isNameAlreadyUsed && "name is already used")}
+          error={isNameEmpty || isNameAlreadyUsed}
         />
           <TextField
             id="deadLine"
@@ -80,7 +93,7 @@ const CreateNewTodo = () => {
         />
 
 
-        <PurpleButton variant="contained" type="submit" disabled={false}>
+        <PurpleButton variant="contained" type="submit" disabled={isNameAlreadyUsed || isNameEmpty}>
           Create
         </PurpleButton>
       </form>

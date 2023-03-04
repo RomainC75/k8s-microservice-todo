@@ -64,7 +64,7 @@ const ListPanel = () => {
   };
 
   return (
-    <div className={`ListPanel ${!isListPanelDisplayed ? "hide" : ""}`}>
+    <section className={`ListPanel ${!isListPanelDisplayed ? "hide" : ""}`}>
       <h2>ALL LISTS({lists.length})</h2>
 
       <ul className="list">
@@ -79,7 +79,7 @@ const ListPanel = () => {
         ))}
       </ul>
       <CreateNewList handleCreateNewList={handleCreateNewList} lists={lists} />
-    </div>
+    </section>
   );
 };
 

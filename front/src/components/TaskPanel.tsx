@@ -21,7 +21,7 @@ const TaskPanel = (): JSX.Element => {
   } = useContext(DataContext) as DataContextInterface;
 
   return (
-    <div
+    <section
       className={`TaskPanel ${isListPanelDisplayed ? "showListPanel" : " "} ${
         isDetailsPanelDisplayed ? "showDetailsPanel" : ""
       }`}
@@ -44,12 +44,12 @@ const TaskPanel = (): JSX.Element => {
                 </ScrollingSection>
               </div>
 
-              <section className="unDone">
+              <div className="unDone">
                 <h3>UNDONE</h3>
                 <ScrollingSection isOpenedByDefault>
                   <TodosList todos={todos.filter((todo) => !todo.isDone)} />
                 </ScrollingSection>
-              </section>
+              </div>
 
               <div className="done">
                 <h3>DONE</h3>
@@ -63,7 +63,7 @@ const TaskPanel = (): JSX.Element => {
           )}
         </>
       )}
-    </div>
+    </section>
   );
 };
 

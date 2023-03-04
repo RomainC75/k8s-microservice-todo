@@ -1,5 +1,5 @@
 import axios from "axios"
-import { NewTodoInterface } from "../@types/todo.type";
+import { NewTodoInterface, TodoInterface } from "../@types/todo.type";
 
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
@@ -87,4 +87,8 @@ export const putTodo = async (listId:string, newTodo:NewTodoInterface): Promise<
             data: error.response
         }
     })
+}
+
+export const isNameAlreadyUsedFn = (todos: TodoInterface[], name:string):boolean =>{
+    return todos.some(todo=>todo.name===name)
 }
