@@ -7,16 +7,25 @@ import ListPanel from "./components/ListPanel";
 import TaskPanel from "./components/TaskPanel";
 import DetailsPanel from "./components/DetailsPanel";
 import NavBar from "./components/NavBar";
+import { DataContext } from "./context/data.context";
+import { DataContextInterface } from "./@types/dataContext.type";
+import DeleteModal from "./components/DeleteModal";
 
 function App() {
   const { authenticateUser, isLoading, isLoggedIn, user } = useContext(
     AuthContext
   ) as AuthContextInterface;
+  const { showDeleteModal } = useContext(
+    DataContext
+  ) as DataContextInterface;
+
   useEffect(() => {
     console.log(user);
   }, [user]);
+  
   return (
     <div className="App">
+      {showDeleteModal && <DeleteModal/>}
       <NavBar />
       <div className="content">
         <ListPanel />

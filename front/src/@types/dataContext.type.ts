@@ -13,4 +13,7 @@ export interface DataContextInterface{
     setIsListPanelDisplayed: (shouldDisplayBool:boolean)=>void
     isDetailsPanelDisplayed: boolean
     setIsDetailsPanelDisplayed: (shouldDisplayBool:boolean)=>void
+    handleDeleteTodo: (id:string)=>void
+    handleDeleteConfirmation: ()=>void
+    showDeleteModal:boolean
 }

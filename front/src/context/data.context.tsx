@@ -27,6 +27,8 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
   const [isLoadingTodos, setIsLoadingTodos] = useState<boolean>(false);
   const [isTodosError, setIsTodosError] = useState<boolean>(false);
   const [todos, setTodos] = useState<TodoInterface[]>([]);
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false)
+  const [todoToDeleteId, setTodoToDeleteId] = useState<string|null>(null)
 
   // states for display arrangement
   const [isListPanelDisplayed, setIsListPanelDisplayed] =
@@ -58,6 +60,14 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
     }
   };
 
+  const handleDeleteTodo = (id:string) =>{
+    setShowDeleteModal(true)
+    setTodoToDeleteId(id)
+  }
+  const handleDeleteConfirmation = () =>{
+    
+  }
+
   return (
     <DataContext.Provider
       value={{
@@ -73,6 +83,9 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
         setIsListPanelDisplayed,
         isDetailsPanelDisplayed,
         setIsDetailsPanelDisplayed,
+        handleDeleteTodo,
+        handleDeleteConfirmation,
+        showDeleteModal
       }}
     >
       {props.children}

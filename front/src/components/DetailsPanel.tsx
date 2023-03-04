@@ -14,7 +14,8 @@ const DetailsPanel = () => {
     todos,
     isLoadingTodos,
     selectedTodoId,
-    isDetailsPanelDisplayed
+    isDetailsPanelDisplayed,
+    handleDeleteTodo
   } = useContext(DataContext) as DataContextInterface;
   const [selectedTodo, setSelectedTodo] = useState<TodoInterface | null>(null);
   const [showUpdate, setShowUpdate] = useState<boolean>(false)
@@ -28,8 +29,8 @@ const DetailsPanel = () => {
     <section className={`DetailsPanel ${!isDetailsPanelDisplayed ? "hide" : ""}`}>
       <h2>DETAILS</h2>
       { selectedTodo ? <TodoDetails todo={selectedTodo}/> : "no task slected"}
-      <Button variant="outlined" size="small" onClick={()=>setShowUpdate(!showUpdate)} color={showUpdate ? "secondary" : "success"}>
-          {!showUpdate ? "show Update" : "show infos"}
+      <Button variant="outlined" size="small" onClick={()=> selectedTodoId && handleDeleteTodo(selectedTodoId)} color="error">
+          Delete
         </Button>
     </section>
   );
