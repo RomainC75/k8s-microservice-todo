@@ -12,6 +12,28 @@
   & h1 {
     margin:0;
   }
+  & .logo{
+    position:relative;
+    transform: translate(7px,-7px) rotate(-15deg);
+    & > div{
+        border-radius: 2em;
+        position:relative;
+    }
+    & > .horizontal{
+        width:40px;
+        height:10px;
+        background-color: $color1;
+        
+        z-index:30;
+    }
+    & > .vertical{
+        width:10px;
+        height:37px;
+        background-color: $color2;
+        position:relative;
+        transform: translate(15px, -10px);
+    }
+  }
   & > .main{
     position:relative;
     width:250px;
@@ -23,7 +45,9 @@
     height:100%;
         &> .title{
             flex-grow: 3;
-            margin-left: 15px;
+            margin-left: 35px;
+            margin-top:10px;
+            display:flex;
         }
       & > .showHideIcon {
         position: relative;
@@ -36,3 +60,4 @@
       }
   }
 }
+

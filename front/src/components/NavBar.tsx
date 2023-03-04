@@ -25,7 +25,11 @@ const NavBar = (): JSX.Element => {
           <FontAwesomeIcon icon={faChevronLeft} />
         </div>
         <div className="title">
-            <h1>My App</h1>
+            <div className="logo">
+                <div className="horizontal"></div>
+                <div className="vertical"></div>
+            </div>
+            <h1>ask</h1>
         </div>
       </div>
 
