@@ -32,6 +32,7 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
 
   useEffect(() => {
     updateTodos()
+    setSelectedTodoId(null)
   }, [selectedListId]);
 
   const updateTodos = () =>{
