@@ -16,8 +16,6 @@ import { AuthContext } from "./auth.context";
 import { TodoInterface } from "../@types/todo.type";
 import { getTodosFromList } from "../utils/todos-helper";
 
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
-
 const DataContext = createContext<DataContextInterface | null>(null);
 
 const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
@@ -30,12 +28,18 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
   const [isTodosError, setIsTodosError] = useState<boolean>(false);
   const [todos, setTodos] = useState<TodoInterface[]>([]);
 
+  // states for display arrangement
+  const [isListPanelDisplayed, setIsListPanelDisplayed] =
+    useState<boolean>(false);
+  const [isDetailsPanelDisplayed, setIsDetailsPanelDisplayed] =
+    useState<boolean>(false);
+
   useEffect(() => {
-    updateTodos()
-    setSelectedTodoId(null)
+    updateTodos();
+    setSelectedTodoId(null);
   }, [selectedListId]);
 
-  const updateTodos = () =>{
+  const updateTodos = () => {
     console.log("selected List id : ", selectedListId);
     if (isLoggedIn && selectedListId) {
       setIsLoadingTodos(true);
@@ -52,7 +56,7 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
           setIsTodosError(true);
         });
     }
-  }
+  };
 
   return (
     <DataContext.Provider
@@ -64,7 +68,11 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
         isTodosError,
         selectedTodoId,
         setSelectedTodoId,
-        updateTodos
+        updateTodos,
+        isListPanelDisplayed,
+        setIsListPanelDisplayed,
+        isDetailsPanelDisplayed,
+        setIsDetailsPanelDisplayed,
       }}
     >
       {props.children}

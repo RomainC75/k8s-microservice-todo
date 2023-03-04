@@ -1,11 +1,18 @@
 .TaskPanel {
+  background-color: #F4F7FD;
   flex-grow: 2;
+  transition: all 0.5s;
+}
+.TaskPanel.showListPanel {
+  margin-left: 250px;
+}
+.TaskPanel.showDetailsPanel {
+  margin-right: 250px;
 }
 .TaskPanel > .title {
   display: flex;
   align-items: center;
   height: 50px;
-  background: white;
 }
 .TaskPanel > .title h2 {
   margin: 0 0 0 15px;

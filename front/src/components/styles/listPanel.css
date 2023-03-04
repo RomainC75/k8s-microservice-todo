@@ -1,18 +1,19 @@
 .ListPanel {
   height: 100%;
-  padding-top: 50px;
-  border-right: 1px solid black;
+  padding-top: 80px;
+  border-right: 1px solid #E4EBFA;
   display: flex;
   flex-direction: column;
-  position: relative;
+  position: fixed;
   width: 250px;
-  transition: all 1s;
+  transition: all 0.5s;
+  overflow-x: hidden;
+  top: 0;
+  left: 0;
+  background-color: white;
 }
 .ListPanel.hide {
-  transform: translateX(-250px);
-}
-.ListPanel.hide .fa-chevron-left {
-  transform: rotate(180deg);
+  width: 0px;
 }
 .ListPanel h2 {
   margin-top: 0;
@@ -38,16 +39,4 @@
 .ListPanel > ul > li.selected {
   background-color: #633DBA;
   color: white;
-}
-.ListPanel > .showHideIcon {
-  position: absolute;
-  bottom: 15px;
-  right: -15px;
-  border: 1px solid black;
-  width: 15px;
-  height: 15px;
-}
-.ListPanel > .showHideIcon > .fa-chevron-left {
-  transition: all 0.5s;
-  cursor: pointer;
 }/*# sourceMappingURL=listPanel.css.map */

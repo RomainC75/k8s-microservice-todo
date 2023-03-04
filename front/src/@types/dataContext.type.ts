@@ -9,4 +9,8 @@ export interface DataContextInterface{
     setSelectedTodoId:(id:string|null)=>void
     selectedTodoId: string|null
     updateTodos:()=>void
+    isListPanelDisplayed: boolean
+    setIsListPanelDisplayed: (shouldDisplayBool:boolean)=>void
+    isDetailsPanelDisplayed: boolean
+    setIsDetailsPanelDisplayed: (shouldDisplayBool:boolean)=>void
 }

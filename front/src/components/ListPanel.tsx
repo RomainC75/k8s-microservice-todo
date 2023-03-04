@@ -19,10 +19,10 @@ const ListPanel = () => {
   const { authenticateUser, isLoading, isLoggedIn, user } = useContext(
     AuthContext
   ) as AuthContextInterface;
-  const {selectedListId, setSelectedListId} = useContext(DataContext) as DataContextInterface
+  const { selectedListId, setSelectedListId, isListPanelDisplayed, setIsListPanelDisplayed } = useContext(DataContext) as DataContextInterface
 
   const [lists, setLists] = useState<ListInterface[]>([]);
-    const [hidePanel, setHidePanel] = useState<boolean>(false)
+    // const [hidePanel, setHidePanel] = useState<boolean>(false)
 
   const handleGetLists = () => {
     getLists().then((ans) => {
@@ -50,7 +50,7 @@ const ListPanel = () => {
   };
 
   return (
-    <div className={`ListPanel ${hidePanel ? "hide" : ""}`}>
+    <div className={`ListPanel ${!isListPanelDisplayed ? "hide" : ""}`}>
       <h2>List panel</h2>
       <CreateNewList handleCreateNewList={handleCreateNewList} lists={lists} />
 
@@ -66,9 +66,7 @@ const ListPanel = () => {
         ))}
       </ul>
 
-      <div className="showHideIcon" onClick={()=>setHidePanel(!hidePanel)}>
-        <FontAwesomeIcon icon={faChevronLeft} />
-      </div>
+      
     </div>
   );
 };

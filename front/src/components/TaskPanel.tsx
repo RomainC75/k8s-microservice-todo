@@ -9,13 +9,13 @@ import CreateNewTodo from "./CreateNewTodo";
 import { TodoInterface } from "../@types/todo.type";
 
 const TaskPanel = (): JSX.Element => {
-  const { selectedListId, setSelectedListId, todos, isLoadingTodos } =
+  const { selectedListId, setSelectedListId, todos, isLoadingTodos, isListPanelDisplayed, isDetailsPanelDisplayed } =
     useContext(DataContext) as DataContextInterface;
   
 
 
   return (
-    <div className="TaskPanel backgroundColor2">
+    <div className={`TaskPanel ${isListPanelDisplayed ? "showListPanel" :" "} ${isDetailsPanelDisplayed ? "showDetailsPanel" : ""}`}>
       <div className="title">
         <h2>Task Panel</h2>
       </div>

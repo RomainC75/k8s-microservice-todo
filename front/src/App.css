@@ -1,12 +1,18 @@
 .App {
+  height:100%;
+}
+
+.App > .content{
+  padding-top:80px;
   text-align: center;
   display:flex;
   justify-content: space-between;
   height:100%;
-
 }
 
-.App > div{
+
+
+.App > .content > div{
   height:100%;
 }
 
