@@ -1,4 +1,24 @@
 .DetailsPanel {
-  border-left: 1px solid black;
-  width: 120px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  height: 100%;
+  border-left: 1px solid #E4EBFA;
+  background-color: #FFFFFF;
+  padding-top: 80px;
+  transition: width 0.5s;
+}
+.DetailsPanel.hide {
+  width: 0px;
+  border-right: none;
+}
+.DetailsPanel h2 {
+  margin-top: 20px;
+  font-weight: bold;
+  letter-spacing: 2.4px;
+  font-size: 1.2rem;
+  color: #828FA3;
 }/*# sourceMappingURL=detailsPanel.css.map */

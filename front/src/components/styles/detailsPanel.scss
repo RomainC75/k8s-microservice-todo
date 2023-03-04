@@ -1,4 +1,27 @@
+@import 'colors';
+@import 'dimensions';
+
 .DetailsPanel{
-    border-left:1px solid black;
-    width:120px;
+    position:fixed;
+    top:0;
+    right:0;
+    display:flex;
+    flex-direction: column;
+    width:$panelWidth;
+    height:100%;
+    border-left: 1px solid $color8;
+    background-color: $color10;
+    padding-top:$navbarHeight;
+    transition: width 0.5s;
+    &.hide{
+        width:0px;
+        border-right: none;
+    }
+    & h2{
+        margin-top:20px;
+        font-weight:bold;
+        letter-spacing: 2.4px;
+        font-size:1.2rem;
+        color:$color7;
+    }
 }

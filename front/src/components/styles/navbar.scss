@@ -1,11 +1,12 @@
-@import "_colors.scss";
+@import "_colors";
+@import "_dimensions";
 
 .NavBar {
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: space-between;
-  height: 80px;
+  height: $navbarHeight;
   position: absolute;
   z-index: 20;
   border-bottom: 1px solid $color8;

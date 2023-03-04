@@ -92,3 +92,7 @@ export const putTodo = async (listId:string, newTodo:NewTodoInterface): Promise<
 export const isNameAlreadyUsedFn = (todos: TodoInterface[], name:string):boolean =>{
     return todos.some(todo=>todo.name===name)
 }
+
+export const countTodosRegardingTheState = (todos:TodoInterface[], isDone:boolean)=>{
+    return todos.filter(todo=>todo.isDone===isDone).length
+} 

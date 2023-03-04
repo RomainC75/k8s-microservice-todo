@@ -13,6 +13,7 @@ const DetailsPanel = () => {
     todos,
     isLoadingTodos,
     selectedTodoId,
+    isDetailsPanelDisplayed
   } = useContext(DataContext) as DataContextInterface;
   const [selectedTodo, setSelectedTodo] = useState<TodoInterface | null>(null);
 
@@ -22,9 +23,9 @@ const DetailsPanel = () => {
   },[selectedTodoId])
 
   return (
-    <section className="DetailsPanel">
-      <h3>Details Panel</h3>
-      { selectedTodo && <TodoDetails todo={selectedTodo}/> }
+    <section className={`DetailsPanel ${!isDetailsPanelDisplayed ? "hide" : ""}`}>
+      <h2>DETAILS</h2>
+      { selectedTodo ? <TodoDetails todo={selectedTodo}/> : "no task slected"}
     </section>
   );
 };

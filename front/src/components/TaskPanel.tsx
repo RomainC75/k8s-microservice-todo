@@ -9,6 +9,7 @@ import { DataContextInterface } from "../@types/dataContext.type";
 import { TodoInterface } from "../@types/todo.type";
 
 import "./styles/taskPanel.css";
+import { countTodosRegardingTheState } from "../utils/todos-helper";
 
 const TaskPanel = (): JSX.Element => {
   const {
@@ -45,14 +46,14 @@ const TaskPanel = (): JSX.Element => {
               </div>
 
               <div className="unDone">
-                <h3>UNDONE</h3>
+                <h3>UNDONE ({countTodosRegardingTheState(todos,false)})</h3>
                 <ScrollingSection isOpenedByDefault>
                   <TodosList todos={todos.filter((todo) => !todo.isDone)} />
                 </ScrollingSection>
               </div>
 
               <div className="done">
-                <h3>DONE</h3>
+                <h3>DONE ({countTodosRegardingTheState(todos,true)})</h3>
                 <ScrollingSection>
                   <TodosList todos={todos.filter((todo) => todo.isDone)} />
                 </ScrollingSection>
