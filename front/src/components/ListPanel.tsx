@@ -9,7 +9,6 @@ import ListItem from "./ListItem";
 import CreateNewList from "./CreateNewList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-
 import "./styles/listPanel.css";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { DataContext } from "../context/data.context";
@@ -19,10 +18,15 @@ const ListPanel = () => {
   const { authenticateUser, isLoading, isLoggedIn, user } = useContext(
     AuthContext
   ) as AuthContextInterface;
-  const { selectedListId, setSelectedListId, isListPanelDisplayed, setIsListPanelDisplayed } = useContext(DataContext) as DataContextInterface
+  const {
+    selectedListId,
+    setSelectedListId,
+    isListPanelDisplayed,
+    setIsListPanelDisplayed,
+  } = useContext(DataContext) as DataContextInterface;
 
   const [lists, setLists] = useState<ListInterface[]>([]);
-    // const [hidePanel, setHidePanel] = useState<boolean>(false)
+  // const [hidePanel, setHidePanel] = useState<boolean>(false)
 
   const handleGetLists = () => {
     getLists().then((ans) => {
@@ -33,26 +37,35 @@ const ListPanel = () => {
   };
 
   const handleDeleteList = (id: string) => {
-    deleteList(id).then((ans) => handleGetLists());
+    deleteList(id).then((ans) => {
+      handleGetLists();
+    });
   };
 
   useEffect(() => {
     handleGetLists();
   }, []);
 
+  useEffect(() => {
+    const isSelecteListStillInLists:boolean = lists.some(
+      (list) => list._id === selectedListId
+    );
+    if (!isSelecteListStillInLists) {
+      setSelectedListId(null);
+    }
+  }, [lists]);
+
   const handleCreateNewList = (name: string) => {
     createList(name).then((ans) => {
       // select the new created list. No async problem ???
-      setSelectedListId(ans.data.list._id)
-      handleGetLists()
-
+      setSelectedListId(ans.data.list._id);
+      handleGetLists();
     });
   };
 
   return (
     <div className={`ListPanel ${!isListPanelDisplayed ? "hide" : ""}`}>
-      <h2>List panel</h2>
-      <CreateNewList handleCreateNewList={handleCreateNewList} lists={lists} />
+      <h2>ALL LISTS({lists.length})</h2>
 
       <ul className="list">
         {lists.map((list) => (
@@ -65,8 +78,7 @@ const ListPanel = () => {
           />
         ))}
       </ul>
-
-      
+      <CreateNewList handleCreateNewList={handleCreateNewList} lists={lists} />
     </div>
   );
 };

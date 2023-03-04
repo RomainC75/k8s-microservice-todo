@@ -1,0 +1,22 @@
+.ScrollingSection{
+    display:flex;
+    flex-direction: column;
+    & .chevron{
+        align-self: flex-start;
+        transform: rotate(-90deg);
+        transition: transform 0.5s;
+        cursor: pointer;
+        &.opened{
+            transform: rotate(90deg);
+        }
+    }
+    & > .children{
+        max-height:0;
+        transition: all 0.5s;
+        overflow: hidden;
+        &.opened{
+            max-height: 3000px;
+            transition: all 0.5s;
+        }
+    }
+}

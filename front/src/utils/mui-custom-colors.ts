@@ -1,24 +1,26 @@
 import { TextField, Button } from "@mui/material";
 import { alpha, styled } from '@mui/material/styles';
 
+const color1 = "#635FC7"
+
 export const PurpleTextField = styled(TextField)(({ theme }) => ({
     '& .MuiOutlinedInput-root': {
       '&:hover fieldset': {
         borderColor: alpha(theme.palette.primary.main, 0.25),
       },
       '&.Mui-focused fieldset': {
-        borderColor: '#633DBA',
+        borderColor: color1,
       },
     },
     '& label.Mui-focused': {
-      color: '#633DBA',
+      color: color1,
     },
   }));
 
 export const PurpleButton = styled(Button)(({ theme }) => ({
     color: 'white',
-    backgroundColor: '#633DBA',
+    backgroundColor: color1,
     '&:hover': {
-      backgroundColor: alpha('#633DBA', 0.75),
+      backgroundColor: alpha(color1, 0.75),
     },
   }));

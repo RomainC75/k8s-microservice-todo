@@ -1,11 +1,11 @@
 .NavBar {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
   height: 80px;
   position: absolute;
   z-index: 20;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
   border-bottom: 1px solid #E4EBFA;
 }
 .NavBar h1 {
@@ -22,7 +22,7 @@
 .NavBar .logo > .horizontal {
   width: 40px;
   height: 10px;
-  background-color: #633DBA;
+  background-color: #635FC7;
   z-index: 30;
 }
 .NavBar .logo > .vertical {

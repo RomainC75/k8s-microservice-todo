@@ -1,21 +1,31 @@
 import React, { useState, useContext } from "react";
-import { DataContext } from "../context/data.context";
-import { DataContextInterface } from "../@types/dataContext.type";
 import TodoItem from "./TodoItem";
-
-import "./styles/taskPanel.css";
 import TodosList from "./TodosList";
 import CreateNewTodo from "./CreateNewTodo";
+import ScrollingSection from "./ScrollingSection";
+
+import { DataContext } from "../context/data.context";
+import { DataContextInterface } from "../@types/dataContext.type";
 import { TodoInterface } from "../@types/todo.type";
 
-const TaskPanel = (): JSX.Element => {
-  const { selectedListId, setSelectedListId, todos, isLoadingTodos, isListPanelDisplayed, isDetailsPanelDisplayed } =
-    useContext(DataContext) as DataContextInterface;
-  
+import "./styles/taskPanel.css";
 
+const TaskPanel = (): JSX.Element => {
+  const {
+    selectedListId,
+    setSelectedListId,
+    todos,
+    isLoadingTodos,
+    isListPanelDisplayed,
+    isDetailsPanelDisplayed,
+  } = useContext(DataContext) as DataContextInterface;
 
   return (
-    <div className={`TaskPanel ${isListPanelDisplayed ? "showListPanel" :" "} ${isDetailsPanelDisplayed ? "showDetailsPanel" : ""}`}>
+    <div
+      className={`TaskPanel ${isListPanelDisplayed ? "showListPanel" : " "} ${
+        isDetailsPanelDisplayed ? "showDetailsPanel" : ""
+      }`}
+    >
       <div className="title">
         <h2>Task Panel</h2>
       </div>
@@ -29,17 +39,23 @@ const TaskPanel = (): JSX.Element => {
             <>
               <div>
                 <h3>Add Todo</h3>
-                <CreateNewTodo/>
+                <ScrollingSection isOpenedByDefault>
+                  <CreateNewTodo />
+                </ScrollingSection>
               </div>
 
               <section className="unDone">
                 <h3>Undone</h3>
-                  <TodosList todos={todos.filter(todo=>!todo.isDone)}/>
+                <ScrollingSection isOpenedByDefault>
+                  <TodosList todos={todos.filter((todo) => !todo.isDone)} />
+                </ScrollingSection>
               </section>
 
               <div className="done">
                 <h3>done</h3>
-                <TodosList todos={todos.filter(todo=>todo.isDone)}/>
+                <ScrollingSection>
+                  <TodosList todos={todos.filter((todo) => todo.isDone)} />
+                </ScrollingSection>
               </div>
             </>
           ) : (

@@ -1,63 +1,61 @@
-@import '_colors.scss';
+@import "_colors.scss";
 
 .NavBar {
-  height: 80px;
-  position: absolute;
-  z-index:20;
-  display: flex;          
+  display: flex;
+  width: 100%;
   align-items: center;
   justify-content: space-between;
-  width:100%;
-  border-bottom: 1px solid $color2;
+  height: 80px;
+  position: absolute;
+  z-index: 20;
+  border-bottom: 1px solid $color8;
   & h1 {
-    margin:0;
+    margin: 0;
   }
-  & .logo{
-    position:relative;
-    transform: translate(7px,-7px) rotate(-15deg);
-    & > div{
-        border-radius: 2em;
-        position:relative;
+  & .logo {
+    position: relative;
+    transform: translate(7px, -7px) rotate(-15deg);
+    & > div {
+      border-radius: 2em;
+      position: relative;
     }
-    & > .horizontal{
-        width:40px;
-        height:10px;
-        background-color: $color1;
-        
-        z-index:30;
+    & > .horizontal {
+      width: 40px;
+      height: 10px;
+      background-color: $color1;
+      z-index: 30;
     }
-    & > .vertical{
-        width:10px;
-        height:37px;
-        background-color: $color2;
-        position:relative;
-        transform: translate(15px, -10px);
+    & > .vertical {
+      width: 10px;
+      height: 37px;
+      background-color: $color8;
+      position: relative;
+      transform: translate(15px, -10px);
     }
   }
-  & > .main{
-    position:relative;
-    width:250px;
-    border-right: 1px solid $color2;
-    display:flex;
+  & > .main {
+    position: relative;
+    width: 250px;
+    border-right: 1px solid $color8;
+    display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    height:100%;
-        &> .title{
-            flex-grow: 3;
-            margin-left: 35px;
-            margin-top:10px;
-            display:flex;
-        }
-      & > .showHideIcon {
-        position: relative;
-        z-index: 4;
-        transition: all 0.5s;
-        cursor: pointer;
-        &.rotate {
-          transform: rotate(180deg);
-        }
+    height: 100%;
+    & > .title {
+      flex-grow: 3;
+      margin-left: 35px;
+      margin-top: 10px;
+      display: flex;
+    }
+    & > .showHideIcon {
+      position: relative;
+      z-index: 4;
+      transition: all 0.5s;
+      cursor: pointer;
+      &.rotate {
+        transform: rotate(180deg);
       }
+    }
   }
 }
-

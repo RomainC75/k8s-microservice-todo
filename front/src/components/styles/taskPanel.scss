@@ -1,9 +1,12 @@
 @import 'colors';
 
 .TaskPanel{
-    background-color: $color3;
+    background-color: $color9;
     flex-grow: 2;
     transition: all 0.5s;
+    padding:15px;
+    overflow: scroll;
+    // scrollbar-width: thin;
     &.showListPanel{
         margin-left:250px;
     }
@@ -15,12 +18,9 @@
         align-items: center;
         height:50px;
         
-        & h2{
-            margin:0 0 0 15px;
-        }
     }
     & h3{
-        margin-left:15px;
+        
         text-align: left;
     }
 }

@@ -8,6 +8,8 @@ import { Textarea } from "@mui/joy";
 import { extractSimpleDate, getRealYYYMMDD } from "../utils/common";
 import { createTodo } from "../utils/todos-helper";
 
+import './styles/createNewTodo.css'
+
 const CreateNewTodo = () => {
   const { selectedListId, setSelectedListId, todos, isLoadingTodos, updateTodos } =
     useContext(DataContext) as DataContextInterface;
@@ -42,7 +44,7 @@ const CreateNewTodo = () => {
   };
 
   return (
-    <div>
+    <div className="CreateNewTodo">
       <form onSubmit={handleForm}>
         <PurpleTextField
           id="name"

@@ -5,6 +5,8 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { PurpleTextField } from "../utils/mui-custom-colors";
 import { ListInterface } from "../@types/list.type";
 
+import './styles/createNewList.css'
+
 interface CreateNewListInterface {
   handleCreateNewList: (name: string) => void;
   lists: ListInterface[];

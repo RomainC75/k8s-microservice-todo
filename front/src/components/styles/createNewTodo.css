@@ -1,0 +1,9 @@
+.CreateNewTodo > form {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+}
+.CreateNewTodo > form > div:nth-child(n+1), .CreateNewTodo > form > button {
+  margin-top: 10px;
+}/*# sourceMappingURL=createNewTodo.css.map */
