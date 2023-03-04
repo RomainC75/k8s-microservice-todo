@@ -85,7 +85,8 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
         setIsDetailsPanelDisplayed,
         handleDeleteTodo,
         handleDeleteConfirmation,
-        showDeleteModal
+        showDeleteModal,
+        setShowDeleteModal
       }}
     >
       {props.children}

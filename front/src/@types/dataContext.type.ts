@@ -16,4 +16,5 @@ export interface DataContextInterface{
     handleDeleteTodo: (id:string)=>void
     handleDeleteConfirmation: ()=>void
     showDeleteModal:boolean
+    setShowDeleteModal: (val:boolean)=>void
 }
