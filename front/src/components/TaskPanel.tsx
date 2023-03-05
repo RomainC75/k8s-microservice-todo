@@ -21,6 +21,8 @@ const TaskPanel = (): JSX.Element => {
     isDetailsPanelDisplayed,
   } = useContext(DataContext) as DataContextInterface;
 
+
+
   return (
     <section
       className={`TaskPanel ${isListPanelDisplayed ? "showListPanel" : " "} ${

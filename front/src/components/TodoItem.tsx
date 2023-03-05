@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import "./styles/todoItem.css";
 import { extractSimpleDate } from "../utils/common";
 import { putTodo } from "../utils/todos-helper";
+import useOutsideClick from "../hooks/useClickOutside";
 
 interface TodoItemInterface {
   todo: TodoInterface;
@@ -40,8 +41,19 @@ const TodoItem = ({ todo }: TodoItemInterface): JSX.Element => {
     setIsDetailsPanelDisplayed(true)
   }
 
+  // const handleOutsideClick = (event:React.MouseEvent<HTMLElement, MouseEvent>)=>{ 
+  //   event.stopPropagation()
+  // }
+
+  const handleOutsideClick = ()=>{
+    console.log('outside ! ')
+  }
+
+  const ref = useOutsideClick(handleOutsideClick)
+
   return (
-    <li
+    <li 
+      ref={ref}
       className={`TodoItem ${
         selectedTodoId === todo._id.toString() ? "selected" : ""
       }`}
