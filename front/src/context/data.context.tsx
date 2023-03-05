@@ -28,6 +28,7 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
   const [todos, setTodos] = useState<TodoInterface[]>([]);
   const [lists, setLists] = useState<ListInterface[]>([]);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+    const [isDeleteModalSupposedToDeleteList, setIsDeleteModalSupposedToDeleteList] = useState<boolean>(false)
 
   const liRefs = useRef<Array<HTMLLIElement | null>>([]);
   const detailsPanelRef = useRef<HTMLElement | null>(null);
@@ -104,7 +105,9 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
         liRefs,
         detailsPanelRef,
         lists,
-        setLists
+        setLists,
+        isDeleteModalSupposedToDeleteList,
+        setIsDeleteModalSupposedToDeleteList
       }}
     >
       {props.children}

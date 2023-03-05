@@ -21,4 +21,6 @@ export interface DataContextInterface{
     detailsPanelRef: MutableRefObject<HTMLElement | null>
     lists:ListInterface[]
     setLists: (lists:ListInterface[])=>void
+    isDeleteModalSupposedToDeleteList:boolean
+        setIsDeleteModalSupposedToDeleteList:(val:boolean)=>void
 }

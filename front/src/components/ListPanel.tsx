@@ -22,8 +22,6 @@ const ListPanel = () => {
     setLists
   } = useContext(DataContext) as DataContextInterface;
 
-  
-
   const handleGetLists = () => {
     getLists().then((ans) => {
       if (ans.status === 200) {

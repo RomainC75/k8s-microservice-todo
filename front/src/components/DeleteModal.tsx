@@ -9,11 +9,7 @@ import { DataContextInterface } from "../@types/dataContext.type";
 import "./styles/deleteModal.css";
 import { deleteList } from "../utils/lists-helper";
 
-interface DeleteModalInterface{
-  isDeleteList?:boolean
-}
-
-const DeleteModal = ({isDeleteList}:DeleteModalInterface) => {
+const DeleteModal = () => {
   const {
     setShowDeleteModal,
     todos,
@@ -21,16 +17,17 @@ const DeleteModal = ({isDeleteList}:DeleteModalInterface) => {
     setSelectedTodoId,
     selectedListId,
     updateTodos,
-    lists
+    lists,
+    isDeleteModalSupposedToDeleteList
   } = useContext(DataContext) as DataContextInterface;
 
   const handleDelete = () => {
     selectedTodoId &&
       deleteTodo(selectedTodoId).then((ans) => {
-        setShowDeleteModal(false);
+        setShowDeleteModal(false)
         updateTodos();
         setSelectedTodoId(null)
-        toast.success(isDeleteList ? "List deleted" : "Todo deleted")
+        toast.success(isDeleteModalSupposedToDeleteList ? "List deleted" : "Todo deleted")
       }).catch(err=>{
         toast.error('todo not deleted')
       })
@@ -38,7 +35,7 @@ const DeleteModal = ({isDeleteList}:DeleteModalInterface) => {
 
   const getTargetName = ():string =>{
     let name=null
-    if(isDeleteList && selectedListId){
+    if(isDeleteModalSupposedToDeleteList && selectedListId){
       name = lists.find((list) => list._id.toString() === selectedListId)?.name
     }else if(selectedListId){
       name = todos.find((todo) => todo._id.toString() === selectedTodoId)?.name
@@ -49,7 +46,7 @@ const DeleteModal = ({isDeleteList}:DeleteModalInterface) => {
   return (
     <div className="DeleteModal">
       <div className="title">
-        <p>DELETE THIS {isDeleteList ? "LIST" : "TODO"} ?</p>
+        <p>DELETE THIS {isDeleteModalSupposedToDeleteList ? "LIST" : "TODO"} ?</p>
       </div>
 
       <div className="name">
