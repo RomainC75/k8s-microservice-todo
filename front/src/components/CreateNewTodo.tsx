@@ -1,10 +1,10 @@
-import { useState, ChangeEvent, FormEvent, useContext } from "react";
+import { useState, ChangeEvent, FormEvent, useContext, useEffect } from "react";
 import { DataContext } from "../context/data.context";
 import { TextField } from "@mui/material";
 import { Textarea } from "@mui/joy";
 import { PurpleButton, PurpleTextField } from "../utils/mui-custom-colors";
 import { createTodo, isNameAlreadyUsedFn } from "../utils/todos-helper";
-import { extractSimpleDate, getRealYYYMMDD } from "../utils/common";
+import { extractSimpleDate, getInitialDate, getRealYYYMMDD } from "../utils/common";
 
 import { NewTodoInterface } from "../@types/todo.type";
 import { DataContextInterface } from "../@types/dataContext.type";
@@ -20,9 +20,7 @@ const CreateNewTodo = () => {
   const [newTodo, setNewTodo] = useState<NewTodoInterface>({
     name: "",
     description: undefined,
-    deadLine: getRealYYYMMDD(
-      extractSimpleDate(new Date(Date.now()).toString())
-    ),
+    deadLine: getInitialDate(),
     isDone: false,
   });
 
@@ -56,6 +54,10 @@ const CreateNewTodo = () => {
       updateTodos()
     })
   };
+
+  useEffect(()=>{
+    console.log("==> new todo",newTodo)
+  },[])
 
   return (
     <div className="CreateNewTodo">
