@@ -36,7 +36,7 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
 
   // states for display arrangement
   const [isListPanelDisplayed, setIsListPanelDisplayed] =
-    useState<boolean>(false);
+    useState<boolean>(true);
   const [isDetailsPanelDisplayed, setIsDetailsPanelDisplayed] =
     useState<boolean>(false);
 
