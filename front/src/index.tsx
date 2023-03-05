@@ -1,15 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { AuthProviderWrapper } from "./context/auth.context";
-import { Router, BrowserRouter, Routes, Route } from "react-router-dom";
-import LoginPage from "./components/Login";
-import SignupPage from "./components/Signup";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import App from "./App";
 import AuthPage from "./pages/Auth.page";
 import IsPrivate from "./components/isPrivate";
+import { AuthProviderWrapper } from "./context/auth.context";
 import { DataProviderWrapper } from "./context/data.context";
+
+import "./index.css";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

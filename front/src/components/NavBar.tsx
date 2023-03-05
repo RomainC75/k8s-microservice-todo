@@ -1,15 +1,14 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { DataContext } from "../context/data.context";
-import { DataContextInterface } from "../@types/dataContext.type";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+
+import { DataContextInterface } from "../@types/dataContext.type";
 
 import "./styles/navbar.css";
 
 const NavBar = (): JSX.Element => {
   const {
-    selectedListId,
-    setSelectedListId,
     isListPanelDisplayed,
     setIsListPanelDisplayed,
     isDetailsPanelDisplayed,

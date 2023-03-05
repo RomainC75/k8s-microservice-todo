@@ -1,12 +1,12 @@
-import React, { useState, useContext } from "react";
+import { useContext } from "react";
 import { DataContext } from "../context/data.context";
-import { DataContextInterface } from "../@types/dataContext.type";
-import { TodoInterface } from "../@types/todo.type";
 import toast from 'react-hot-toast';
+import { deleteTodo } from "../utils/todos-helper";
+import { Button } from "@mui/material";
+
+import { DataContextInterface } from "../@types/dataContext.type";
 
 import "./styles/deleteModal.css";
-import { Button } from "@mui/material";
-import { deleteTodo } from "../utils/todos-helper";
 
 const DeleteModal = () => {
   const {

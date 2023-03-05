@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { TextField } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { PurpleTextField } from "../utils/mui-custom-colors";
+
 import { ListInterface } from "../@types/list.type";
 
 import './styles/createNewList.css'

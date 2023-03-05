@@ -1,27 +1,22 @@
-import React, { useState, useContext } from "react";
-import TodoItem from "./TodoItem";
+import { useContext } from "react";
+import { DataContext } from "../context/data.context";
 import TodosList from "./TodosList";
 import CreateNewTodo from "./CreateNewTodo";
 import ScrollingSection from "./ScrollingSection";
+import { countTodosRegardingTheState } from "../utils/todos-helper";
 
-import { DataContext } from "../context/data.context";
 import { DataContextInterface } from "../@types/dataContext.type";
-import { TodoInterface } from "../@types/todo.type";
 
 import "./styles/taskPanel.css";
-import { countTodosRegardingTheState } from "../utils/todos-helper";
 
 const TaskPanel = (): JSX.Element => {
   const {
     selectedListId,
-    setSelectedListId,
     todos,
     isLoadingTodos,
     isListPanelDisplayed,
     isDetailsPanelDisplayed,
   } = useContext(DataContext) as DataContextInterface;
-
-
 
   return (
     <section

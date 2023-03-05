@@ -1,13 +1,14 @@
-import React, { useContext, useEffect, useRef } from "react";
-import { TodoInterface } from "../@types/todo.type";
+import { useContext} from "react";
 import { DataContext } from "../context/data.context";
-import { DataContextInterface } from "../@types/dataContext.type";
+import { putTodo } from "../utils/todos-helper";
 import Button from '@mui/material/Button';
 
-import "./styles/todoItem.css";
 import { extractSimpleDate } from "../utils/common";
-import { putTodo } from "../utils/todos-helper";
-import useOutsideClick from "../hooks/useClickOutside";
+
+import { TodoInterface } from "../@types/todo.type";
+import { DataContextInterface } from "../@types/dataContext.type";
+
+import "./styles/todoItem.css";
 
 interface TodoItemInterface {
   todo: TodoInterface;
@@ -16,9 +17,7 @@ interface TodoItemInterface {
 const TodoItem = ({ todo }: TodoItemInterface): JSX.Element => {
   const {
     selectedListId,
-    setSelectedListId,
     todos,
-    isLoadingTodos,
     selectedTodoId,
     setSelectedTodoId,
     setIsDetailsPanelDisplayed,

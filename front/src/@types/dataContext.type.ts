@@ -14,8 +14,6 @@ export interface DataContextInterface{
     setIsListPanelDisplayed: (shouldDisplayBool:boolean)=>void
     isDetailsPanelDisplayed: boolean
     setIsDetailsPanelDisplayed: (shouldDisplayBool:boolean)=>void
-    handleDeleteTodo: (id:string)=>void
-    
     showDeleteModal:boolean
     setShowDeleteModal: (val:boolean)=>void
     liRefs:MutableRefObject<(HTMLLIElement | null)[]>

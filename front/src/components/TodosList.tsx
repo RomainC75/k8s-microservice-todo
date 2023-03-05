@@ -1,4 +1,3 @@
-import React from "react";
 import { TodoInterface } from "../@types/todo.type";
 import TodoItem from "./TodoItem";
 

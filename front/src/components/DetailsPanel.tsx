@@ -1,25 +1,22 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { DataContext } from "../context/data.context";
-import { DataContextInterface } from "../@types/dataContext.type";
-import { TodoInterface } from "../@types/todo.type";
+import TodoDetails from "./TodoDetails";
 import { Button } from "@mui/material";
 
+import { TodoInterface } from "../@types/todo.type";
+import { DataContextInterface } from "../@types/dataContext.type";
+
 import "./styles/detailsPanel.css";
-import TodoDetails from "./TodoDetails";
 
 const DetailsPanel = () => {
   const {
-    selectedListId,
-    setSelectedListId,
     todos,
-    isLoadingTodos,
     selectedTodoId,
     isDetailsPanelDisplayed,
-    handleDeleteTodo,
-    detailsPanelRef
+    detailsPanelRef,
+    setShowDeleteModal
   } = useContext(DataContext) as DataContextInterface;
   const [selectedTodo, setSelectedTodo] = useState<TodoInterface | null>(null);
-  const [showUpdate, setShowUpdate] = useState<boolean>(false)
 
   useEffect(()=>{
     const foundTodo:TodoInterface|undefined = todos.find(todo=>todo._id.toString()===selectedTodoId)
@@ -30,7 +27,7 @@ const DetailsPanel = () => {
     <section ref={detailsPanelRef} className={`DetailsPanel ${!isDetailsPanelDisplayed ? "hide" : ""}`}>
       <h2>DETAILS</h2>
       { selectedTodo ? <TodoDetails todo={selectedTodo}/> : "no task slected"}
-      { selectedTodo && <Button variant="outlined" size="small" onClick={()=> selectedTodoId && handleDeleteTodo(selectedTodoId)} color="error">
+      { selectedTodo && <Button variant="outlined" size="small" onClick={()=> selectedTodoId && setShowDeleteModal(true)} color="error">
           Delete
         </Button>}
     </section>

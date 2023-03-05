@@ -1,19 +1,21 @@
-import React, { useContext, useEffect } from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "./context/auth.context";
-import { AuthContextInterface } from "./@types/authContext.type";
+import { DataContext } from "./context/data.context";
 import ListPanel from "./components/ListPanel";
 import TaskPanel from "./components/TaskPanel";
 import DetailsPanel from "./components/DetailsPanel";
 import NavBar from "./components/NavBar";
-import { DataContext } from "./context/data.context";
-import { DataContextInterface } from "./@types/dataContext.type";
 import DeleteModal from "./components/DeleteModal";
 import { Toaster } from 'react-hot-toast';
 
+
+import { DataContextInterface } from "./@types/dataContext.type";
+import { AuthContextInterface } from "./@types/authContext.type";
+
+import "./App.css";
+
 function App() {
-  const { authenticateUser, isLoading, isLoggedIn, user } = useContext(
+  const { user } = useContext(
     AuthContext
   ) as AuthContextInterface;
   const { showDeleteModal } = useContext(

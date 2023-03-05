@@ -1,17 +1,18 @@
-import React, { useState, ChangeEvent, FormEvent, useEffect, useContext } from "react";
-import { NewTodoInterface } from "../@types/todo.type";
+import { useState, ChangeEvent, FormEvent, useContext } from "react";
 import { DataContext } from "../context/data.context";
-import { DataContextInterface } from "../@types/dataContext.type";
-import { PurpleButton, PurpleTextField } from "../utils/mui-custom-colors";
 import { TextField } from "@mui/material";
 import { Textarea } from "@mui/joy";
-import { extractSimpleDate, getRealYYYMMDD } from "../utils/common";
+import { PurpleButton, PurpleTextField } from "../utils/mui-custom-colors";
 import { createTodo, isNameAlreadyUsedFn } from "../utils/todos-helper";
+import { extractSimpleDate, getRealYYYMMDD } from "../utils/common";
+
+import { NewTodoInterface } from "../@types/todo.type";
+import { DataContextInterface } from "../@types/dataContext.type";
 
 import './styles/createNewTodo.css'
 
 const CreateNewTodo = () => {
-  const { selectedListId, setSelectedListId, todos, isLoadingTodos, updateTodos } =
+  const { selectedListId, todos, updateTodos } =
     useContext(DataContext) as DataContextInterface;
   const [isNameAlreadyUsed, setIsNameAlreadyUsed] = useState<boolean>(true);
   const [isNameEmpty, setIsNameEmpty] = useState<boolean>(true)

@@ -8,10 +8,7 @@ import {
 } from "react";
 import {
   AuthContextInterface,
-  UserInterface,
 } from "../@types/authContext.type";
-import { NavigateFunction, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { DataContextInterface } from "../@types/dataContext.type";
 import { AuthContext } from "./auth.context";
 import { TodoInterface } from "../@types/todo.type";
@@ -20,7 +17,7 @@ import { getTodosFromList } from "../utils/todos-helper";
 const DataContext = createContext<DataContextInterface | null>(null);
 
 const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
-  const { authenticateUser, isLoading, isLoggedIn, user } = useContext(
+  const { isLoggedIn } = useContext(
     AuthContext
   ) as AuthContextInterface;
   const [selectedListId, setSelectedListId] = useState<string | null>(null);
@@ -29,7 +26,6 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
   const [isTodosError, setIsTodosError] = useState<boolean>(false);
   const [todos, setTodos] = useState<TodoInterface[]>([]);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
-  const [todoToDeleteId, setTodoToDeleteId] = useState<string | null>(null);
 
   const liRefs = useRef<Array<HTMLLIElement | null>>([]);
   const detailsPanelRef = useRef<HTMLElement | null>(null);
@@ -62,11 +58,6 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
           setIsTodosError(true);
         });
     }
-  };
-
-  const handleDeleteTodo = (id: string) => {
-    setShowDeleteModal(true);
-    setTodoToDeleteId(id);
   };
 
   useEffect(() => {
@@ -106,12 +97,10 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
         setIsListPanelDisplayed,
         isDetailsPanelDisplayed,
         setIsDetailsPanelDisplayed,
-        handleDeleteTodo,
         showDeleteModal,
         setShowDeleteModal,
         liRefs,
         detailsPanelRef,
-        // todoItemRefs
       }}
     >
       {props.children}

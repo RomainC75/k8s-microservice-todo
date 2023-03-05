@@ -1,6 +1,5 @@
-import React from "react";
 import { TodoInterface } from "../@types/todo.type";
-import { extractDisplayableDate, extractSimpleDate } from "../utils/common";
+import { extractDisplayableDate } from "../utils/common";
 
 import "./styles/todoDetails.css";
 

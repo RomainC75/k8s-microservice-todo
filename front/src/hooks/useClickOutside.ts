@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, RefObject } from 'react';
+import { useEffect, useRef, RefObject } from 'react';
 
 const useOutsideClick = (callback: () => void): RefObject<HTMLLIElement> => {
   const ref = useRef<HTMLLIElement>(null);
@@ -15,7 +15,6 @@ const useOutsideClick = (callback: () => void): RefObject<HTMLLIElement> => {
       document.removeEventListener('click', handleClick);
     };
   }, [callback, ref]);
-
 
   useEffect(() => {
     isCallbackCalled.current = false;

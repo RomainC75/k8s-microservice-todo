@@ -1,29 +1,29 @@
-import React, { FormEvent, useState, ChangeEvent, useContext } from "react";
-// import { TextField, Button } from "@mui/material";
-import { PurpleButton, PurpleTextField } from "../utils/mui-custom-colors";
-import "./styles/signup.css";
-import {
-  LoginInterface,
-  SignupFullInterface,
-  SignupInterface,
-  UserInterface,
-} from "../@types/authContext.type";
+import { FormEvent, useState, ChangeEvent, useContext } from "react";
 import { AuthContext } from "../context/auth.context";
-import { AuthContextInterface } from "../@types/authContext.type";
+import axios from "axios";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { detailsAboutNeededCharactersInPass, isEmailValidFn, isPasswordValidFn } from "../utils/signugFieldsTests";
+import { PurpleButton, PurpleTextField } from "../utils/mui-custom-colors";
+import {
+  detailsAboutNeededCharactersInPass,
+  isEmailValidFn,
+  isPasswordValidFn,
+} from "../utils/signugFieldsTests";
 
-interface SignupComponentInterface{
-  setIsLoginNotSignup: (isLoginNotSignup:boolean)=>void
+import { SignupFullInterface } from "../@types/authContext.type";
+import { AuthContextInterface } from "../@types/authContext.type";
+
+import "./styles/signup.css";
+
+interface SignupComponentInterface {
+  setIsLoginNotSignup: (isLoginNotSignup: boolean) => void;
 }
 
-const Signup = ({setIsLoginNotSignup}:SignupComponentInterface): JSX.Element => {
-  const { authenticateUser, isLoading, isLoggedIn, user, API_URL, storeToken } =
+const Signup = ({
+  setIsLoginNotSignup,
+}: SignupComponentInterface): JSX.Element => {
+  const { API_URL } =
     useContext(AuthContext) as AuthContextInterface;
-  const navigate = useNavigate();
   const [inputsState, setInputsState] = useState<SignupFullInterface>({
     email: "",
     password: "",
@@ -32,7 +32,6 @@ const Signup = ({setIsLoginNotSignup}:SignupComponentInterface): JSX.Element => 
     emailConf: "",
     passwordConf: "",
   });
-  const [signupErrorMessage, setSignupErrorMessage] = useState<string>("")
   const [isSignupError, setIsSignupError] = useState<boolean>(false);
 
   const [isFirstNameValid, setIsFirstNameValid] = useState<boolean>(true);
@@ -61,7 +60,7 @@ const Signup = ({setIsLoginNotSignup}:SignupComponentInterface): JSX.Element => 
       setIsEmailsEquals(newValues.email === newValues.emailConf);
 
       setIsPasswordValid(isPasswordValidFn(newValues.password));
-      setIsPasswordsEquals(newValues.password === newValues.passwordConf); 
+      setIsPasswordsEquals(newValues.password === newValues.passwordConf);
     }
   };
 
@@ -70,12 +69,12 @@ const Signup = ({setIsLoginNotSignup}:SignupComponentInterface): JSX.Element => 
     axios
       .post(`${API_URL}/auth/signup`, inputsState)
       .then((ans) => {
-        console.log('signup',ans.data)
-        setIsLoginNotSignup(true)
+        console.log("signup", ans.data);
+        setIsLoginNotSignup(true);
       })
       .catch((err) => {
         setIsSignupError(true);
-        console.log('err : ', err)
+        console.log("err : ", err);
       });
   };
 
@@ -132,7 +131,10 @@ const Signup = ({setIsLoginNotSignup}:SignupComponentInterface): JSX.Element => 
           variant="outlined"
           value={inputsState.password}
           onChange={handleInputs}
-          helperText={!isPasswordValid && detailsAboutNeededCharactersInPass(inputsState.password)}
+          helperText={
+            !isPasswordValid &&
+            detailsAboutNeededCharactersInPass(inputsState.password)
+          }
           error={!isPasswordValid}
         />
         <PurpleTextField
