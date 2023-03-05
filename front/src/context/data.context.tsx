@@ -4,7 +4,7 @@ import {
   useEffect,
   PropsWithChildren,
   useContext,
-  useRef
+  useRef,
 } from "react";
 import {
   AuthContextInterface,
@@ -28,9 +28,11 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
   const [isLoadingTodos, setIsLoadingTodos] = useState<boolean>(false);
   const [isTodosError, setIsTodosError] = useState<boolean>(false);
   const [todos, setTodos] = useState<TodoInterface[]>([]);
-  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false)
-  const [todoToDeleteId, setTodoToDeleteId] = useState<string|null>(null)
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+  const [todoToDeleteId, setTodoToDeleteId] = useState<string | null>(null);
+
   const liRefs = useRef<Array<HTMLLIElement | null>>([]);
+  const detailsPanelRef = useRef<HTMLElement | null>(null);
 
   // states for display arrangement
   const [isListPanelDisplayed, setIsListPanelDisplayed] =
@@ -44,7 +46,7 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
   }, [selectedListId]);
 
   const updateTodos = () => {
-    console.log("selected List id : ", selectedListId)
+    console.log("selected List id : ", selectedListId);
     if (isLoggedIn && selectedListId) {
       setIsLoadingTodos(true);
       setIsTodosError(false);
@@ -62,29 +64,32 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
     }
   };
 
-  const handleDeleteTodo = (id:string) =>{
-    setShowDeleteModal(true)
-    setTodoToDeleteId(id)
-  }
+  const handleDeleteTodo = (id: string) => {
+    setShowDeleteModal(true);
+    setTodoToDeleteId(id);
+  };
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
+      const detailsPanelEl = document.querySelector('.DetailsPanel')
+      const element = event.target as HTMLElement
+      if(detailsPanelEl && detailsPanelEl.contains(element)){
+        return 
+      }
       if (
-        !liRefs.current.some(
-          (li) => {
-            return li && li.contains(event.target as Node)
-          }
-        )
+        !liRefs.current.some((li) => {
+          return li && li.contains(event.target as Node);
+        })
       ) {
-        setSelectedTodoId(null)
-        console.log('click OutSide !')
+        !showDeleteModal && setSelectedTodoId(null);
+        console.log("click OutSide !");
       }
     }
-    window.addEventListener('click', handleClickOutside);
+    window.addEventListener("click", handleClickOutside);
     return () => {
-      window.removeEventListener('click', handleClickOutside);
+      window.removeEventListener("click", handleClickOutside);
     };
-  }, [liRefs]);
+  }, [liRefs])
 
   return (
     <DataContext.Provider
@@ -105,6 +110,7 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
         showDeleteModal,
         setShowDeleteModal,
         liRefs,
+        detailsPanelRef,
         // todoItemRefs
       }}
     >

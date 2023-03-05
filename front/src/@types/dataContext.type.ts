@@ -19,4 +19,5 @@ export interface DataContextInterface{
     showDeleteModal:boolean
     setShowDeleteModal: (val:boolean)=>void
     liRefs:MutableRefObject<(HTMLLIElement | null)[]>
+    detailsPanelRef: MutableRefObject<HTMLElement | null>
 }
