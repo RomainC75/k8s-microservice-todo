@@ -4,6 +4,7 @@ import {
   useEffect,
   PropsWithChildren,
   useContext,
+  useRef
 } from "react";
 import {
   AuthContextInterface,
@@ -29,6 +30,7 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
   const [todos, setTodos] = useState<TodoInterface[]>([]);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false)
   const [todoToDeleteId, setTodoToDeleteId] = useState<string|null>(null)
+  const liRefs = useRef<Array<HTMLLIElement | null>>([]);
 
   // states for display arrangement
   const [isListPanelDisplayed, setIsListPanelDisplayed] =
@@ -64,9 +66,25 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
     setShowDeleteModal(true)
     setTodoToDeleteId(id)
   }
-  const handleDeleteConfirmation = () =>{
-    
-  }
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        !liRefs.current.some(
+          (li) => {
+            return li && li.contains(event.target as Node)
+          }
+        )
+      ) {
+        setSelectedTodoId(null)
+        console.log('click OutSide !')
+      }
+    }
+    window.addEventListener('click', handleClickOutside);
+    return () => {
+      window.removeEventListener('click', handleClickOutside);
+    };
+  }, [liRefs]);
 
   return (
     <DataContext.Provider
@@ -84,9 +102,10 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
         isDetailsPanelDisplayed,
         setIsDetailsPanelDisplayed,
         handleDeleteTodo,
-        handleDeleteConfirmation,
         showDeleteModal,
-        setShowDeleteModal
+        setShowDeleteModal,
+        liRefs,
+        // todoItemRefs
       }}
     >
       {props.children}

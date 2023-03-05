@@ -1,4 +1,5 @@
 import { TodoInterface } from "./todo.type"
+import { MutableRefObject } from "react"
 
 export interface DataContextInterface{
     selectedListId:string|null
@@ -14,7 +15,8 @@ export interface DataContextInterface{
     isDetailsPanelDisplayed: boolean
     setIsDetailsPanelDisplayed: (shouldDisplayBool:boolean)=>void
     handleDeleteTodo: (id:string)=>void
-    handleDeleteConfirmation: ()=>void
+    
     showDeleteModal:boolean
     setShowDeleteModal: (val:boolean)=>void
+    liRefs:MutableRefObject<(HTMLLIElement | null)[]>
 }

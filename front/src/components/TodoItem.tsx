@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { TodoInterface } from "../@types/todo.type";
 import { DataContext } from "../context/data.context";
 import { DataContextInterface } from "../@types/dataContext.type";
@@ -22,7 +22,8 @@ const TodoItem = ({ todo }: TodoItemInterface): JSX.Element => {
     selectedTodoId,
     setSelectedTodoId,
     setIsDetailsPanelDisplayed,
-    updateTodos
+    updateTodos,
+    liRefs,
   } = useContext(DataContext) as DataContextInterface;
 
   const handleToggleIsDone = () =>{
@@ -41,19 +42,9 @@ const TodoItem = ({ todo }: TodoItemInterface): JSX.Element => {
     setIsDetailsPanelDisplayed(true)
   }
 
-  // const handleOutsideClick = (event:React.MouseEvent<HTMLElement, MouseEvent>)=>{ 
-  //   event.stopPropagation()
-  // }
-
-  const handleOutsideClick = ()=>{
-    console.log('outside ! ')
-  }
-
-  const ref = useOutsideClick(handleOutsideClick)
-
   return (
     <li 
-      ref={ref}
+      ref={(li)=>(liRefs.current[todos.findIndex(todoo=>todoo._id===todo._id)]=li)}
       className={`TodoItem ${
         selectedTodoId === todo._id.toString() ? "selected" : ""
       }`}
