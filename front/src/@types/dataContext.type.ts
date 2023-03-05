@@ -1,5 +1,6 @@
 import { TodoInterface } from "./todo.type"
 import { MutableRefObject } from "react"
+import { ListInterface } from "./list.type"
 
 export interface DataContextInterface{
     selectedListId:string|null
@@ -18,4 +19,6 @@ export interface DataContextInterface{
     setShowDeleteModal: (val:boolean)=>void
     liRefs:MutableRefObject<(HTMLLIElement | null)[]>
     detailsPanelRef: MutableRefObject<HTMLElement | null>
+    lists:ListInterface[]
+    setLists: (lists:ListInterface[])=>void
 }

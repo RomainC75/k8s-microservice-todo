@@ -7,14 +7,21 @@ import { Button } from "@mui/material";
 import { DataContextInterface } from "../@types/dataContext.type";
 
 import "./styles/deleteModal.css";
+import { deleteList } from "../utils/lists-helper";
 
-const DeleteModal = () => {
+interface DeleteModalInterface{
+  isDeleteList?:boolean
+}
+
+const DeleteModal = ({isDeleteList}:DeleteModalInterface) => {
   const {
     setShowDeleteModal,
     todos,
     selectedTodoId,
     setSelectedTodoId,
+    selectedListId,
     updateTodos,
+    lists
   } = useContext(DataContext) as DataContextInterface;
 
   const handleDelete = () => {
@@ -23,21 +30,30 @@ const DeleteModal = () => {
         setShowDeleteModal(false);
         updateTodos();
         setSelectedTodoId(null)
-        toast.success('todo deleted')
+        toast.success(isDeleteList ? "List deleted" : "Todo deleted")
       }).catch(err=>{
         toast.error('todo not deleted')
       })
   }
 
+  const getTargetName = ():string =>{
+    let name=null
+    if(isDeleteList && selectedListId){
+      name = lists.find((list) => list._id.toString() === selectedListId)?.name
+    }else if(selectedListId){
+      name = todos.find((todo) => todo._id.toString() === selectedTodoId)?.name
+    }
+    return name ? name : "error"
+  }
+
   return (
     <div className="DeleteModal">
       <div className="title">
-        <p>DELETE THIS TODO ?</p>
+        <p>DELETE THIS {isDeleteList ? "LIST" : "TODO"} ?</p>
       </div>
 
       <div className="name">
-      {selectedTodoId &&
-        todos.find((todo) => todo._id.toString() === selectedTodoId)?.name}
+      {getTargetName()}
       </div>
       <div className="selection">
         <Button

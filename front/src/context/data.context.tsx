@@ -12,6 +12,7 @@ import {
 import { DataContextInterface } from "../@types/dataContext.type";
 import { AuthContext } from "./auth.context";
 import { TodoInterface } from "../@types/todo.type";
+import { ListInterface } from "../@types/list.type";
 import { getTodosFromList } from "../utils/todos-helper";
 
 const DataContext = createContext<DataContextInterface | null>(null);
@@ -25,6 +26,7 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
   const [isLoadingTodos, setIsLoadingTodos] = useState<boolean>(false);
   const [isTodosError, setIsTodosError] = useState<boolean>(false);
   const [todos, setTodos] = useState<TodoInterface[]>([]);
+  const [lists, setLists] = useState<ListInterface[]>([]);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
 
   const liRefs = useRef<Array<HTMLLIElement | null>>([]);
@@ -101,6 +103,8 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
         setShowDeleteModal,
         liRefs,
         detailsPanelRef,
+        lists,
+        setLists
       }}
     >
       {props.children}

@@ -18,9 +18,11 @@ const ListPanel = () => {
     selectedListId,
     setSelectedListId,
     isListPanelDisplayed,
+    lists,
+    setLists
   } = useContext(DataContext) as DataContextInterface;
 
-  const [lists, setLists] = useState<ListInterface[]>([]);
+  
 
   const handleGetLists = () => {
     getLists().then((ans) => {
