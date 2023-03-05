@@ -61,7 +61,6 @@ export const createTodo = async (listId:string, newTodo:NewTodoInterface): Promi
 
 
 export const putTodo = async (listId:string, newTodo:NewTodoInterface): Promise<any> =>{
-
     const token:string|null = localStorage.getItem('authToken')
     if(!token){
         return null
@@ -74,6 +73,34 @@ export const putTodo = async (listId:string, newTodo:NewTodoInterface): Promise<
             Authorization: `Bearer ${token}`
         },
         data:newTodo
+    }).then ((response) =>{
+        console.log('==> putTodo',response)
+        return {
+            status: response.status,
+            data: response.data
+        }
+    }).catch((error) =>{
+        console.log("ERROR putTodo",error)
+        return {
+            status: error.status,
+            data: error.response
+        }
+    })
+}
+
+export const deleteTodo = async (todoId:string): Promise<any> =>{
+
+    const token:string|null = localStorage.getItem('authToken')
+    if(!token){
+        return null
+    }
+    
+    return await axios({
+        method:"delete",
+        url: `${API_URL}/todo/task/${todoId}`,
+        headers:{
+            Authorization: `Bearer ${token}`
+        }
     }).then ((response) =>{
         console.log('==> putTodo',response)
         return {

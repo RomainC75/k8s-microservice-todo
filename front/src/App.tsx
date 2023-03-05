@@ -10,6 +10,7 @@ import NavBar from "./components/NavBar";
 import { DataContext } from "./context/data.context";
 import { DataContextInterface } from "./@types/dataContext.type";
 import DeleteModal from "./components/DeleteModal";
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   const { authenticateUser, isLoading, isLoggedIn, user } = useContext(
@@ -25,7 +26,10 @@ function App() {
   
   return (
     <div className="App">
+      <Toaster />
+      {showDeleteModal && <div className="curtain"></div>}
       {showDeleteModal && <DeleteModal/>}
+
       <NavBar />
       <div className="content">
         <ListPanel />

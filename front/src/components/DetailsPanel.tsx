@@ -29,9 +29,9 @@ const DetailsPanel = () => {
     <section className={`DetailsPanel ${!isDetailsPanelDisplayed ? "hide" : ""}`}>
       <h2>DETAILS</h2>
       { selectedTodo ? <TodoDetails todo={selectedTodo}/> : "no task slected"}
-      <Button variant="outlined" size="small" onClick={()=> selectedTodoId && handleDeleteTodo(selectedTodoId)} color="error">
+      { selectedTodo && <Button variant="outlined" size="small" onClick={()=> selectedTodoId && handleDeleteTodo(selectedTodoId)} color="error">
           Delete
-        </Button>
+        </Button>}
     </section>
   );
 };

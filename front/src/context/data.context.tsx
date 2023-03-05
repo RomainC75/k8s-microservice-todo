@@ -42,7 +42,7 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
   }, [selectedListId]);
 
   const updateTodos = () => {
-    console.log("selected List id : ", selectedListId);
+    console.log("selected List id : ", selectedListId)
     if (isLoggedIn && selectedListId) {
       setIsLoadingTodos(true);
       setIsTodosError(false);

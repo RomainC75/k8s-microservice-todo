@@ -1,1 +1,1 @@
-{"version":3,"sources":["deleteModal.scss","deleteModal.css"],"names":[],"mappings":"AAAA;EACI,kBAAA;EACA,WAAA;EACA,YAAA;EACA,aAAA;EACA,QAAA;EACA,SAAA;EACA,gCAAA;EACA,uBAAA;ACCJ","file":"deleteModal.css"}
+{"version":3,"sources":["deleteModal.scss","deleteModal.css","_colors.scss"],"names":[],"mappings":"AAEA;EACI,kBAAA;EACA,WAAA;EACA,YAAA;EACA,aAAA;EACA,QAAA;EACA,SAAA;EACA,gCAAA;EACA,uBAAA;EACA,aAAA;EACA,sBAAA;EACA,mBAAA;EACA,uBAAA;EACA,kBAAA;ACDJ;ADGI;EACI,cEZA;EFaA,mBAAA;ACDR;ADII;EACI,cEvBA;EFwBA,mBAAA;ACFR;ADII;EACI,YAAA;ACFR","file":"deleteModal.css"}
