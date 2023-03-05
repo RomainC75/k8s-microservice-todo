@@ -22,7 +22,10 @@ const CreateNewList = ({
 
   const handleName = (name: string) => {
     setNewName(name);
-    setIsNameAlreadyUsed(lists.some((list) => list.name === name));
+    const isUsed:boolean = lists.some((list) => list.name === name)
+    setIsNameAlreadyUsed(isUsed);
+    
+
   };
 
   const handleCreation = () =>{
@@ -40,6 +43,7 @@ const CreateNewList = ({
         value={newName}
         helperText={isNameAlreadyUsed && "already used!"}
         error={isNameAlreadyUsed}
+        onKeyDown={(e)=>e.key==='Enter' && !isNameAlreadyUsed && handleCreation()}
       />
       <FontAwesomeIcon
         className="cursor"
