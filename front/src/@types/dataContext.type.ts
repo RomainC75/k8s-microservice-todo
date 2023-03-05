@@ -23,4 +23,5 @@ export interface DataContextInterface{
     setLists: (lists:ListInterface[])=>void
     isDeleteModalSupposedToDeleteList:boolean
         setIsDeleteModalSupposedToDeleteList:(val:boolean)=>void
+        handleGetLists: ()=>void
 }

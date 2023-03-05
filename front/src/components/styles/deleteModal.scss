@@ -19,6 +19,13 @@
         color:$color7;
         margin-bottom: 30px;
     }
+    & > .subtitle{
+        max-width: 90%;
+        text-align: center;
+        color: $color7;
+        margin-bottom: 10px;
+        line-height: 1.3rem;
+    }
 
     & > .name{
         color:$color1;

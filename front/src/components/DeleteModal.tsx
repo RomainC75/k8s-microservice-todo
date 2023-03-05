@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { DataContext } from "../context/data.context";
 import toast from 'react-hot-toast';
 import { deleteTodo } from "../utils/todos-helper";
-import { Button } from "@mui/material";
+import { Button, dividerClasses } from "@mui/material";
 
 import { DataContextInterface } from "../@types/dataContext.type";
 
@@ -18,19 +18,32 @@ const DeleteModal = () => {
     selectedListId,
     updateTodos,
     lists,
-    isDeleteModalSupposedToDeleteList
+    isDeleteModalSupposedToDeleteList,
+    handleGetLists,
+    setSelectedListId
   } = useContext(DataContext) as DataContextInterface;
 
   const handleDelete = () => {
-    selectedTodoId &&
-      deleteTodo(selectedTodoId).then((ans) => {
+    if(isDeleteModalSupposedToDeleteList){
+      selectedListId && deleteList(selectedListId).then(ans=>{
         setShowDeleteModal(false)
-        updateTodos();
-        setSelectedTodoId(null)
-        toast.success(isDeleteModalSupposedToDeleteList ? "List deleted" : "Todo deleted")
+        handleGetLists()
+        setSelectedListId(null)
+        toast.success("List deleted")
       }).catch(err=>{
-        toast.error('todo not deleted')
+        toast.error('list not deleted')
       })
+    }else{
+      selectedTodoId &&
+        deleteTodo(selectedTodoId).then((ans) => {
+          setShowDeleteModal(false)
+          updateTodos();
+          setSelectedTodoId(null)
+          toast.success("Todo deleted")
+        }).catch(err=>{
+          toast.error('todo not deleted')
+        })
+    }
   }
 
   const getTargetName = ():string =>{
@@ -48,6 +61,9 @@ const DeleteModal = () => {
       <div className="title">
         <p>DELETE THIS {isDeleteModalSupposedToDeleteList ? "LIST" : "TODO"} ?</p>
       </div>
+
+      
+      <div className="subtitle">{isDeleteModalSupposedToDeleteList && "This operation will delete any related to-do item."}</div>
 
       <div className="name">
       {getTargetName()}

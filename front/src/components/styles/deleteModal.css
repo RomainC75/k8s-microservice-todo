@@ -17,6 +17,13 @@
   color: #828FA3;
   margin-bottom: 30px;
 }
+.DeleteModal > .subtitle {
+  max-width: 90%;
+  text-align: center;
+  color: #828FA3;
+  margin-bottom: 10px;
+  line-height: 1.3rem;
+}
 .DeleteModal > .name {
   color: #635FC7;
   margin-bottom: 30px;

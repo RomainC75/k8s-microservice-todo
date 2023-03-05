@@ -14,7 +14,8 @@ const DetailsPanel = () => {
     selectedTodoId,
     isDetailsPanelDisplayed,
     detailsPanelRef,
-    setShowDeleteModal
+    setShowDeleteModal,
+    setIsDeleteModalSupposedToDeleteList
   } = useContext(DataContext) as DataContextInterface;
   const [selectedTodo, setSelectedTodo] = useState<TodoInterface | null>(null);
 
@@ -23,11 +24,16 @@ const DetailsPanel = () => {
     setSelectedTodo(foundTodo ? foundTodo : null)
   },[selectedTodoId])
 
+  const handleDelete = () =>{
+    selectedTodoId && setShowDeleteModal(true)
+    setIsDeleteModalSupposedToDeleteList(false)
+  }
+
   return (
     <section ref={detailsPanelRef} className={`DetailsPanel ${!isDetailsPanelDisplayed ? "hide" : ""}`}>
       <h2>DETAILS</h2>
       { selectedTodo ? <TodoDetails todo={selectedTodo}/> : "no task slected"}
-      { selectedTodo && <Button variant="outlined" size="small" onClick={()=> selectedTodoId && setShowDeleteModal(true)} color="error">
+      { selectedTodo && <Button variant="outlined" size="small" onClick={()=> handleDelete()} color="error">
           Delete
         </Button>}
     </section>

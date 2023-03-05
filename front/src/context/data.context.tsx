@@ -14,6 +14,7 @@ import { AuthContext } from "./auth.context";
 import { TodoInterface } from "../@types/todo.type";
 import { ListInterface } from "../@types/list.type";
 import { getTodosFromList } from "../utils/todos-helper";
+import { createList, deleteList, getLists } from "../utils/lists-helper";
 
 const DataContext = createContext<DataContextInterface | null>(null);
 
@@ -63,6 +64,14 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
     }
   };
 
+  const handleGetLists = () => {
+    getLists().then((ans) => {
+      if (ans.status === 200) {
+        setLists(ans.data);
+      }
+    });
+  };
+
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       const detailsPanelEl = document.querySelector('.DetailsPanel')
@@ -107,7 +116,8 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
         lists,
         setLists,
         isDeleteModalSupposedToDeleteList,
-        setIsDeleteModalSupposedToDeleteList
+        setIsDeleteModalSupposedToDeleteList,
+        handleGetLists
       }}
     >
       {props.children}
