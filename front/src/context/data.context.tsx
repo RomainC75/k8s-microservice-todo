@@ -85,6 +85,7 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
         })
       ) {
         !showDeleteModal && setSelectedTodoId(null);
+        setIsDetailsPanelDisplayed(false)
         console.log("click OutSide !");
       }
     }
