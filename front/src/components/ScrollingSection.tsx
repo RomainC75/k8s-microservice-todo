@@ -7,11 +7,13 @@ import "./styles/scrollingSection.css";
 interface ScrollingSectionInterface {
   children: JSX.Element;
   isOpenedByDefault?: boolean;
+  margin?: number;
 }
 
 const ScrollingSection = ({
   children,
   isOpenedByDefault,
+  margin
 }: ScrollingSectionInterface): JSX.Element => {
   
   const [isOpened, setIsOpened] = useState<boolean>(
@@ -19,11 +21,12 @@ const ScrollingSection = ({
   );
 
   return (
-    <div className="ScrollingSection">
+    <div className="ScrollingSection" >
       <FontAwesomeIcon
         className={`chevron ${isOpened ? "opened" : ""}`}
         icon={faChevronLeft}
         onClick={() => setIsOpened(!isOpened)}
+        style={{marginLeft:`${margin ? margin : 0}px`}}
       />
       <div className={`children ${isOpened ? "opened" : ""}`}>{children}</div>
     </div>
