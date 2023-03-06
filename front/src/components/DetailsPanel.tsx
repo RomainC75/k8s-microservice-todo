@@ -22,7 +22,7 @@ const DetailsPanel = () => {
   useEffect(()=>{
     const foundTodo:TodoInterface|undefined = todos.find(todo=>todo._id.toString()===selectedTodoId)
     setSelectedTodo(foundTodo ? foundTodo : null)
-  },[selectedTodoId])
+  },[selectedTodoId, todos])
 
   const handleDelete = () =>{
     selectedTodoId && setShowDeleteModal(true)
