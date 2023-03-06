@@ -13,6 +13,7 @@ const TaskPanel = (): JSX.Element => {
   const {
     selectedListId,
     todos,
+    lists,
     isLoadingTodos,
     isListPanelDisplayed,
     isDetailsPanelDisplayed,
@@ -42,19 +43,32 @@ const TaskPanel = (): JSX.Element => {
               </div>
 
               <div className="unDone">
-                <ScrollingSection isOpenedByDefault menuName={ `UNDONE (${countTodosRegardingTheState(todos,false)})`}>
+                <ScrollingSection
+                  isOpenedByDefault
+                  menuName={`UNDONE (${countTodosRegardingTheState(
+                    todos,
+                    false
+                  )})`}
+                >
                   <TodosList todos={todos.filter((todo) => !todo.isDone)} />
                 </ScrollingSection>
               </div>
 
               <div className="done">
-                <ScrollingSection menuName={`DONE (${countTodosRegardingTheState(todos,true)})`}>
+                <ScrollingSection
+                  menuName={`DONE (${countTodosRegardingTheState(
+                    todos,
+                    true
+                  )})`}
+                >
                   <TodosList todos={todos.filter((todo) => todo.isDone)} />
                 </ScrollingSection>
               </div>
             </>
           ) : (
-            <p>Please choose a list</p>
+            <>
+              <p className="warning">{lists.length===0 ? "Please create a list before adding a todo !" : "Please choose a list"}</p>
+            </>
           )}
         </>
       )}
