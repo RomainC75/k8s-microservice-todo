@@ -1,14 +1,14 @@
 import { useContext } from "react";
 import { DataContext } from "../context/data.context";
+import { AuthContext } from "../context/auth.context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 import { DataContextInterface } from "../@types/dataContext.type";
+import { AuthContextInterface } from "../@types/authContext.type";
 
 import "./styles/navbar.css";
-import { AuthContext } from "../context/auth.context";
-import { AuthContextInterface } from "../@types/authContext.type";
 
 const NavBar = (): JSX.Element => {
   const {
@@ -39,6 +39,7 @@ const NavBar = (): JSX.Element => {
       <div className="rightSide">
       <FontAwesomeIcon icon={faArrowRightFromBracket} className="deconnexion" onClick={removeToken}/>
       <div
+        id="detailsChevron"
         className={`showHideIcon ${isDetailsPanelDisplayed ? "rotate" : ""}`}
         onClick={() => setIsDetailsPanelDisplayed(!isDetailsPanelDisplayed)}
       > 

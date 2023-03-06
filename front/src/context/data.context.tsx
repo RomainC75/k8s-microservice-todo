@@ -48,10 +48,14 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      const detailsPanelEl = document.querySelector(".DetailsPanel");
       const element = event.target as HTMLElement;
+      const detailsPanelEl = document.querySelector(".DetailsPanel");
+      const detailsChevronEl = document.getElementById('detailsChevron')
+      if(detailsChevronEl && detailsChevronEl?.contains(element)){
+        return
+      }
       if (detailsPanelEl && detailsPanelEl.contains(element)) {
-        return;
+        return
       }
       if (
         !liRefs.current.some((li) => {

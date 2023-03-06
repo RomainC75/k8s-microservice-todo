@@ -36,7 +36,7 @@ const TaskPanel = (): JSX.Element => {
           {selectedListId ? (
             <>
               <div>
-                <ScrollingSection isOpenedByDefault menuName="ADD TODO">
+                <ScrollingSection menuName="ADD TODO">
                   <CreateNewTodo />
                 </ScrollingSection>
               </div>
