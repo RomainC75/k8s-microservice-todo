@@ -5,6 +5,8 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { DataContext } from '../context/data.context'
 import { DataContextInterface } from '../@types/dataContext.type'
 
+import './styles/listItem.css'
+
 interface ListItemInterface{
     listItem:ListInterface
     handleDeleteList: (id:string)=>void 
@@ -26,7 +28,7 @@ const ListItem = ({listItem, setSelectedListId, selectedListId}:ListItemInterfac
 
   return (
     <li className={`ListItem ${listItem._id===selectedListId && "selected"}`}>
-        <p onClick={()=>setSelectedListId(listItem._id)}>{listItem.name}</p>
+        <p onClick={()=>setSelectedListId(listItem._id)}>{listItem.name}  <span className="">{'todosNumber' in listItem ? listItem.todosNumber : "?"}</span></p>
         {/* <FontAwesomeIcon className="trash" icon={faTrash} onClick={()=>handleDeleteList(listItem._id)}/> */}
         <FontAwesomeIcon className="trash" icon={faTrash} onClick={()=>handleDelete()}/>
     </li>
