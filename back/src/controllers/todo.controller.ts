@@ -47,7 +47,7 @@ export const createTodo = async (
         return res.status(409).json({message:"name is needed"})
     }
     
-    const foundTodo:TodoInterface|null = await Todo.findOne({name:req.body.name})
+    const foundTodo:TodoInterface|null = await Todo.findOne({name:req.body.name, listId})
     if(foundTodo){
         return res.status(401).json({message:"todo name already used"})
     }

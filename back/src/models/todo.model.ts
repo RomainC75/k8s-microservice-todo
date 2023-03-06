@@ -10,7 +10,6 @@ const todoSchema = new Schema<TodoInterface>(
     },
     name: {
       type: String,
-      unique: true,
       required: true,
     },
     description: {
@@ -28,6 +27,8 @@ const todoSchema = new Schema<TodoInterface>(
     timestamps: true,
   }
 )
+
+todoSchema.index({listId:1, name:1},{unique:true})
 
 const Todo = model<TodoInterface>('Todo', todoSchema)
 
