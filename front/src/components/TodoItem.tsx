@@ -23,18 +23,10 @@ const TodoItem = ({ todo }: TodoItemInterface): JSX.Element => {
     setIsDetailsPanelDisplayed,
     handleGetTodos,
     liRefs,
+    handleToggleIsDone
   } = useContext(DataContext) as DataContextInterface;
 
-  const handleToggleIsDone = () =>{
-    selectedListId && putTodo(todo._id.toString(),{
-      ...todo,
-      isDone:!todo.isDone
-    }).then(ans=>{
-      handleGetTodos()
-    }).catch(err=>{
-      console.log('put error : ', err)
-    })
-  }
+  
 
   const handleClickOnTodo = () =>{
     setSelectedTodoId(todo._id.toString())
@@ -53,7 +45,7 @@ const TodoItem = ({ todo }: TodoItemInterface): JSX.Element => {
         <p className="name">{todo.name}</p>
         <p className="date color3">{extractSimpleDate(todo.deadLine)}</p>
       </div>
-      <Button variant="outlined" size="small" onClick={handleToggleIsDone} color={todo.isDone ? "secondary" : "success"}>
+      <Button variant="outlined" size="small" onClick={()=>handleToggleIsDone(todo)} color={todo.isDone ? "secondary" : "success"}>
           {todo.isDone ? "unDone" : "Done"}
         </Button>
     </li>

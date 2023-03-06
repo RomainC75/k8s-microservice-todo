@@ -11,7 +11,7 @@ import { DataContextInterface } from "../@types/dataContext.type";
 import { AuthContext } from "./auth.context";
 import { NewTodoInterface, TodoInterface } from "../@types/todo.type";
 import { ListInterface } from "../@types/list.type";
-import { createTodo, getTodosFromList, deleteTodo } from "../utils/todos-helper";
+import { createTodo, getTodosFromList, deleteTodo, putTodo } from "../utils/todos-helper";
 import { createList, deleteList, getLists } from "../utils/lists-helper";
 
 import toast from "react-hot-toast";
@@ -19,7 +19,7 @@ import toast from "react-hot-toast";
 const DataContext = createContext<DataContextInterface | null>(null);
 
 const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
-  const { isLoggedIn } = useContext(AuthContext) as AuthContextInterface;
+  const { isLoggedIn, authenticateUser } = useContext(AuthContext) as AuthContextInterface;
   const [selectedListId, setSelectedListId] = useState<string | null>(null);
   const [selectedTodoId, setSelectedTodoId] = useState<string | null>(null);
   const [isLoadingTodos, setIsLoadingTodos] = useState<boolean>(false);
@@ -80,6 +80,7 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
       })
       .catch((err) => {
         toast.error("error getting lists");
+        authenticateUser()
       });
   };
 
@@ -91,6 +92,7 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
       toast.success("List deleted")
     }).catch(err=>{
       toast.error('list not deleted')
+      authenticateUser()
     })
   };
 
@@ -104,6 +106,7 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
       })
       .catch((err) => {
         toast.error("error : cannot create a new list");
+        authenticateUser()
       });
   };
 
@@ -123,6 +126,7 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
           setIsLoadingTodos(false);
           setIsTodosError(true);
           toast.error('error : cannot get the task')
+          authenticateUser()
         });
     }
   };
@@ -137,6 +141,8 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
           handleGetLists()
         }).catch(err=>{
           toast.error('Error : could not delete the task !')
+          console.log('mlksjdmlksjdf')
+          authenticateUser()
         })
   }
 
@@ -147,9 +153,24 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
         toast.success('Task created')
         handleGetLists()
       }).catch(err=>{
+        console.log('===> erre !!')
+        authenticateUser()
         toast.error('error : could not create the new task !')
       })
   };
+
+  const handleToggleIsDone = (todo:TodoInterface) =>{
+    selectedListId && putTodo(todo._id.toString(),{
+      ...todo,
+      isDone:!todo.isDone
+    }).then(ans=>{
+      handleGetTodos()
+      toast.success('todo updated')
+    }).catch(err=>{
+      toast.error('error : could not update the todo')
+      authenticateUser()
+    })
+  }
 
   return (
     <DataContext.Provider
@@ -178,7 +199,8 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
         handleDeleteList,
         handleCreateNewList,
         handleCreateNewTodo,
-        handleDeleteTodo
+        handleDeleteTodo,
+        handleToggleIsDone
       }}
     >
       {props.children}
