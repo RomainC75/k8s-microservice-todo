@@ -1,6 +1,7 @@
 export const extractSimpleDate = (strDate:string):string =>{
     const date= new Date(strDate)
-    return `${date.getFullYear()}-${date.getMonth().toString().padStart(2,'0')}-${date.getDay().toString().padStart(2,'0')}`
+    console.log('extract simple date : ', date)
+    return `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2,'0')}-${date.getDate().toString().padStart(2,'0')}`
 }
 
 export const getRealYYYMMDD = (date:string):string =>{
@@ -20,4 +21,4 @@ export const getInitialDate = ():string =>{
     return date.toISOString().split("T")[0]
 }
 
-const monthConvertor = ['Jan.','Feb.','Mar.','Apr.','May.','Jun.','Jul.','Aug.','Sept.','Oct.','Nov.','Dec.']
+const monthConvertor: string[] = ['Jan.','Feb.','Mar.','Apr.','May.','Jun.','Jul.','Aug.','Sept.','Oct.','Nov.','Dec.']

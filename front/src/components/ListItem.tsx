@@ -12,7 +12,8 @@ interface ListItemInterface{
     selectedListId:string|null
 }
 
-const ListItem = ({listItem, handleDeleteList, setSelectedListId, selectedListId}:ListItemInterface) => {
+const ListItem = ({listItem, setSelectedListId, selectedListId}:ListItemInterface) => {
+  
   const {
     setIsDeleteModalSupposedToDeleteList,
     setShowDeleteModal

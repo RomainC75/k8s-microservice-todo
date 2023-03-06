@@ -51,7 +51,7 @@ const TodoItem = ({ todo }: TodoItemInterface): JSX.Element => {
     >
       <div className="infos">
         <p className="name">{todo.name}</p>
-        <p className="date color3">{extractSimpleDate(todo.createdAt)}</p>
+        <p className="date color3">{extractSimpleDate(todo.deadLine)}</p>
       </div>
       <Button variant="outlined" size="small" onClick={handleToggleIsDone} color={todo.isDone ? "secondary" : "success"}>
           {todo.isDone ? "unDone" : "Done"}
