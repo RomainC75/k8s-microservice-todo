@@ -7,4 +7,6 @@ export interface ListInterface {
   createdAt: string
   updatedAt: string
   __v: number
+  todosNumber:number
+  toObject:()=>ListInterface
 }

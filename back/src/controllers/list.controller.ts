@@ -13,7 +13,14 @@ export const getAllLists = async (
 ) => {
   try {
     const foundLists: ListInterface[] = await List.find({ userId: req.user.id })
-    res.status(200).json(foundLists)
+    const data = await Promise.all(foundLists.map(async(list:ListInterface)=>{
+        const todosNumber = await Todo.countDocuments({listId:list._id})
+        return {
+          ...list.toObject(),
+          todosNumber
+        }
+    }))
+    res.status(200).json(data)
   } catch (error) {
     next(error)
   }
