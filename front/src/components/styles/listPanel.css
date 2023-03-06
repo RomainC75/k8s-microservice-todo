@@ -1,14 +1,14 @@
 .ListPanel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  width: 250px;
   height: 100%;
   padding-top: 80px;
   border-right: 1px solid #E4EBFA;
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  width: 250px;
   overflow-x: hidden;
-  top: 0;
-  left: 0;
   background-color: #FFFFFF;
   transition: width 0.5s;
 }
@@ -16,19 +16,24 @@
   width: 0px;
   border-right: none;
 }
-.ListPanel h2 {
-  margin-top: 20px;
+.ListPanel h2, .ListPanel h3 {
   font-weight: bold;
   letter-spacing: 2.4px;
-  font-size: 1.2rem;
   color: #828FA3;
 }
-.ListPanel > ul {
+.ListPanel h2 {
+  margin-top: 20px;
+  font-size: 1.2rem;
+}
+.ListPanel h3 {
+  font-size: 1rem;
+}
+.ListPanel ul.list {
   list-style-type: none;
   padding-left: 0;
   margin-right: 5px;
 }
-.ListPanel > ul > li {
+.ListPanel ul.list > li {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -39,10 +44,10 @@
   transition: all 0.3s;
   color: #828FA3;
 }
-.ListPanel > ul > li .trash, .ListPanel > ul > li p {
+.ListPanel ul.list > li .trash, .ListPanel ul.list > li p {
   cursor: pointer;
 }
-.ListPanel > ul > li.selected {
+.ListPanel ul.list > li.selected {
   background-color: #635FC7;
   color: white;
 }/*# sourceMappingURL=listPanel.css.map */

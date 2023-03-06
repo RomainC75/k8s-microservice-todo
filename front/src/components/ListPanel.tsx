@@ -9,6 +9,7 @@ import { DataContext } from "../context/data.context";
 import { DataContextInterface } from "../@types/dataContext.type";
 
 import "./styles/listPanel.css";
+import ScrollingSection from "./ScrollingSection";
 
 const ListPanel = () => {
   // const { authenticateUser, isLoading, isLoggedIn, user } = useContext(
@@ -19,7 +20,7 @@ const ListPanel = () => {
     setSelectedListId,
     isListPanelDisplayed,
     lists,
-    setLists
+    setLists,
   } = useContext(DataContext) as DataContextInterface;
 
   const handleGetLists = () => {
@@ -41,7 +42,7 @@ const ListPanel = () => {
   }, []);
 
   useEffect(() => {
-    const isSelecteListStillInLists:boolean = lists.some(
+    const isSelecteListStillInLists: boolean = lists.some(
       (list) => list._id === selectedListId
     );
     if (!isSelecteListStillInLists) {
@@ -60,19 +61,27 @@ const ListPanel = () => {
   return (
     <section className={`ListPanel ${!isListPanelDisplayed ? "hide" : ""}`}>
       <h2>ALL LISTS({lists.length})</h2>
-
-      <ul className="list">
-        {lists.map((list) => (
-          <ListItem
-            key={list._id}
-            listItem={list}
-            handleDeleteList={handleDeleteList}
-            selectedListId={selectedListId}
-            setSelectedListId={setSelectedListId}
-          />
-        ))}
-      </ul>
-      <CreateNewList handleCreateNewList={handleCreateNewList} lists={lists} />
+      <h3>list menu</h3>
+      <ScrollingSection>
+        <ul className="list">
+          {lists.map((list) => (
+            <ListItem
+              key={list._id}
+              listItem={list}
+              handleDeleteList={handleDeleteList}
+              selectedListId={selectedListId}
+              setSelectedListId={setSelectedListId}
+            />
+          ))}
+        </ul>
+      </ScrollingSection>
+      <h3>creation menu</h3>
+      <ScrollingSection>
+        <CreateNewList
+          handleCreateNewList={handleCreateNewList}
+          lists={lists}
+        />
+      </ScrollingSection>
     </section>
   );
 };
