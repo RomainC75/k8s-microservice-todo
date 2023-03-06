@@ -49,7 +49,6 @@ const DeleteModal = () => {
         <p>DELETE THIS {isDeleteModalSupposedToDeleteList ? "LIST" : "TODO"} ?</p>
       </div>
 
-      
       <div className="subtitle">{isDeleteModalSupposedToDeleteList && "This operation will delete any related to-do item."}</div>
 
       <div className="name">

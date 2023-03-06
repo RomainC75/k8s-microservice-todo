@@ -35,7 +35,8 @@ const TodoItem = ({ todo }: TodoItemInterface): JSX.Element => {
 
   return (
     <li 
-      ref={(li)=>(liRefs.current[todos.findIndex(todoo=>todoo._id===todo._id)]=li)}
+      // ref={(li)=>(liRefs.current[todos.findIndex(todoo=>todoo._id===todo._id)]=li)}
+      ref={(li)=>(liRefs.current.push(li))}
       className={`TodoItem ${
         selectedTodoId === todo._id.toString() ? "selected" : ""
       }`}

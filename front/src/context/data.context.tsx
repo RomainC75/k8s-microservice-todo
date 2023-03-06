@@ -11,15 +11,23 @@ import { DataContextInterface } from "../@types/dataContext.type";
 import { AuthContext } from "./auth.context";
 import { NewTodoInterface, TodoInterface } from "../@types/todo.type";
 import { ListInterface } from "../@types/list.type";
-import { createTodo, getTodosFromList, deleteTodo, putTodo } from "../utils/todos-helper";
+import {
+  createTodo,
+  getTodosFromList,
+  deleteTodo,
+  putTodo,
+} from "../utils/todos-helper";
 import { createList, deleteList, getLists } from "../utils/lists-helper";
 
 import toast from "react-hot-toast";
+import { click } from "@testing-library/user-event/dist/click";
 
 const DataContext = createContext<DataContextInterface | null>(null);
 
 const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
-  const { isLoggedIn, authenticateUser } = useContext(AuthContext) as AuthContextInterface;
+  const { isLoggedIn, authenticateUser } = useContext(
+    AuthContext
+  ) as AuthContextInterface;
   const [selectedListId, setSelectedListId] = useState<string | null>(null);
   const [selectedTodoId, setSelectedTodoId] = useState<string | null>(null);
   const [isLoadingTodos, setIsLoadingTodos] = useState<boolean>(false);
@@ -46,32 +54,39 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
     setSelectedTodoId(null);
   }, [selectedListId]);
 
+  useEffect(()=>{
+    console.log('showDeleteModal : ', showDeleteModal)
+  },[showDeleteModal])
+
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      const element = event.target as HTMLElement;
-      const detailsPanelEl = document.querySelector(".DetailsPanel");
-      const detailsChevronEl = document.getElementById('detailsChevron')
-      if(detailsChevronEl && detailsChevronEl?.contains(element)){
-        return
-      }
-      if (detailsPanelEl && detailsPanelEl.contains(element)) {
-        return
-      }
-      if (
-        !liRefs.current.some((li) => {
-          return li && li.contains(event.target as Node);
-        })
-      ) {
-        !showDeleteModal && setSelectedTodoId(null);
-        setIsDetailsPanelDisplayed(false);
-        console.log("click OutSide !");
-      }
-    }
     window.addEventListener("click", handleClickOutside);
     return () => {
       window.removeEventListener("click", handleClickOutside);
     };
   }, [liRefs]);
+
+  function handleClickOutside(event: MouseEvent) {
+    const element = event.target as HTMLElement;
+    const detailsPanelEl = document.querySelector(".DetailsPanel");
+    const detailsChevronEl = document.getElementById("detailsChevron");
+    if (detailsChevronEl && detailsChevronEl?.contains(element)) {
+      return;
+    }
+    if (detailsPanelEl && detailsPanelEl.contains(element)) {
+      return;
+    }
+    const clickedElementIsAChildOfATodoItem: boolean = liRefs.current.some(
+      (li) => {
+        return li && li.contains(event.target as Node);
+      }
+    );
+    console.log('==> HANDLECLICKOUTSIDE : ', clickedElementIsAChildOfATodoItem, showDeleteModal)
+    if (!clickedElementIsAChildOfATodoItem && !showDeleteModal) {
+      setSelectedTodoId(null);
+      setIsDetailsPanelDisplayed(false);
+    }
+  }
+ 
 
   // handle Lists ==================
 
@@ -84,20 +99,23 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
       })
       .catch((err) => {
         toast.error("error getting lists");
-        authenticateUser()
+        authenticateUser();
       });
   };
 
   const handleDeleteList = () => {
-    selectedListId && deleteList(selectedListId).then(ans=>{
-      setShowDeleteModal(false)
-      handleGetLists()
-      setSelectedListId(null)
-      toast.success("List deleted")
-    }).catch(err=>{
-      toast.error('list not deleted')
-      authenticateUser()
-    })
+    selectedListId &&
+      deleteList(selectedListId)
+        .then((ans) => {
+          setShowDeleteModal(false);
+          handleGetLists();
+          setSelectedListId(null);
+          toast.success("List deleted");
+        })
+        .catch((err) => {
+          toast.error("list not deleted");
+          authenticateUser();
+        });
   };
 
   const handleCreateNewList = (name: string) => {
@@ -110,7 +128,7 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
       })
       .catch((err) => {
         toast.error("error : cannot create a new list");
-        authenticateUser()
+        authenticateUser();
       });
   };
 
@@ -129,52 +147,59 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
         .catch((err) => {
           setIsLoadingTodos(false);
           setIsTodosError(true);
-          toast.error('error : cannot get the task')
-          authenticateUser()
+          toast.error("error : cannot get the task");
+          authenticateUser();
         });
     }
   };
 
-  const handleDeleteTodo = ()=>{
+  const handleDeleteTodo = () => {
     selectedTodoId &&
-        deleteTodo(selectedTodoId).then((ans) => {
-          setShowDeleteModal(false)
+      deleteTodo(selectedTodoId)
+        .then((ans) => {
+          setShowDeleteModal(false);
           handleGetTodos();
-          setSelectedTodoId(null)
-          toast.success("Task deleted")
-          handleGetLists()
-        }).catch(err=>{
-          toast.error('Error : could not delete the task !')
-          console.log('mlksjdmlksjdf')
-          authenticateUser()
+          setSelectedTodoId(null);
+          toast.success("Task deleted");
+          handleGetLists();
         })
-  }
+        .catch((err) => {
+          toast.error("Error : could not delete the task !");
+          console.log("mlksjdmlksjdf");
+          authenticateUser();
+        });
+  };
 
   const handleCreateNewTodo = (newTodo: NewTodoInterface): void => {
     selectedListId &&
-      createTodo(selectedListId, newTodo).then((ans) => {
-        handleGetTodos();
-        toast.success('Task created')
-        handleGetLists()
-      }).catch(err=>{
-        console.log('===> erre !!')
-        authenticateUser()
-        toast.error('error : could not create the new task !')
-      })
+      createTodo(selectedListId, newTodo)
+        .then((ans) => {
+          handleGetTodos();
+          toast.success("Task created");
+          handleGetLists();
+        })
+        .catch((err) => {
+          console.log("===> erre !!");
+          authenticateUser();
+          toast.error("error : could not create the new task !");
+        });
   };
 
-  const handleToggleIsDone = (todo:TodoInterface) =>{
-    selectedListId && putTodo(todo._id.toString(),{
-      ...todo,
-      isDone:!todo.isDone
-    }).then(ans=>{
-      handleGetTodos()
-      toast.success('todo updated')
-    }).catch(err=>{
-      toast.error('error : could not update the todo')
-      authenticateUser()
-    })
-  }
+  const handleToggleIsDone = (todo: TodoInterface) => {
+    selectedListId &&
+      putTodo(todo._id.toString(), {
+        ...todo,
+        isDone: !todo.isDone,
+      })
+        .then((ans) => {
+          handleGetTodos();
+          toast.success("todo updated");
+        })
+        .catch((err) => {
+          toast.error("error : could not update the todo");
+          authenticateUser();
+        });
+  };
 
   return (
     <DataContext.Provider
@@ -204,7 +229,7 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
         handleCreateNewList,
         handleCreateNewTodo,
         handleDeleteTodo,
-        handleToggleIsDone
+        handleToggleIsDone,
       }}
     >
       {props.children}
