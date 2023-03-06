@@ -8,30 +8,33 @@ interface ScrollingSectionInterface {
   children: JSX.Element;
   isOpenedByDefault?: boolean;
   margin?: number;
+  menuName?: string;
 }
 
 const ScrollingSection = ({
   children,
   isOpenedByDefault,
-  margin
+  margin,
+  menuName,
 }: ScrollingSectionInterface): JSX.Element => {
-  
   const [isOpened, setIsOpened] = useState<boolean>(
     isOpenedByDefault ? isOpenedByDefault : false
   );
 
   return (
-    <div className="ScrollingSection" >
-      <FontAwesomeIcon
-        className={`chevron ${isOpened ? "opened" : ""}`}
-        icon={faChevronLeft}
-        onClick={() => setIsOpened(!isOpened)}
-        style={{marginLeft:`${margin ? margin : 0}px`}}
-      />
+    <div className="ScrollingSection">
+      <div className="title">
+        <FontAwesomeIcon
+          className={`chevron ${isOpened ? "opened" : ""}`}
+          icon={faChevronLeft}
+          onClick={() => setIsOpened(!isOpened)}
+          style={{ marginLeft: `${margin ? margin : 0}px` }}
+        />
+        <h3>{menuName}</h3>
+      </div>
       <div className={`children ${isOpened ? "opened" : ""}`}>{children}</div>
     </div>
   );
-  
 };
 
 export default ScrollingSection;

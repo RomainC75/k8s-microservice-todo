@@ -1,11 +1,22 @@
+@import 'colors';
+
 .ScrollingSection{
     display:flex;
     flex-direction: column;
+    margin-bottom: 20px;
+    & > .title{
+        display:flex;
+        justify-content: flex-start;
+        & > h3{
+            margin: 0 0 0 30px;
+        }
+    }
     & .chevron{
         align-self: flex-start;
         transform: rotate(-90deg);
         transition: transform 0.5s;
         cursor: pointer;
+        color:$color7;
         &.opened{
             transform: rotate(90deg);
         }
