@@ -18,12 +18,13 @@ const ListItem = ({listItem, setSelectedListId, selectedListId}:ListItemInterfac
   
   const {
     setIsDeleteModalSupposedToDeleteList,
-    setShowDeleteModal
+    setShowDeleteModal,
   } = useContext(DataContext) as DataContextInterface;
 
   const handleDelete = () =>{
     setIsDeleteModalSupposedToDeleteList(true)
     setShowDeleteModal(true)
+    setSelectedListId(listItem._id)
   }
 
   return (
