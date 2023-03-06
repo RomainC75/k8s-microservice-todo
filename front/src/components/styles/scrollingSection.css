@@ -9,13 +9,14 @@
 }
 .ScrollingSection > .title > h3 {
   margin: 0 0 0 30px;
+  cursor: pointer;
 }
 .ScrollingSection .chevron {
   align-self: flex-start;
   transform: rotate(-90deg);
   transition: transform 0.5s;
-  cursor: pointer;
   color: #828FA3;
+  cursor: pointer;
 }
 .ScrollingSection .chevron.opened {
   transform: rotate(90deg);

@@ -9,14 +9,15 @@
         justify-content: flex-start;
         & > h3{
             margin: 0 0 0 30px;
+            cursor: pointer;
         }
     }
     & .chevron{
         align-self: flex-start;
         transform: rotate(-90deg);
         transition: transform 0.5s;
-        cursor: pointer;
         color:$color7;
+        cursor: pointer;
         &.opened{
             transform: rotate(90deg);
         }

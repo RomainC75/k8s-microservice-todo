@@ -61,7 +61,6 @@ const ListPanel = () => {
   return (
     <section className={`ListPanel ${!isListPanelDisplayed ? "hide" : ""}`}>
       <h2>ALL LISTS({lists.length})</h2>
-      {/* <h3>list menu</h3> */}
       <ScrollingSection margin={20} menuName="list menu">
         <ul className="list">
           {lists.map((list) => (
@@ -75,7 +74,6 @@ const ListPanel = () => {
           ))}
         </ul>
       </ScrollingSection>
-      {/* <h3>creation menu</h3> */}
       <ScrollingSection margin={20} menuName="creation menu">
         <CreateNewList
           handleCreateNewList={handleCreateNewList}

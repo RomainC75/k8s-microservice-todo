@@ -23,12 +23,12 @@ const ScrollingSection = ({
 
   return (
     <div className="ScrollingSection">
-      <div className="title">
+      <div className="title" onClick={() => setIsOpened(!isOpened)}>
         <FontAwesomeIcon
           className={`chevron ${isOpened ? "opened" : ""}`}
           icon={faChevronLeft}
-          onClick={() => setIsOpened(!isOpened)}
           style={{ marginLeft: `${margin ? margin : 0}px` }}
+          onClick={() => setIsOpened(!isOpened)}
         />
         <h3>{menuName}</h3>
       </div>

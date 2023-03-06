@@ -36,22 +36,19 @@ const TaskPanel = (): JSX.Element => {
           {selectedListId ? (
             <>
               <div>
-                <h3>ADD TODO</h3>
-                <ScrollingSection isOpenedByDefault>
+                <ScrollingSection isOpenedByDefault menuName="ADD TODO">
                   <CreateNewTodo />
                 </ScrollingSection>
               </div>
 
               <div className="unDone">
-                <h3>UNDONE ({countTodosRegardingTheState(todos,false)})</h3>
-                <ScrollingSection isOpenedByDefault>
+                <ScrollingSection isOpenedByDefault menuName={ `UNDONE (${countTodosRegardingTheState(todos,false)})`}>
                   <TodosList todos={todos.filter((todo) => !todo.isDone)} />
                 </ScrollingSection>
               </div>
 
               <div className="done">
-                <h3>DONE ({countTodosRegardingTheState(todos,true)})</h3>
-                <ScrollingSection>
+                <ScrollingSection menuName={`DONE (${countTodosRegardingTheState(todos,true)})`}>
                   <TodosList todos={todos.filter((todo) => todo.isDone)} />
                 </ScrollingSection>
               </div>
