@@ -50,14 +50,23 @@
       margin-top: 10px;
       display: flex;
     }
+  }
+  & > .rightSide{
+    display:flex;
+    justify-content: center;
+    & > .deconnexion{
+      cursor: pointer;
+    }
     & > .showHideIcon {
       position: relative;
       z-index: 4;
       transition: all 0.5s;
+      margin: 0 20px;
       cursor: pointer;
       &.rotate {
         transform: rotate(180deg);
       }
     }
   }
+  
 }
