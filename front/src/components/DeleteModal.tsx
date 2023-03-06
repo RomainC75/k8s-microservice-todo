@@ -16,33 +16,20 @@ const DeleteModal = () => {
     selectedTodoId,
     setSelectedTodoId,
     selectedListId,
-    updateTodos,
+    handleGetTodos,
     lists,
     isDeleteModalSupposedToDeleteList,
     handleGetLists,
-    setSelectedListId
+    setSelectedListId,
+    handleDeleteList,
+    handleDeleteTodo
   } = useContext(DataContext) as DataContextInterface;
 
   const handleDelete = () => {
     if(isDeleteModalSupposedToDeleteList){
-      selectedListId && deleteList(selectedListId).then(ans=>{
-        setShowDeleteModal(false)
-        handleGetLists()
-        setSelectedListId(null)
-        toast.success("List deleted")
-      }).catch(err=>{
-        toast.error('list not deleted')
-      })
+      handleDeleteList()
     }else{
-      selectedTodoId &&
-        deleteTodo(selectedTodoId).then((ans) => {
-          setShowDeleteModal(false)
-          updateTodos();
-          setSelectedTodoId(null)
-          toast.success("Todo deleted")
-        }).catch(err=>{
-          toast.error('todo not deleted')
-        })
+      handleDeleteTodo()
     }
   }
 

@@ -4,6 +4,7 @@ import { ListInterface } from "../@types/list.type";
 import { createList, deleteList, getLists } from "../utils/lists-helper";
 import ListItem from "./ListItem";
 import CreateNewList from "./CreateNewList";
+import toast from 'react-hot-toast';
 
 import { DataContext } from "../context/data.context";
 import { DataContextInterface } from "../@types/dataContext.type";
@@ -21,21 +22,10 @@ const ListPanel = () => {
     isListPanelDisplayed,
     lists,
     setLists,
+    handleGetLists,
+    handleDeleteList,
+    handleCreateNewList
   } = useContext(DataContext) as DataContextInterface;
-
-  const handleGetLists = () => {
-    getLists().then((ans) => {
-      if (ans.status === 200) {
-        setLists(ans.data);
-      }
-    });
-  };
-
-  const handleDeleteList = (id: string) => {
-    deleteList(id).then((ans) => {
-      handleGetLists();
-    });
-  };
 
   useEffect(() => {
     handleGetLists();
@@ -50,18 +40,10 @@ const ListPanel = () => {
     }
   }, [lists]);
 
-  const handleCreateNewList = (name: string) => {
-    createList(name).then((ans) => {
-      // select the new created list. No async problem ???
-      setSelectedListId(ans.data.list._id);
-      handleGetLists();
-    });
-  };
-
   return (
     <section className={`ListPanel ${!isListPanelDisplayed ? "hide" : ""}`}>
-      <h2>ALL LISTS({lists.length})</h2>
-      <ScrollingSection margin={20} menuName="list menu">
+      <h2>ALL LISTS</h2>
+      <ScrollingSection margin={20} menuName={`list menu (${lists.length})`}>
         <ul className="list">
           {lists.map((list) => (
             <ListItem

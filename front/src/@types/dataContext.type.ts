@@ -1,4 +1,4 @@
-import { TodoInterface } from "./todo.type";
+import { NewTodoInterface, TodoInterface } from "./todo.type";
 import { MutableRefObject } from "react";
 import { ListInterface } from "./list.type";
 
@@ -10,7 +10,7 @@ export interface DataContextInterface {
   isTodosError: boolean;
   setSelectedTodoId: (id: string | null) => void;
   selectedTodoId: string | null;
-  updateTodos: () => void;
+  handleGetTodos: () => void;
   isListPanelDisplayed: boolean;
   setIsListPanelDisplayed: (shouldDisplayBool: boolean) => void;
   isDetailsPanelDisplayed: boolean;
@@ -24,4 +24,8 @@ export interface DataContextInterface {
   isDeleteModalSupposedToDeleteList: boolean;
   setIsDeleteModalSupposedToDeleteList: (val: boolean) => void;
   handleGetLists: () => void;
+  handleDeleteList: () => void
+  handleCreateNewList: (name:string)=>void
+  handleCreateNewTodo: (newTodo: NewTodoInterface)=>void
+  handleDeleteTodo: ()=>void;
 }

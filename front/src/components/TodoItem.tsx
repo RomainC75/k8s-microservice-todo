@@ -21,7 +21,7 @@ const TodoItem = ({ todo }: TodoItemInterface): JSX.Element => {
     selectedTodoId,
     setSelectedTodoId,
     setIsDetailsPanelDisplayed,
-    updateTodos,
+    handleGetTodos,
     liRefs,
   } = useContext(DataContext) as DataContextInterface;
 
@@ -30,7 +30,7 @@ const TodoItem = ({ todo }: TodoItemInterface): JSX.Element => {
       ...todo,
       isDone:!todo.isDone
     }).then(ans=>{
-      updateTodos()
+      handleGetTodos()
     }).catch(err=>{
       console.log('put error : ', err)
     })

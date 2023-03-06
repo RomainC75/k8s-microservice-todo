@@ -3,7 +3,7 @@ import { DataContext } from "../context/data.context";
 import { TextField } from "@mui/material";
 import { Textarea } from "@mui/joy";
 import { PurpleButton, PurpleTextField } from "../utils/mui-custom-colors";
-import { createTodo, isNameAlreadyUsedFn } from "../utils/todos-helper";
+import { isNameAlreadyUsedFn } from "../utils/todos-helper";
 import { extractSimpleDate, getInitialDate, getRealYYYMMDD } from "../utils/common";
 
 import { NewTodoInterface } from "../@types/todo.type";
@@ -12,7 +12,7 @@ import { DataContextInterface } from "../@types/dataContext.type";
 import './styles/createNewTodo.css'
 
 const CreateNewTodo = () => {
-  const { selectedListId, todos, updateTodos } =
+  const { selectedListId, todos, handleGetTodos, handleCreateNewTodo } =
     useContext(DataContext) as DataContextInterface;
   const [isNameAlreadyUsed, setIsNameAlreadyUsed] = useState<boolean>(true);
   const [isNameEmpty, setIsNameEmpty] = useState<boolean>(true)
@@ -31,14 +31,11 @@ const CreateNewTodo = () => {
       ...newTodo,
       [e.target.name]: e.target.value,
     };
-    console.log("=>handleInputs", e.target.value);
     setNewTodo(newTodoBuffer);
-    console.log('xxxx : ', newTodoBuffer)
     if(newTodoBuffer.name.length===0){
       setIsNameEmpty(true)
     }else{
       setIsNameEmpty(false)
-      console.log("===> NAME : ",todos, newTodoBuffer.name, isNameAlreadyUsedFn(todos,newTodoBuffer.name))
       if(isNameAlreadyUsedFn(todos,newTodoBuffer.name)){
         setIsNameAlreadyUsed(true)
       }else{
@@ -49,10 +46,7 @@ const CreateNewTodo = () => {
 
   const handleForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("==>", newTodo);
-    selectedListId && createTodo(selectedListId,newTodo).then(ans=>{
-      updateTodos()
-    })
+    handleCreateNewTodo(newTodo)
   };
 
   useEffect(()=>{
