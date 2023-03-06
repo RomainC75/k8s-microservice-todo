@@ -134,6 +134,7 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
           handleGetTodos();
           setSelectedTodoId(null)
           toast.success("Task deleted")
+          handleGetLists()
         }).catch(err=>{
           toast.error('Error : could not delete the task !')
         })
@@ -144,6 +145,7 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
       createTodo(selectedListId, newTodo).then((ans) => {
         handleGetTodos();
         toast.success('Task created')
+        handleGetLists()
       }).catch(err=>{
         toast.error('error : could not create the new task !')
       })
