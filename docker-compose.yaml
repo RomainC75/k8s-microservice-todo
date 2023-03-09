@@ -7,17 +7,25 @@ services:
       context: ./back
       dockerfile: Dockerfile.dev
     ports:
-      - 5001:5001
+      - ${BACK_PORT}:${BACK_PORT}
     volumes:
       - ./back/src:/app/src
+    environment:
+      - PORT=${BACK_PORT}
+      - DOMAIN=${BACK_DOMAIN}
+      - ORIGIN=${ORIGIN}
+      - MONGIDB_URI=${BACK_MONGIDB_URI}
+      - TOKEN_SECRET=${BACK_TOKEN_SECRET}
     
   front:
-    depends_on:
-      - back
     container_name: saegus-front
     restart: always
+    depends_on:
+      - back
     build: ./front
     ports:
       - 3000:3000
     volumes:
       - ./front/src:/app/src
+    environment:
+      - REACT_APP_API_URL=${BACK_DOMAIN}:${BACK_PORT}
