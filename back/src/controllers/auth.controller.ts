@@ -66,8 +66,6 @@ export const postSignin = async (
   }
 }
 
-
-
 export const verify = async (
   req: AuthenticatedRequest,
   res: Response,
