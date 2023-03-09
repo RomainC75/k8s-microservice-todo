@@ -1,0 +1,23 @@
+version: '3.4'
+services:
+  back:
+    container_name: saegus-back
+    restart: always
+    build:
+      context: ./back
+      dockerfile: Dockerfile.dev
+    ports:
+      - 5001:5001
+    volumes:
+      - ./back/src:/app/src
+    
+  front:
+    depends_on:
+      - back
+    container_name: saegus-front
+    restart: always
+    build: ./front
+    ports:
+      - 3000:3000
+    volumes:
+      - ./front/src:/app/src

@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 
 import { PurpleTextField, PurpleButton } from "../utils/mui-custom-colors";
 
-
 const Login = (): JSX.Element => {
   const { authenticateUser, isLoading, isLoggedIn, user, API_URL, storeToken } =
     useContext(AuthContext) as AuthContextInterface;
