@@ -1,8 +1,8 @@
 import { UserInterface } from "../../@types/userInterface"
+import dotenv from 'dotenv'
+dotenv.config()
 
-require('dotenv').config()
-
-export const API_URL = `${process.env.DOMAIN}:${process.env.PORT}`
+// export const API_URL = `${process.env.DOMAIN}:${process.env.PORT}`
 
 export const new_user_info:UserInterface = {
   firstname: 'Dummy',

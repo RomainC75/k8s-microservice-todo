@@ -1,8 +1,12 @@
 import express from 'express';
-var router = express.Router();
-const authentication = require('../middlewares/authentication')
+import authentication from '../middlewares/authentication'
 
-router.use('/list',authentication, require('./todo-list'))
-router.use('/task', authentication, require('./todo-task'))
+import todoListRouter from './todo-list'
+import todoTastRouter from './todo-task'
 
-module.exports = router
+const router = express.Router();
+
+router.use('/list',authentication, todoListRouter)
+router.use('/task', authentication, todoTastRouter)
+
+export default router

@@ -1,18 +1,18 @@
 import { ObjectId } from "mongoose"
 
-export interface UserInterface{
+interface UserInterface{
     firstname:string,
     lastname: string,
     email:string,
     password: string
 }
 
-export interface UserCredentialsInterface{
+interface UserCredentialsInterface{
     email:string,
     password: string
 }
 
-export interface MongoUserInterface{
+interface MongoUserInterface{
     _id: ObjectId,
   email: string,
   password?: string,
@@ -22,3 +22,5 @@ export interface MongoUserInterface{
   updatedAt: Date,
   __v?: number
 }
+
+export { UserInterface, UserCredentialsInterface, MongoUserInterface}

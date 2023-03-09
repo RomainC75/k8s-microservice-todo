@@ -32,4 +32,4 @@ todoSchema.index({listId:1, name:1},{unique:true})
 
 const Todo = model<TodoInterface>('Todo', todoSchema)
 
-module.exports = Todo
+export default Todo

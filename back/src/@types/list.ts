@@ -1,6 +1,6 @@
 import { ObjectId } from "mongoose"
 
-export interface ListInterface {
+interface ListInterface {
   _id: ObjectId
   name: string
   userId: ObjectId
@@ -10,3 +10,5 @@ export interface ListInterface {
   todosNumber?:number
   toObject:()=>ListInterface
 }
+
+export {ListInterface}

@@ -1,9 +1,9 @@
-import express, { Express, Request, Response, NextFunction } from 'express'
-const User = require('../models/user.model')
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
+import  { Request, Response, NextFunction } from 'express'
+import User from '../models/user.model'
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 import { AuthenticatedRequest } from "../@types/authenticatedRequest";
-import {isEveryStringKeyPresentFn} from '../utils/isEveryStringKeysPresent';
+// import {isEveryStringKeyPresentFn} from '../utils/isEveryStringKeysPresent';
 
 
 export const postSignup = async (
@@ -21,7 +21,7 @@ export const postSignup = async (
 
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(body.password, salt)
-    const ans = await User.create({
+    await User.create({
       ...body,
       password: hash,
     })
@@ -68,8 +68,7 @@ export const postSignin = async (
 
 export const verify = async (
   req: AuthenticatedRequest,
-  res: Response,
-  next: NextFunction
+  res: Response
 ) => {
   if(req.user){
     res.status(200).json(req.user)

@@ -1,7 +1,7 @@
-import express, { Express, Request, Response, NextFunction } from 'express'
-const User = require('../models/user.model')
-const List = require('../models/list.model')
-const Todo = require('../models/todo.model')
+import { Response, NextFunction } from 'express'
+// import User from '../models/user.model'
+import List from '../models/list.model'
+import Todo from '../models/todo.model'
 
 import { AuthenticatedRequest } from '../@types/authenticatedRequest'
 import { ListInterface } from '../@types/list'
@@ -66,7 +66,7 @@ export const putTodo = async (
 ) => {
   try {
     const todoId: string = req.params.todoId
-    const body: Object = req.body
+    const body: object = req.body
 
     const foundTodo: TodoInterface | null = await Todo.findById(todoId)
     if (!foundTodo) {
@@ -116,7 +116,7 @@ export const deleteTodo = async (
       return res.status(401).json({ message: 'unauthorized' })
     }
 
-    const ans = await Todo.findByIdAndDelete(todoId)
+    await Todo.findByIdAndDelete(todoId)
 
     res.status(202).json({ message: 'todo deleted' })
   } catch (error) {

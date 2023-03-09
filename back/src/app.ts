@@ -1,12 +1,19 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var morgan = require('morgan');
-const cors = require('cors')
-var app = express();
 
-require('dotenv').config()
+import createError from 'http-errors'
+import express, { Request, Response } from 'express'
+import path from 'path'
+import cookieParser  from 'cookie-parser'
+import morgan  from 'morgan'
+import cors  from 'cors'
+import dotenv from 'dotenv'
+
+import indexRouter from './routes/index'
+import authRouter from './routes/auth'
+import todoRouter from './routes/todo'
+
+const app = express();
+
+dotenv.config()
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -25,15 +32,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', require('./routes/index'));
-app.use('/auth', require('./routes/auth'));
-app.use('/todo', require('./routes/todo'))
+// app.use('/', require('./routes/index'));
+app.use('/', indexRouter);
+app.use('/auth', authRouter)
+app.use('/todo', todoRouter)
 
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-app.use(function(err, req, res, next) {
+app.use((err:any, req:Request, res:Response)=> {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
@@ -41,4 +49,4 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+export default app

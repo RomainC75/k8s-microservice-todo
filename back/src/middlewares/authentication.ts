@@ -1,7 +1,8 @@
-import express, { Express, Request, Response, NextFunction } from "express"
-var router = express.Router();
-const jwt = require('jsonwebtoken')
-require('dotenv').config()
+import express, { Response, NextFunction } from "express"
+const router = express.Router();
+import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
+dotenv.config()
 import { AuthenticatedRequest } from "../@types/authenticatedRequest";
 
 router.use((req:AuthenticatedRequest,res:Response,next:NextFunction)=>{
@@ -27,4 +28,4 @@ router.use((req:AuthenticatedRequest,res:Response,next:NextFunction)=>{
     }
 })
 
-module.exports=router
+export default router

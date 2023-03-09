@@ -29,4 +29,4 @@ const userSchema = new Schema<MongoUserInterface>(
 
 const User = model<MongoUserInterface>('User', userSchema)
 
-module.exports = User
+export default User

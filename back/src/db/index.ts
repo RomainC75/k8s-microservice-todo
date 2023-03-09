@@ -1,7 +1,9 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose"
 
-// require('dotenv').config({ path: '../.env' })
-require('dotenv').config()
+import dotenv from 'dotenv'
+dotenv.config({ path: '../.env' })
+
+
 
 const MONGO_URI:string = process.env.MONGODB_URI 
 console.log('MONGODB_URI : ',MONGO_URI)

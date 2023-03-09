@@ -1,4 +1,6 @@
-export interface SigninResponseInterface{
+interface SigninResponseInterface{
     userId:string,
     token:string
 }
+
+export { SigninResponseInterface}

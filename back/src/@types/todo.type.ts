@@ -1,6 +1,6 @@
 import { ObjectId } from "mongoose"
 
-export interface TodoInterface {
+interface TodoInterface {
   _id: ObjectId
   listId: ObjectId
   name: string
@@ -12,9 +12,11 @@ export interface TodoInterface {
   __v: number
 }
 
-export interface UpdatableTodoDataInterface{
+interface UpdatableTodoDataInterface{
   name: string
   description?: string
   deadLine: Date | string
   isDone: boolean
 }
+
+export {TodoInterface, UpdatableTodoDataInterface}

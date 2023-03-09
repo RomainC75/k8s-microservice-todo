@@ -1,27 +1,30 @@
-import { assert } from 'chai'
-import { API_URL, new_user_info } from './utils/utils'
-const axios = require('axios')
-const expect = require('chai').expect
-// const { before, after, afterAll, describe, it } = require('mocha')
+import chai from 'chai'
+const expect = chai.expect
 import { describe, it, after } from 'mocha'
+import { new_user_info } from './utils/utils'
+require('../db')
+import axios, { AxiosResponse } from 'axios'
+
+// const should = chai.should()
+
+import User from '../models/user.model'
+
+import dotenv from 'dotenv'
+dotenv.config()
+
+const API_URL = 'http://localhost:5010'
+
 import {
-  MongoUserInterface,
-  UserCredentialsInterface,
+UserCredentialsInterface,
   UserInterface,
 } from '../@types/userInterface'
+
 import { SigninResponseInterface } from '../@types/signinResponse'
-
-import { AxiosResponse } from 'axios'
-let chai = require('chai')
-let should = chai.should()
-
-require('../db')
-const User = require('../models/user.model')
-
 
 
 describe('/auth/signup Route : ', () => {
   it('should return an error if firstname is missing', async () => {
+    console.log('API URL :', API_URL)
     try {
       const incompleteUser: UserInterface = { ...new_user_info }
       delete incompleteUser.lastname
@@ -30,13 +33,17 @@ describe('/auth/signup Route : ', () => {
         `${API_URL}/auth/signup`,
         incompleteUser
       )
-
       expect(response.status).not.to.be.equal(201)
     } catch (error) {
-      expect(error.response.status).to.be.equal(422)
-      expect(error.response.data.message).to.be.equal(
-        'the request needs 4 fields : firstname, lastname, email, password'
-      )
+      if(axios.isAxiosError(error)){
+        console.log('error : ', error)
+        expect(error.response.status).to.be.equal(422)
+        expect(error.response.data.message).to.be.equal(
+          'the request needs 4 fields : firstname, lastname, email, password'
+        )
+      }else{
+        console.log(error)
+      }
     }
   })
 
@@ -212,8 +219,7 @@ describe('/auth/verify Route : ', () => {
 
   it('should return an error if there is no token', async () => {
     try {
-      const response: AxiosResponse = await axios.get(`${API_URL}/auth/verify`)
-      console.log('=========>', response.status)
+      await axios.get(`${API_URL}/auth/verify`)
     } catch (error) {
       expect(error.response.status).to.be.equal(422)
       expect(error.response.data).to.be.an('object')

@@ -20,4 +20,4 @@ const listSchema = new Schema<ListInterface>(
 
 const List = model<ListInterface>('List', listSchema)
 
-module.exports = List
+export default List

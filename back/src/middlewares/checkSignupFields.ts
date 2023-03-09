@@ -1,5 +1,5 @@
-import express, { Express, Request, Response, NextFunction } from "express"
-var router = express.Router();
+import express, { Request, Response, NextFunction } from "express"
+const router = express.Router();
 
 router.use((req:Request,res:Response,next:NextFunction)=>{
     const fields:string[] = ["firstname", "lastname", "email", "password"]
@@ -26,4 +26,4 @@ router.use((req:Request,res:Response,next:NextFunction)=>{
     next()
 })
 
-module.exports = router
+export default router
