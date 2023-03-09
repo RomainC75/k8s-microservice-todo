@@ -1,10 +1,10 @@
-import { TodoInterface } from "../@types/todo.type";
-import { extractDisplayableDate } from "../utils/common";
+import { TodoInterface } from '../@types/todo.type'
+import { extractDisplayableDate } from '../utils/common'
 
-import "./styles/todoDetails.css";
+import './styles/todoDetails.css'
 
 interface TodoDetailsInterface {
-  todo: TodoInterface;
+  todo: TodoInterface
 }
 
 const TodoDetails = ({ todo }: TodoDetailsInterface) => {
@@ -16,10 +16,10 @@ const TodoDetails = ({ todo }: TodoDetailsInterface) => {
       </div>
       <div className="description">
         <p>DESCRIPTION</p>
-        <p>{todo.description ? todo.description : "no description"}</p>
+        <p>{todo.description ? todo.description : 'no description'}</p>
       </div>
       <div className="isDone">
-        <p>STATUS : {todo.isDone ? "✅" : "❌"}</p>
+        <p>STATUS : {todo.isDone ? '✅' : '❌'}</p>
       </div>
       <div className="dueDate">
         <p>DUE DATE</p>
@@ -30,7 +30,7 @@ const TodoDetails = ({ todo }: TodoDetailsInterface) => {
         <p>{extractDisplayableDate(todo.createdAt)}</p>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default TodoDetails;
+export default TodoDetails

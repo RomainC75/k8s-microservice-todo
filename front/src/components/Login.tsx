@@ -1,58 +1,58 @@
-import React, { FormEvent, useState, ChangeEvent, useContext } from "react";
-import { TextField, Button } from "@mui/material";
-import "./styles/login.css";
-import { LoginInterface, UserInterface } from "../@types/authContext.type";
-import { AuthContext } from "../context/auth.context";
-import { AuthContextInterface } from "../@types/authContext.type";
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import React, { FormEvent, useState, ChangeEvent, useContext } from 'react'
+import './styles/login.css'
+import { LoginInterface } from '../@types/authContext.type'
+import { AuthContext } from '../context/auth.context'
+import { AuthContextInterface } from '../@types/authContext.type'
+import Alert from '@mui/material/Alert'
+import AlertTitle from '@mui/material/AlertTitle'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
-import { PurpleTextField, PurpleButton } from "../utils/mui-custom-colors";
+import { PurpleTextField, PurpleButton } from '../utils/mui-custom-colors'
 
 const Login = (): JSX.Element => {
-  const { authenticateUser, isLoading, isLoggedIn, user, API_URL, storeToken } =
-    useContext(AuthContext) as AuthContextInterface;
-  const navigate = useNavigate();
+  const { authenticateUser, API_URL, storeToken } = useContext(
+    AuthContext
+  ) as AuthContextInterface
+  const navigate = useNavigate()
   const [inputsState, setInputsState] = useState<LoginInterface>({
-    email: "",
-    password: "",
-  });
-  const [isLoginValid, setIsLoginValid] = useState<boolean>(false);
-  const [isLoginError, setIsLoginError] = useState<boolean>(false);
+    email: '',
+    password: '',
+  })
+  const [isLoginValid, setIsLoginValid] = useState<boolean>(false)
+  const [isLoginError, setIsLoginError] = useState<boolean>(false)
 
   const handleInputs = (
     e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    if (e.target && "value" in e.target && "name" in e.target) {
-      setIsLoginError(false);
+    if (e.target && 'value' in e.target && 'name' in e.target) {
+      setIsLoginError(false)
       const newValues: LoginInterface = {
         ...inputsState,
         [e.target.name]: e.target.value,
-      };
-      setInputsState(newValues);
-      if (Object.values(newValues).includes("")) {
-        setIsLoginValid(false);
+      }
+      setInputsState(newValues)
+      if (Object.values(newValues).includes('')) {
+        setIsLoginValid(false)
       } else {
-        setIsLoginValid(true);
+        setIsLoginValid(true)
       }
     }
-  };
+  }
 
   const handleForm = (e: FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
+    e.preventDefault()
     axios
       .post(`${API_URL}/auth/signin`, inputsState)
-      .then((ans) => {
-        storeToken(ans.data.token);
-        authenticateUser();
-        navigate("/");
+      .then(ans => {
+        storeToken(ans.data.token)
+        authenticateUser()
+        navigate('/')
       })
-      .catch((err) => {
-        setIsLoginError(true);
-      });
-  };
+      .catch(() => {
+        setIsLoginError(true)
+      })
+  }
 
   return (
     <div className="Login">
@@ -76,7 +76,11 @@ const Login = (): JSX.Element => {
           value={inputsState.password}
           onChange={handleInputs}
         />
-        <PurpleButton variant="contained" type="submit" disabled={!isLoginValid}>
+        <PurpleButton
+          variant="contained"
+          type="submit"
+          disabled={!isLoginValid}
+        >
           Login
         </PurpleButton>
         {isLoginError && (
@@ -87,7 +91,7 @@ const Login = (): JSX.Element => {
         )}
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

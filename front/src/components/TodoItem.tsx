@@ -1,44 +1,38 @@
-import { useContext} from "react";
-import { DataContext } from "../context/data.context";
-import { putTodo } from "../utils/todos-helper";
-import Button from '@mui/material/Button';
+import { useContext } from 'react'
+import { DataContext } from '../context/data.context'
+import Button from '@mui/material/Button'
 
-import { extractSimpleDate } from "../utils/common";
+import { extractSimpleDate } from '../utils/common'
 
-import { TodoInterface } from "../@types/todo.type";
-import { DataContextInterface } from "../@types/dataContext.type";
+import { TodoInterface } from '../@types/todo.type'
+import { DataContextInterface } from '../@types/dataContext.type'
 
-import "./styles/todoItem.css";
+import './styles/todoItem.css'
 
 interface TodoItemInterface {
-  todo: TodoInterface;
+  todo: TodoInterface
 }
 
 const TodoItem = ({ todo }: TodoItemInterface): JSX.Element => {
   const {
-    selectedListId,
-    todos,
     selectedTodoId,
     setSelectedTodoId,
     setIsDetailsPanelDisplayed,
-    handleGetTodos,
     liRefs,
-    handleToggleIsDone
-  } = useContext(DataContext) as DataContextInterface;
+    handleToggleIsDone,
+  } = useContext(DataContext) as DataContextInterface
 
-  
-
-  const handleClickOnTodo = () =>{
+  const handleClickOnTodo = () => {
     setSelectedTodoId(todo._id.toString())
     setIsDetailsPanelDisplayed(true)
   }
 
   return (
-    <li 
+    <li
       // ref={(li)=>(liRefs.current[todos.findIndex(todoo=>todoo._id===todo._id)]=li)}
-      ref={(li)=>(liRefs.current.push(li))}
+      ref={li => liRefs.current.push(li)}
       className={`TodoItem ${
-        selectedTodoId === todo._id.toString() ? "selected" : ""
+        selectedTodoId === todo._id.toString() ? 'selected' : ''
       }`}
       onClick={() => handleClickOnTodo()}
     >
@@ -46,11 +40,16 @@ const TodoItem = ({ todo }: TodoItemInterface): JSX.Element => {
         <p className="name">{todo.name}</p>
         <p className="date color3">{extractSimpleDate(todo.deadLine)}</p>
       </div>
-      <Button variant="outlined" size="small" onClick={()=>handleToggleIsDone(todo)} color={todo.isDone ? "secondary" : "success"}>
-          {todo.isDone ? "unDone" : "Done"}
-        </Button>
+      <Button
+        variant="outlined"
+        size="small"
+        onClick={() => handleToggleIsDone(todo)}
+        color={todo.isDone ? 'secondary' : 'success'}
+      >
+        {todo.isDone ? 'unDone' : 'Done'}
+      </Button>
     </li>
-  );
-};
+  )
+}
 
-export default TodoItem;
+export default TodoItem

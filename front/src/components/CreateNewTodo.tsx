@@ -1,28 +1,29 @@
-import { useState, ChangeEvent, FormEvent, useContext, useEffect } from "react";
-import { DataContext } from "../context/data.context";
-import { TextField } from "@mui/material";
-import { Textarea } from "@mui/joy";
-import { PurpleButton, PurpleTextField } from "../utils/mui-custom-colors";
-import { isNameAlreadyUsedFn } from "../utils/todos-helper";
-import { extractSimpleDate, getInitialDate, getRealYYYMMDD } from "../utils/common";
+import { useState, ChangeEvent, FormEvent, useContext, useEffect } from 'react'
+import { DataContext } from '../context/data.context'
+import { TextField } from '@mui/material'
+import { Textarea } from '@mui/joy'
+import { PurpleButton, PurpleTextField } from '../utils/mui-custom-colors'
+import { isNameAlreadyUsedFn } from '../utils/todos-helper'
+import { getInitialDate } from '../utils/common'
 
-import { NewTodoInterface } from "../@types/todo.type";
-import { DataContextInterface } from "../@types/dataContext.type";
+import { NewTodoInterface } from '../@types/todo.type'
+import { DataContextInterface } from '../@types/dataContext.type'
 
 import './styles/createNewTodo.css'
 
 const CreateNewTodo = () => {
-  const { selectedListId, todos, handleGetTodos, handleCreateNewTodo } =
-    useContext(DataContext) as DataContextInterface;
-  const [isNameAlreadyUsed, setIsNameAlreadyUsed] = useState<boolean>(true);
+  const { todos, handleCreateNewTodo } = useContext(
+    DataContext
+  ) as DataContextInterface
+  const [isNameAlreadyUsed, setIsNameAlreadyUsed] = useState<boolean>(true)
   const [isNameEmpty, setIsNameEmpty] = useState<boolean>(true)
 
   const [newTodo, setNewTodo] = useState<NewTodoInterface>({
-    name: "",
+    name: '',
     description: undefined,
     deadLine: getInitialDate(),
     isDone: false,
-  });
+  })
 
   const handleInputs = (
     e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -30,28 +31,28 @@ const CreateNewTodo = () => {
     const newTodoBuffer: NewTodoInterface = {
       ...newTodo,
       [e.target.name]: e.target.value,
-    };
-    setNewTodo(newTodoBuffer);
-    if(newTodoBuffer.name.length===0){
+    }
+    setNewTodo(newTodoBuffer)
+    if (newTodoBuffer.name.length === 0) {
       setIsNameEmpty(true)
-    }else{
+    } else {
       setIsNameEmpty(false)
-      if(isNameAlreadyUsedFn(todos,newTodoBuffer.name)){
+      if (isNameAlreadyUsedFn(todos, newTodoBuffer.name)) {
         setIsNameAlreadyUsed(true)
-      }else{
+      } else {
         setIsNameAlreadyUsed(false)
       }
     }
-  };
+  }
 
   const handleForm = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault()
     handleCreateNewTodo(newTodo)
-  };
+  }
 
-  useEffect(()=>{
-    console.log("==> new todo",newTodo)
-  },[])
+  useEffect(() => {
+    console.log('==> new todo', newTodo)
+  }, [])
 
   return (
     <div className="CreateNewTodo">
@@ -63,21 +64,24 @@ const CreateNewTodo = () => {
           variant="outlined"
           value={newTodo.name}
           onChange={handleInputs}
-          helperText={(isNameEmpty && "need a name") || (isNameAlreadyUsed && "name is already used")}
+          helperText={
+            (isNameEmpty && 'need a name') ||
+            (isNameAlreadyUsed && 'name is already used')
+          }
           error={isNameEmpty || isNameAlreadyUsed}
         />
-          <TextField
-            id="deadLine"
-            label="dead line"
-            type="date"
-            name="deadLine"
-            onChange={handleInputs}
-            sx={{ width: 220 }}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            value={newTodo.deadLine}
-          />
+        <TextField
+          id="deadLine"
+          label="dead line"
+          type="date"
+          name="deadLine"
+          onChange={handleInputs}
+          sx={{ width: 220 }}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          value={newTodo.deadLine}
+        />
         <Textarea
           minRows={2}
           placeholder="type your description"
@@ -89,13 +93,16 @@ const CreateNewTodo = () => {
           onChange={handleInputs}
         />
 
-
-        <PurpleButton variant="contained" type="submit" disabled={isNameAlreadyUsed || isNameEmpty}>
+        <PurpleButton
+          variant="contained"
+          type="submit"
+          disabled={isNameAlreadyUsed || isNameEmpty}
+        >
           Create
         </PurpleButton>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default CreateNewTodo;
+export default CreateNewTodo

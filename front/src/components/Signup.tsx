@@ -1,82 +1,81 @@
-import { FormEvent, useState, ChangeEvent, useContext } from "react";
-import { AuthContext } from "../context/auth.context";
-import axios from "axios";
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
-import { PurpleButton, PurpleTextField } from "../utils/mui-custom-colors";
+import { FormEvent, useState, ChangeEvent, useContext } from 'react'
+import { AuthContext } from '../context/auth.context'
+import axios from 'axios'
+import Alert from '@mui/material/Alert'
+import AlertTitle from '@mui/material/AlertTitle'
+import { PurpleButton, PurpleTextField } from '../utils/mui-custom-colors'
 import {
   detailsAboutNeededCharactersInPass,
   isEmailValidFn,
   isPasswordValidFn,
-} from "../utils/signugFieldsTests";
+} from '../utils/signugFieldsTests'
 
-import { SignupFullInterface } from "../@types/authContext.type";
-import { AuthContextInterface } from "../@types/authContext.type";
+import { SignupFullInterface } from '../@types/authContext.type'
+import { AuthContextInterface } from '../@types/authContext.type'
 
-import "./styles/signup.css";
+import './styles/signup.css'
 
 interface SignupComponentInterface {
-  setIsLoginNotSignup: (isLoginNotSignup: boolean) => void;
+  setIsLoginNotSignup: (isLoginNotSignup: boolean) => void
 }
 
 const Signup = ({
   setIsLoginNotSignup,
 }: SignupComponentInterface): JSX.Element => {
-  const { API_URL } =
-    useContext(AuthContext) as AuthContextInterface;
+  const { API_URL } = useContext(AuthContext) as AuthContextInterface
   const [inputsState, setInputsState] = useState<SignupFullInterface>({
-    email: "",
-    password: "",
-    firstname: "",
-    lastname: "",
-    emailConf: "",
-    passwordConf: "",
-  });
-  const [isSignupError, setIsSignupError] = useState<boolean>(false);
+    email: '',
+    password: '',
+    firstname: '',
+    lastname: '',
+    emailConf: '',
+    passwordConf: '',
+  })
+  const [isSignupError, setIsSignupError] = useState<boolean>(false)
 
-  const [isFirstNameValid, setIsFirstNameValid] = useState<boolean>(true);
-  const [isLastNameValid, setIsLastNameValid] = useState<boolean>(true);
+  const [isFirstNameValid, setIsFirstNameValid] = useState<boolean>(true)
+  const [isLastNameValid, setIsLastNameValid] = useState<boolean>(true)
 
-  const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
-  const [isPasswordValid, setIsPasswordValid] = useState<boolean>(true);
-  const [isPasswordsEquals, setIsPasswordsEquals] = useState<boolean>(true);
-  const [isEmailsEquals, setIsEmailsEquals] = useState<boolean>(true);
+  const [isEmailValid, setIsEmailValid] = useState<boolean>(true)
+  const [isPasswordValid, setIsPasswordValid] = useState<boolean>(true)
+  const [isPasswordsEquals, setIsPasswordsEquals] = useState<boolean>(true)
+  const [isEmailsEquals, setIsEmailsEquals] = useState<boolean>(true)
 
   const handleInputs = (
     e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    if (e.target && "value" in e.target && "name" in e.target) {
-      setIsSignupError(false);
+    if (e.target && 'value' in e.target && 'name' in e.target) {
+      setIsSignupError(false)
       const newValues: SignupFullInterface = {
         ...inputsState,
         [e.target.name]: e.target.value,
-      };
-      setInputsState(newValues);
+      }
+      setInputsState(newValues)
 
-      setIsFirstNameValid(newValues.firstname.length > 0);
-      setIsLastNameValid(newValues.lastname.length > 0);
+      setIsFirstNameValid(newValues.firstname.length > 0)
+      setIsLastNameValid(newValues.lastname.length > 0)
 
-      setIsEmailValid(isEmailValidFn(newValues.email));
-      setIsEmailsEquals(newValues.email === newValues.emailConf);
+      setIsEmailValid(isEmailValidFn(newValues.email))
+      setIsEmailsEquals(newValues.email === newValues.emailConf)
 
-      setIsPasswordValid(isPasswordValidFn(newValues.password));
-      setIsPasswordsEquals(newValues.password === newValues.passwordConf);
+      setIsPasswordValid(isPasswordValidFn(newValues.password))
+      setIsPasswordsEquals(newValues.password === newValues.passwordConf)
     }
-  };
+  }
 
   const handleForm = (e: FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
+    e.preventDefault()
     axios
       .post(`${API_URL}/auth/signup`, inputsState)
-      .then((ans) => {
-        console.log("signup", ans.data);
-        setIsLoginNotSignup(true);
+      .then(ans => {
+        console.log('signup', ans.data)
+        setIsLoginNotSignup(true)
       })
-      .catch((err) => {
-        setIsSignupError(true);
-        console.log("err : ", err);
-      });
-  };
+      .catch(err => {
+        setIsSignupError(true)
+        console.log('err : ', err)
+      })
+  }
 
   return (
     <div className="Signup">
@@ -89,7 +88,7 @@ const Signup = ({
           variant="outlined"
           value={inputsState.firstname}
           onChange={handleInputs}
-          helperText={!isFirstNameValid && "need a first name"}
+          helperText={!isFirstNameValid && 'need a first name'}
           error={!isFirstNameValid}
         />
         <PurpleTextField
@@ -99,7 +98,7 @@ const Signup = ({
           variant="outlined"
           value={inputsState.lastname}
           onChange={handleInputs}
-          helperText={!isLastNameValid && "need a last name"}
+          helperText={!isLastNameValid && 'need a last name'}
           error={!isLastNameValid}
         />
         <PurpleTextField
@@ -109,7 +108,7 @@ const Signup = ({
           variant="outlined"
           value={inputsState.email}
           onChange={handleInputs}
-          helperText={!isEmailValid && "need a valid email"}
+          helperText={!isEmailValid && 'need a valid email'}
           error={!isEmailValid}
         />
         <PurpleTextField
@@ -119,7 +118,7 @@ const Signup = ({
           variant="outlined"
           value={inputsState.emailConf}
           onChange={handleInputs}
-          helperText={!isEmailsEquals && "need the same email"}
+          helperText={!isEmailsEquals && 'need the same email'}
           error={!isEmailsEquals}
         />
         <PurpleTextField
@@ -146,7 +145,7 @@ const Signup = ({
           variant="outlined"
           value={inputsState.passwordConf}
           onChange={handleInputs}
-          helperText={!isPasswordsEquals && "need the same password"}
+          helperText={!isPasswordsEquals && 'need the same password'}
           error={!isPasswordsEquals}
         />
         <PurpleButton
@@ -171,7 +170,7 @@ const Signup = ({
         )}
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default Signup;
+export default Signup

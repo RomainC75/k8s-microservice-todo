@@ -1,16 +1,12 @@
-import { useEffect } from "react";
-import { useState, useContext } from "react";
-import { ListInterface } from "../@types/list.type";
-import { createList, deleteList, getLists } from "../utils/lists-helper";
-import ListItem from "./ListItem";
-import CreateNewList from "./CreateNewList";
-import toast from 'react-hot-toast';
+import { useEffect, useContext } from 'react'
+import ListItem from './ListItem'
+import CreateNewList from './CreateNewList'
 
-import { DataContext } from "../context/data.context";
-import { DataContextInterface } from "../@types/dataContext.type";
+import { DataContext } from '../context/data.context'
+import { DataContextInterface } from '../@types/dataContext.type'
 
-import "./styles/listPanel.css";
-import ScrollingSection from "./ScrollingSection";
+import './styles/listPanel.css'
+import ScrollingSection from './ScrollingSection'
 
 const ListPanel = () => {
   // const { authenticateUser, isLoading, isLoggedIn, user } = useContext(
@@ -21,31 +17,34 @@ const ListPanel = () => {
     setSelectedListId,
     isListPanelDisplayed,
     lists,
-    setLists,
     handleGetLists,
     handleDeleteList,
-    handleCreateNewList
-  } = useContext(DataContext) as DataContextInterface;
+    handleCreateNewList,
+  } = useContext(DataContext) as DataContextInterface
 
   useEffect(() => {
-    handleGetLists();
-  }, []);
+    handleGetLists()
+  }, [])
 
   useEffect(() => {
     const isSelecteListStillInLists: boolean = lists.some(
-      (list) => list._id === selectedListId
-    );
+      list => list._id === selectedListId
+    )
     if (!isSelecteListStillInLists) {
-      setSelectedListId(null);
+      setSelectedListId(null)
     }
-  }, [lists]);
+  }, [lists])
 
   return (
-    <section className={`ListPanel ${!isListPanelDisplayed ? "hide" : ""}`}>
+    <section className={`ListPanel ${!isListPanelDisplayed ? 'hide' : ''}`}>
       <h2>ALL LISTS</h2>
-      <ScrollingSection margin={20} menuName={`list menu (${lists.length})`} isOpenedByDefault>
+      <ScrollingSection
+        margin={20}
+        menuName={`list menu (${lists.length})`}
+        isOpenedByDefault
+      >
         <ul className="list">
-          {lists.map((list) => (
+          {lists.map(list => (
             <ListItem
               key={list._id}
               listItem={list}
@@ -63,7 +62,7 @@ const ListPanel = () => {
         />
       </ScrollingSection>
     </section>
-  );
-};
+  )
+}
 
-export default ListPanel;
+export default ListPanel

@@ -1,67 +1,72 @@
-import { useState, createContext, useEffect, PropsWithChildren } from "react";
 import {
-  AuthContextInterface,
-  UserInterface,
-} from "../@types/authContext.type";
-import { NavigateFunction, useNavigate } from "react-router-dom";
-import axios from "axios";
+  useState,
+  createContext,
+  useEffect,
+  type PropsWithChildren,
+} from 'react'
+import {
+  type AuthContextInterface,
+  type UserInterface,
+} from '../@types/authContext.type'
+import { type NavigateFunction, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+const API_URL: string = process.env.REACT_APP_API_URL || 'http://localhost:5000'
 
-const AuthContext = createContext<AuthContextInterface | null>(null);
+const AuthContext = createContext<AuthContextInterface | null>(null)
 
 const AuthProviderWrapper = (props: PropsWithChildren): JSX.Element => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [user, setUser] = useState<UserInterface | null>(null);
-  const navigate: NavigateFunction = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [user, setUser] = useState<UserInterface | null>(null)
+  const navigate: NavigateFunction = useNavigate()
 
   const storeToken = (token: string): void => {
-    localStorage.setItem("authToken", token);
-  };
+    localStorage.setItem('authToken', token)
+  }
 
   const removeToken = () => {
-    localStorage.removeItem("authToken");
-    setUser(null);
+    localStorage.removeItem('authToken')
+    setUser(null)
     navigate('/auth')
-  };
+  }
 
   const logOutUser = () => {
-    setUser(null);
-  };
+    setUser(null)
+  }
 
   const authenticateUser = (): void => {
-    const storedToken: string | null = localStorage.getItem("authToken");
+    const storedToken: string | null = localStorage.getItem('authToken')
 
     if (!storedToken) {
-      setIsLoggedIn(false);
-      setIsLoading(false);
-      setUser(null);
-      return;
+      setIsLoggedIn(false)
+      setIsLoading(false)
+      setUser(null)
+      return
     }
-    setIsLoading(true);
+    setIsLoading(true)
     axios
       .get(`${API_URL}/auth/verify`, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
         },
       })
-      .then((ans) => {
-        setIsLoggedIn(true);
-        setIsLoading(false);
-        setUser(ans.data);
+      .then(ans => {
+        setIsLoggedIn(true)
+        setIsLoading(false)
+        setUser(ans.data)
       })
-      .catch((err) => {
-        setIsLoading(false);
-        setIsLoading(false);
-        removeToken();
-        navigate("/");
-      });
-  };
+      .catch(() => {
+        setIsLoading(false)
+        setIsLoading(false)
+        removeToken()
+        navigate('/')
+      })
+  }
 
   useEffect(() => {
-    authenticateUser();
-  }, []);
+    authenticateUser()
+  }, [])
 
   return (
     <AuthContext.Provider
@@ -73,12 +78,12 @@ const AuthProviderWrapper = (props: PropsWithChildren): JSX.Element => {
         authenticateUser,
         logOutUser,
         API_URL,
-        removeToken
+        removeToken,
       }}
     >
       {props.children}
     </AuthContext.Provider>
-  );
-};
+  )
+}
 
-export { AuthContext, AuthProviderWrapper };
+export { AuthContext, AuthProviderWrapper }

@@ -1,13 +1,13 @@
-import { useContext } from "react";
-import { DataContext } from "../context/data.context";
-import TodosList from "./TodosList";
-import CreateNewTodo from "./CreateNewTodo";
-import ScrollingSection from "./ScrollingSection";
-import { countTodosRegardingTheState } from "../utils/todos-helper";
+import { useContext } from 'react'
+import { DataContext } from '../context/data.context'
+import TodosList from './TodosList'
+import CreateNewTodo from './CreateNewTodo'
+import ScrollingSection from './ScrollingSection'
+import { countTodosRegardingTheState } from '../utils/todos-helper'
 
-import { DataContextInterface } from "../@types/dataContext.type";
+import { DataContextInterface } from '../@types/dataContext.type'
 
-import "./styles/taskPanel.css";
+import './styles/taskPanel.css'
 
 const TaskPanel = (): JSX.Element => {
   const {
@@ -17,12 +17,12 @@ const TaskPanel = (): JSX.Element => {
     isLoadingTodos,
     isListPanelDisplayed,
     isDetailsPanelDisplayed,
-  } = useContext(DataContext) as DataContextInterface;
+  } = useContext(DataContext) as DataContextInterface
 
   return (
     <section
-      className={`TaskPanel ${isListPanelDisplayed ? "showListPanel" : " "} ${
-        isDetailsPanelDisplayed ? "showDetailsPanel" : ""
+      className={`TaskPanel ${isListPanelDisplayed ? 'showListPanel' : ' '} ${
+        isDetailsPanelDisplayed ? 'showDetailsPanel' : ''
       }`}
     >
       <div className="title">
@@ -50,7 +50,7 @@ const TaskPanel = (): JSX.Element => {
                     false
                   )})`}
                 >
-                  <TodosList todos={todos.filter((todo) => !todo.isDone)} />
+                  <TodosList todos={todos.filter(todo => !todo.isDone)} />
                 </ScrollingSection>
               </div>
 
@@ -61,19 +61,23 @@ const TaskPanel = (): JSX.Element => {
                     true
                   )})`}
                 >
-                  <TodosList todos={todos.filter((todo) => todo.isDone)} />
+                  <TodosList todos={todos.filter(todo => todo.isDone)} />
                 </ScrollingSection>
               </div>
             </>
           ) : (
             <>
-              <p className="warning">{lists.length===0 ? "Please create a list before adding a todo !" : "Please choose a list"}</p>
+              <p className="warning">
+                {lists.length === 0
+                  ? 'Please create a list before adding a todo !'
+                  : 'Please choose a list'}
+              </p>
             </>
           )}
         </>
       )}
     </section>
-  );
-};
+  )
+}
 
-export default TaskPanel;
+export default TaskPanel
