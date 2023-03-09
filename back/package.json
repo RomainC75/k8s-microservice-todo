@@ -11,7 +11,8 @@
     "dev:static": "ts-node-dev  src/bin/www.ts",
     "test": "mocha ./dist/tests",
     "test:watch": "nodemon  --exec npx mocha ./dist/tests || true",
-    "start:old": "node ./bin/www"
+    "start:old": "node ./bin/www",
+    "dev:ts-node-dev":"ts-node-dev --respawn src/bin/www.ts"
   },
   "dependencies": {
     "axios": "^1.3.4",
