@@ -5,13 +5,22 @@ interface AxiosParamsInterface {
     url: string
   }
 
-type AxiosServiceResponse = {
+interface AxiosTokenHeader {
+    headers:{
+        Authorization: string
+    }
+}
+
+  type AxiosServiceResponse = {
     data:Pick<AxiosResponse,"data">
     status:number
 }
+
+
   
   export {
     AxiosParamsInterface,
-    AxiosServiceResponse
+    AxiosServiceResponse,
+    AxiosTokenHeader
   }
   
