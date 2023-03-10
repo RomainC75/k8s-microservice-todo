@@ -14,7 +14,7 @@ services:
       - PORT=${BACK_PORT}
       - DOMAIN=${BACK_DOMAIN}
       - ORIGIN=${ORIGIN}
-      - MONGIDB_URI=${BACK_MONGIDB_URI}
+      - MONGODB_URI=${BACK_MONGODB_URI}
       - TOKEN_SECRET=${BACK_TOKEN_SECRET}
     
   front:
@@ -29,3 +29,25 @@ services:
       - ./front/src:/app/src
     environment:
       - REACT_APP_API_URL=${BACK_DOMAIN}:${BACK_PORT}
+
+  # back_test:
+  #   container_name: saegus-test
+  #   restart: always
+  #   build:
+  #     context: ./back
+  #     dockerfile: Dockerfile.dev
+  #   ports:
+  #     - ${TEST_PORT}:${TEST_PORT}
+  #   volumes:
+  #     - ./back/src:/app/src
+  #   environment:
+  #     - PORT=${TEST_PORT}
+  #     - DOMAIN=${BACK_DOMAIN}
+  #     - ORIGIN=${ORIGIN}
+  #     - MONGODB_URI=${BACK_MONGODB_URI}
+  #     - TOKEN_SECRET=${BACK_TOKEN_SECRET}
+  #     - API_DOMAIN=back
+  #     - API_PORT=${BACK_PORT}
+  #   depends_on:
+  #     - front
+  #   command: ["npm", "run", "test:watch"]
