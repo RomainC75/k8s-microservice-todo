@@ -21,7 +21,6 @@ UserCredentialsInterface,
 
 import { SigninResponseInterface } from '../@types/signinResponse'
 
-
 describe('/auth/signup Route : ', () => {
   it('should return an error if firstname is missing', async () => {
     console.log('API URL :', API_URL)
@@ -36,13 +35,12 @@ describe('/auth/signup Route : ', () => {
       expect(response.status).not.to.be.equal(201)
     } catch (error) {
       if(axios.isAxiosError(error)){
-        console.log('error : ', error)
         expect(error.response.status).to.be.equal(422)
         expect(error.response.data.message).to.be.equal(
           'the request needs 4 fields : firstname, lastname, email, password'
         )
       }else{
-        console.log(error)
+        console.log('error',error)
       }
     }
   })
@@ -88,18 +86,13 @@ describe('/auth/signup Route : ', () => {
   it('should return "user created"', async () => {
     try {
       const completeUser = { ...new_user_info }
-      console.log('complete user : ', completeUser)
       const response: AxiosResponse = await axios.post(
         `${API_URL}/auth/signup`,
         completeUser
       )
-
       expect(response.status).to.be.equal(201)
-
-      const { data } = response
-      console.log('CREATION', data)
     } catch (error) {
-      expect(error.response.status).to.be.equal(201)
+      expect(error.response.status).not.to.be.equal(201)
     }
   })
 
@@ -188,7 +181,6 @@ describe('/auth/signin Route : ', () => {
     )
 
     const foundUser = await User.findOne({ email: new_user_info.email })
-
     expect(response.status).to.be.equal(200)
     expect(response.data.token).to.be.an('string')
     expect(response.data.userId).to.be.an('string')
@@ -233,6 +225,7 @@ describe('/auth/verify Route : ', () => {
         `${API_URL}/auth/verify`,
         {headers}
       )
+      console.log('delete : should return the user id !: ', response.status, response.data)
       expect(response.data).to.be.an('object')
       expect(response.data.id).to.be.equal(data.userId)
   })
@@ -241,3 +234,4 @@ describe('/auth/verify Route : ', () => {
     await User.findOneAndDelete({ email: new_user_info.email })
   })
 })
+

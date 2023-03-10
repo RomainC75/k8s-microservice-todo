@@ -14,6 +14,7 @@ export const getAllTodos = async (
   next: NextFunction
 ) => {
   try {
+    
     const listId: string = req.params.listId
     const foundList: ListInterface | null = await List.findById(listId)
     if (!foundList) {
