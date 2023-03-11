@@ -22,8 +22,6 @@ import { createUser, deleteUser } from './utils/user.handler'
 let listId: string | null = null
 let usersInfos: UserInfosInterface[] = []
 
-
-
 describe('/todo/list Route : ', () => {
   before(async () => {
     try {
@@ -174,7 +172,24 @@ describe('/todo/list Route : ', () => {
     }
   })
 
-  // it('PUT /list/:listId => should change not change the list if the user is not authorized', async ()=>{})
+  it('PUT /list/:listId => should change not change the list if the user is not authorized', async ()=>{
+    try {
+      
+      const user0List = await List.findOne({userId:usersInfos[0].userId})
+      const name = "myList3"
+      const response: AxiosResponse = await axios.put(
+        `${API_URL}/todo/list/${user0List._id}`,
+        { name },
+        tokenHeader(usersInfos[1].token)
+      )
+        expect(response.status).not.to.be.equal(202)
+    } catch (error) {
+      expect(error.response.status).to.be.equal(401)
+      expect(error.response.data).to.be.an('object')
+      expect(error.response.data).to.have.all.keys('message')
+      expect(error.response.data.message).to.be.equal('unauthorized')
+    }
+  })
 
   it('PUT /list/:listId => should change the list Id', async () => {
     try {
@@ -198,6 +213,5 @@ describe('/todo/list Route : ', () => {
     await List.deleteMany({ userId: user._id.toString() })
     // await User.findOneAndDelete({ email: new_user_info.email })
     await Promise.allSettled( new_users.map(user=> deleteUser(user.email) ) )
-    
   })
 })
