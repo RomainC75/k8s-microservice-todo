@@ -1,7 +1,7 @@
 import chai from 'chai'
 const expect = chai.expect
 import { describe, it, after } from 'mocha'
-import { new_user_info } from './utils/utils'
+import { new_user_info } from './utils/constants/user.utils'
 require('../db')
 import axios, { AxiosResponse } from 'axios'
 
