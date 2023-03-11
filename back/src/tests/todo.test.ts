@@ -1,7 +1,11 @@
 import chai from 'chai'
 const expect = chai.expect
 import { describe, it, after, before } from 'mocha'
-import { new_user_info, new_user_info2, new_users } from './utils/constants/user.utils'
+import {
+  new_user_info,
+  new_user_info2,
+  new_users,
+} from './utils/constants/user.utils'
 require('../db')
 import axios, { AxiosResponse } from 'axios'
 import bcrypt from 'bcrypt'
@@ -18,6 +22,7 @@ import { tokenHeader } from './utils/axios.headers.utils'
 import List from '../models/list.model'
 import { UserInfosInterface } from './@types/userInfos.type'
 import { createUser, deleteUser } from './utils/user.handler'
+import { ListInterface } from '../@types/list'
 
 let listId: string | null = null
 let usersInfos: UserInfosInterface[] = []
@@ -25,7 +30,7 @@ let usersInfos: UserInfosInterface[] = []
 describe('/todo/list Route : ', () => {
   before(async () => {
     try {
-      usersInfos = await Promise.all( new_users.map(user=> createUser(user) ) )
+      usersInfos = await Promise.all(new_users.map((user) => createUser(user)))
     } catch (error) {
       console.log('==>', error)
     }
@@ -156,10 +161,10 @@ describe('/todo/list Route : ', () => {
 
   it('PUT /list/:listId => should not find the list the id is invalid', async () => {
     try {
-      const listId = 'aaaaaaaaaaaaaaaaaaaaaaaa'
+      const fakeListId = 'aaaaaaaaaaaaaaaaaaaaaaaa'
       const name = 'newList2'
       const response: AxiosResponse = await axios.put(
-        `${API_URL}/todo/list/${listId}`,
+        `${API_URL}/todo/list/${fakeListId}`,
         { name },
         tokenHeader(usersInfos[0].token)
       )
@@ -172,17 +177,16 @@ describe('/todo/list Route : ', () => {
     }
   })
 
-  it('PUT /list/:listId => should change not change the list if the user is not authorized', async ()=>{
+  it('PUT /list/:listId => should change not change the list if the user is not authorized', async () => {
     try {
-      
-      const user0List = await List.findOne({userId:usersInfos[0].userId})
-      const name = "myList3"
+      const user0List = await List.findOne({ userId: usersInfos[0].userId })
+      const name = 'myList3'
       const response: AxiosResponse = await axios.put(
         `${API_URL}/todo/list/${user0List._id}`,
         { name },
         tokenHeader(usersInfos[1].token)
       )
-        expect(response.status).not.to.be.equal(202)
+      expect(response.status).not.to.be.equal(202)
     } catch (error) {
       expect(error.response.status).to.be.equal(401)
       expect(error.response.data).to.be.an('object')
@@ -191,7 +195,7 @@ describe('/todo/list Route : ', () => {
     }
   })
 
-  it('PUT /list/:listId => should change the list Id', async () => {
+  it('PUT /list/:listId => should change the list name ', async () => {
     try {
       const name = 'myNewList'
       const response: AxiosResponse = await axios.put(
@@ -208,10 +212,60 @@ describe('/todo/list Route : ', () => {
     }
   })
 
+  // == Delete
+
+  it('DELETE /list/:listId => should return an error if the id is invalid', async () => {
+    try {
+      const fakeListId = 'aaaaaaaaaaaaaaaaaaaaaaaa'
+      const response: AxiosResponse = await axios.delete(
+        `${API_URL}/todo/list/${fakeListId}`,
+        tokenHeader(usersInfos[0].token)
+      )
+      expect(response.status).not.to.be.equal(202)
+     
+    } catch (error) {
+      expect(error.response.status).to.equal(409)
+      expect(error.response.data).to.be.an('object')
+      expect(error.response.data).to.have.all.keys('message')
+      expect(error.response.data.message).to.be.equal('list not found')
+    }
+  })
+
+  it('PUT /list/:listId => should change not change the list if the user is not authorized', async () => {
+    try {
+      const user0List:ListInterface = await List.findOne({ userId: usersInfos[0].userId })
+      const response: AxiosResponse = await axios.delete(
+        `${API_URL}/todo/list/${user0List._id}`,
+        tokenHeader(usersInfos[1].token)
+      )
+      expect(response.status).not.to.be.equal(202)
+    } catch (error) {
+      expect(error.response.status).to.be.equal(401)
+      expect(error.response.data).to.be.an('object')
+      expect(error.response.data).to.have.all.keys('message')
+      expect(error.response.data.message).to.be.equal('unauthorized')
+    }
+  })
+
+  it('DELETE /list/:listId => should delete the list ', async () => {
+    try {
+      const response: AxiosResponse = await axios.delete(
+        `${API_URL}/todo/list/${listId}`,
+        tokenHeader(usersInfos[0].token)
+      )
+      expect(response.status).to.be.equal(202)
+      expect(response.data).to.be.an('object')
+      expect(response.data).to.have.all.keys('message')
+      expect(response.data.message).to.be.equal('list deleted')
+    } catch (error) {
+      expect(error.response.status).to.equal(202)
+    }
+  })
+
   after(async () => {
     const user = await User.findOne({ email: new_users[0].email })
     await List.deleteMany({ userId: user._id.toString() })
     // await User.findOneAndDelete({ email: new_user_info.email })
-    await Promise.allSettled( new_users.map(user=> deleteUser(user.email) ) )
+    await Promise.allSettled(new_users.map((user) => deleteUser(user.email)))
   })
 })
