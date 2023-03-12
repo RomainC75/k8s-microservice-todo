@@ -1,9 +1,8 @@
 import { Request, Response, NextFunction } from 'express'
-import User from '../models/user.model'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { AuthenticatedRequest } from '../@types/authenticatedRequest'
-// import {isEveryStringKeyPresentFn} from '../utils/isEveryStringKeysPresent';
+import AuthService from '../services/auth.service'
 
 export const postSignup = async (
   req: Request,
@@ -11,20 +10,12 @@ export const postSignup = async (
   next: NextFunction
 ) => {
   try {
-    const { body } = req
-
-    const foundUser = await User.findOne({ email: body.email })
-    if (foundUser) {
+    const authService = new AuthService()
+    
+    if (await authService.isEmailInDb(req.body.email)) {
       return res.status(409).json({ message: 'user already exists' })
     }
-
-    const salt = await bcrypt.genSalt(10)
-    const hash = await bcrypt.hash(body.password, salt)
-    await User.create({
-      ...body,
-      password: hash,
-    })
-
+    await authService.signup(req.body)
     res.status(201).json({ message: 'user created' })
   } catch (error) {
     next(error)
@@ -36,19 +27,18 @@ export const postSignin = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { body } = req
-  console.log('signin:', body)
   try {
-    const foundUser = await User.findOne({ email: body.email })
+    const authService = new AuthService()
+    const foundUser = await authService.getUserByEmail(req.body.email)
     if (!foundUser) {
       return res.status(403).json({ message: 'wrong email or password' })
     }
 
     const isPasswordValid: boolean = await bcrypt.compare(
-      body.password,
+      req.body.password,
       foundUser.password
     )
-    console.log('VERIFICATRION : ', foundUser.password, body.password)
+    
     if (!isPasswordValid) {
       return res.status(403).json({ message: 'wrong email or password' })
     }
@@ -64,7 +54,6 @@ export const postSignin = async (
       ),
     })
   } catch (error) {
-    console.log(error)
     next(error)
   }
 }
