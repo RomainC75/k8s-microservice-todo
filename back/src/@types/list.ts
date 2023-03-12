@@ -1,4 +1,4 @@
-import { ObjectId } from "mongoose"
+import { ObjectId } from 'mongoose'
 
 interface ListInterface {
   _id: ObjectId
@@ -7,8 +7,8 @@ interface ListInterface {
   createdAt: string
   updatedAt: string
   __v: number
-  todosNumber?:number
-  toObject:()=>ListInterface
+  todosNumber?: number
+  toObject: () => ListInterface
 }
 
-export {ListInterface}
+export { ListInterface }

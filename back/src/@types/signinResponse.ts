@@ -1,6 +1,6 @@
-interface SigninResponseInterface{
-    userId:string,
-    token:string
+interface SigninResponseInterface {
+  userId: string
+  token: string
 }
 
-export { SigninResponseInterface}
+export { SigninResponseInterface }

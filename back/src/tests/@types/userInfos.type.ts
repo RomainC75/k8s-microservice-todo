@@ -1,8 +1,6 @@
-interface UserInfosInterface{
-    token: string
-    userId: string
+interface UserInfosInterface {
+  token: string
+  userId: string
 }
 
-export {
-    UserInfosInterface
-}
+export { UserInfosInterface }

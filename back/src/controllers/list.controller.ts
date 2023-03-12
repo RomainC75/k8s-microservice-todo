@@ -1,12 +1,9 @@
 import { Response, NextFunction } from 'express'
-import List from'../models/list.model'
-import Todo from'../models/todo.model'
+import List from '../models/list.model'
 
 import { AuthenticatedRequest } from '../@types/authenticatedRequest'
 import { ListInterface } from '../@types/list'
 import ListService from '../services/list.service'
-
-
 
 export const getAllLists = async (
   req: AuthenticatedRequest,
@@ -17,7 +14,6 @@ export const getAllLists = async (
     const listService = new ListService()
     const data = await listService.getAll(req.user.id)
     res.status(200).json(data)
-
   } catch (error) {
     next(error)
   }
@@ -43,7 +39,7 @@ export const createList = async (
 
     const listService = new ListService()
     const ans: ListInterface = await listService.post(userId, req.body.name)
-    
+
     res.status(201).json({
       message: 'todo created',
       list: {
@@ -78,7 +74,10 @@ export const putList = async (
     }
 
     const listService = new ListService()
-    const {_id, name}: ListInterface = await listService.putNewName(listId,req.body.name)
+    const { _id, name }: ListInterface = await listService.putNewName(
+      listId,
+      req.body.name
+    )
 
     res.status(202).json({
       _id,
@@ -108,8 +107,8 @@ export const deleteList = async (
 
     const listService = new ListService()
     await listService.deleteListAndTodos(listId)
-    
-    res.status(202).json({message: 'list deleted'})
+
+    res.status(202).json({ message: 'list deleted' })
   } catch (error) {
     next(error)
   }

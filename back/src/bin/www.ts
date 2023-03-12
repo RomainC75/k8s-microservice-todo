@@ -5,17 +5,17 @@ import dotenv from 'dotenv'
 dotenv.config()
 require('../db/index')
 
-const port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
-app.listen(port,()=>console.log(`==>listening on port : ${port}`))
+const port = normalizePort(process.env.PORT || '3000')
+app.set('port', port)
+app.listen(port, () => console.log(`==>listening on port : ${port}`))
 
 function normalizePort(val) {
-  const port = parseInt(val, 10);
+  const port = parseInt(val, 10)
   if (isNaN(port)) {
-    return val;
+    return val
   }
   if (port >= 0) {
-      return port;
+    return port
   }
-  return false;
+  return false
 }

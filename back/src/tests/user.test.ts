@@ -15,7 +15,7 @@ dotenv.config()
 const API_URL = 'http://localhost:5010'
 
 import {
-UserCredentialsInterface,
+  UserCredentialsInterface,
   UserInterface,
 } from '../@types/userInterface'
 
@@ -34,13 +34,13 @@ describe('/auth/signup Route : ', () => {
       )
       expect(response.status).not.to.be.equal(201)
     } catch (error) {
-      if(axios.isAxiosError(error)){
+      if (axios.isAxiosError(error)) {
         expect(error.response.status).to.be.equal(422)
         expect(error.response.data.message).to.be.equal(
           'the request needs 4 fields : firstname, lastname, email, password'
         )
-      }else{
-        console.log('error',error)
+      } else {
+        console.log('error', error)
       }
     }
   })
@@ -190,8 +190,8 @@ describe('/auth/signin Route : ', () => {
 })
 
 let headers
-let responseSI: AxiosResponse|undefined
-let data:SigninResponseInterface|undefined
+let responseSI: AxiosResponse | undefined
+let data: SigninResponseInterface | undefined
 
 describe('/auth/verify Route : ', () => {
   beforeEach(async () => {
@@ -199,13 +199,10 @@ describe('/auth/verify Route : ', () => {
       email: new_user_info.email,
       password: new_user_info.password,
     }
-    responseSI = await axios.post(
-      `${API_URL}/auth/signin`,
-      credentials
-    )
+    responseSI = await axios.post(`${API_URL}/auth/signin`, credentials)
     data = responseSI.data
-    headers= {
-      Authorization:`Bearer ${data.token}`
+    headers = {
+      Authorization: `Bearer ${data.token}`,
     }
   })
 
@@ -220,18 +217,20 @@ describe('/auth/verify Route : ', () => {
     }
   })
 
-  it('should return the user Id', async () => {    
-      const response: AxiosResponse = await axios.get(
-        `${API_URL}/auth/verify`,
-        {headers}
-      )
-      console.log('delete : should return the user id !: ', response.status, response.data)
-      expect(response.data).to.be.an('object')
-      expect(response.data.id).to.be.equal(data.userId)
+  it('should return the user Id', async () => {
+    const response: AxiosResponse = await axios.get(`${API_URL}/auth/verify`, {
+      headers,
+    })
+    console.log(
+      'delete : should return the user id !: ',
+      response.status,
+      response.data
+    )
+    expect(response.data).to.be.an('object')
+    expect(response.data.id).to.be.equal(data.userId)
   })
 
   after(async () => {
     await User.findOneAndDelete({ email: new_user_info.email })
   })
 })
-

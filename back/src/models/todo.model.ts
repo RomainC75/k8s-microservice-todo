@@ -15,20 +15,20 @@ const todoSchema = new Schema<TodoInterface>(
     description: {
       type: String,
     },
-    deadLine:{
-      type:Date
+    deadLine: {
+      type: Date,
     },
-    isDone:{
-        type: Boolean,
-        default: false
-    }
+    isDone: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
   }
 )
 
-todoSchema.index({listId:1, name:1},{unique:true})
+todoSchema.index({ listId: 1, name: 1 }, { unique: true })
 
 const Todo = model<TodoInterface>('Todo', todoSchema)
 

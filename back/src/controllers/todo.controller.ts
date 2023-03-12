@@ -14,7 +14,6 @@ export const getAllTodos = async (
   next: NextFunction
 ) => {
   try {
-    
     const listId: string = req.params.listId
     const foundList: ListInterface | null = await List.findById(listId)
     if (!foundList) {
@@ -44,13 +43,16 @@ export const createTodo = async (
     if (foundList.userId.toString() !== req.user.id) {
       return res.status(401).json({ message: 'unauthorized' })
     }
-    if(!req.body.name){
-        return res.status(409).json({message:"name is needed"})
+    if (!req.body.name) {
+      return res.status(409).json({ message: 'name is needed' })
     }
-    
-    const foundTodo:TodoInterface|null = await Todo.findOne({name:req.body.name, listId})
-    if(foundTodo){
-        return res.status(401).json({message:"todo name already used"})
+
+    const foundTodo: TodoInterface | null = await Todo.findOne({
+      name: req.body.name,
+      listId,
+    })
+    if (foundTodo) {
+      return res.status(401).json({ message: 'todo name already used' })
     }
 
     const ans = await Todo.create({ ...req.body, listId })

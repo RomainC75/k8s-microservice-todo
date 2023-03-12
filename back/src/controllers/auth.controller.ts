@@ -1,10 +1,9 @@
-import  { Request, Response, NextFunction } from 'express'
+import { Request, Response, NextFunction } from 'express'
 import User from '../models/user.model'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import { AuthenticatedRequest } from "../@types/authenticatedRequest";
+import { AuthenticatedRequest } from '../@types/authenticatedRequest'
 // import {isEveryStringKeyPresentFn} from '../utils/isEveryStringKeysPresent';
-
 
 export const postSignup = async (
   req: Request,
@@ -45,7 +44,7 @@ export const postSignin = async (
       return res.status(403).json({ message: 'wrong email or password' })
     }
 
-    const isPasswordValid:boolean = await bcrypt.compare(
+    const isPasswordValid: boolean = await bcrypt.compare(
       body.password,
       foundUser.password
     )
@@ -56,9 +55,13 @@ export const postSignin = async (
 
     res.status(200).json({
       userId: foundUser._id,
-      token: jwt.sign({ userId: foundUser._id.toString(), email:foundUser.email }, process.env.TOKEN_SECRET, {
-        expiresIn: '10h',
-      }),
+      token: jwt.sign(
+        { userId: foundUser._id.toString(), email: foundUser.email },
+        process.env.TOKEN_SECRET,
+        {
+          expiresIn: '10h',
+        }
+      ),
     })
   } catch (error) {
     console.log(error)
@@ -66,12 +69,8 @@ export const postSignin = async (
   }
 }
 
-export const verify = async (
-  req: AuthenticatedRequest,
-  res: Response
-) => {
-  if(req.user){
+export const verify = async (req: AuthenticatedRequest, res: Response) => {
+  if (req.user) {
     res.status(200).json(req.user)
   }
-  
 }

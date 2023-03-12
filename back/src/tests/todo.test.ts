@@ -1,9 +1,7 @@
 import chai from 'chai'
 const expect = chai.expect
 import { describe, it, after, before } from 'mocha'
-import {
-  new_users,
-} from './utils/constants/user.utils'
+import { new_users } from './utils/constants/user.utils'
 require('../db')
 import axios, { AxiosResponse } from 'axios'
 
@@ -219,7 +217,6 @@ describe('/todo/list Route : ', () => {
         tokenHeader(usersInfos[0].token)
       )
       expect(response.status).not.to.be.equal(202)
-     
     } catch (error) {
       expect(error.response.status).to.equal(409)
       expect(error.response.data).to.be.an('object')
@@ -230,7 +227,9 @@ describe('/todo/list Route : ', () => {
 
   it('PUT /list/:listId => should change not change the list if the user is not authorized', async () => {
     try {
-      const user0List:ListInterface = await List.findOne({ userId: usersInfos[0].userId })
+      const user0List: ListInterface = await List.findOne({
+        userId: usersInfos[0].userId,
+      })
       const response: AxiosResponse = await axios.delete(
         `${API_URL}/todo/list/${user0List._id}`,
         tokenHeader(usersInfos[1].token)
