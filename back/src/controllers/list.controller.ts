@@ -1,6 +1,4 @@
 import { Response, NextFunction } from 'express'
-import List from '../models/list.model'
-
 import { AuthenticatedRequest } from '../@types/authenticatedRequest'
 import { ListInterface } from '../@types/list'
 import ListService from '../services/list.service'
@@ -29,15 +27,12 @@ export const createList = async (
     if (!('name' in req.body) || typeof req.body.name !== 'string') {
       return res.status(422).json({ message: 'need a name' })
     }
-    const foundList: ListInterface | null = await List.findOne({
-      name: req.body.name,
-      userId,
-    })
-    if (foundList) {
+
+    const listService = new ListService()
+    if (await listService.isAListNameAlreadyUsedByUser(userId,req.body.name)) {
       return res.status(409).json({ message: 'name already exists' })
     }
 
-    const listService = new ListService()
     const ans: ListInterface = await listService.post(userId, req.body.name)
 
     res.status(201).json({
@@ -64,8 +59,9 @@ export const putList = async (
     if (!('name' in req.body) || typeof req.body.name !== 'string') {
       return res.status(422).json({ message: 'need a name' })
     }
-
-    const foundList: ListInterface | null = await List.findById(listId)
+    
+    const listService = new ListService()
+    const foundList: ListInterface | null = await listService.getAListById(listId)
     if (!foundList) {
       return res.status(409).json({ message: 'list not found' })
     }
@@ -73,7 +69,6 @@ export const putList = async (
       return res.status(401).json({ message: 'unauthorized' })
     }
 
-    const listService = new ListService()
     const { _id, name }: ListInterface = await listService.putNewName(
       listId,
       req.body.name
@@ -96,7 +91,10 @@ export const deleteList = async (
   try {
     const { listId } = req.params
     const userId: string = req.user.id
-    const foundList: ListInterface | null = await List.findById(listId)
+    const listService = new ListService()
+
+    const foundList: ListInterface | null = await listService.getAListById(listId)
+
     if (!foundList) {
       return res.status(409).json({ message: 'list not found' })
     }
@@ -105,7 +103,6 @@ export const deleteList = async (
       return res.status(401).json({ message: 'unauthorized' })
     }
 
-    const listService = new ListService()
     await listService.deleteListAndTodos(listId)
 
     res.status(202).json({ message: 'list deleted' })

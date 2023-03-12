@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt'
-import { MongoUserInterface, UserInterface } from '../@types/userInterface'
+import { MongoUserInterface } from '../@types/userInterface'
 import User from '../models/user.model'
 
 export default class AuthService {
@@ -17,10 +17,9 @@ export default class AuthService {
     return foundUser ? true : false
   }
 
-  getUserByEmail = async(email:string):Promise<MongoUserInterface|null>=>{
+  getUserByEmail = async (
+    email: string
+  ): Promise<MongoUserInterface | null> => {
     return await User.findOne({ email })
   }
 }
-
-
-

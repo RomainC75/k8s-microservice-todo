@@ -18,6 +18,21 @@ export default class ListService {
     return data
   }
 
+  getAListById = async (listId: string): Promise<ListInterface | null> => {
+    return await List.findById(listId)
+  }
+
+  isAListNameAlreadyUsedByUser = async (
+    userId: string,
+    name: string
+  ): Promise<boolean> => {
+    const foundList: ListInterface | null = await List.findOne({
+      name,
+      userId,
+    })
+    return foundList ? true : false
+  }
+
   post = async (userId: string, name: string): Promise<ListInterface> => {
     const list: ListInterface = await List.create({
       name: name,
