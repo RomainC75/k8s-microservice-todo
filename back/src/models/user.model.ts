@@ -1,7 +1,7 @@
-import { Schema, model, SchemaTypes } from 'mongoose'
+import { Schema, model, SchemaTypes, Model } from 'mongoose'
 import { MongoUserInterface } from '../@types/userInterface'
 
-const userSchema = new Schema<MongoUserInterface>(
+const userSchema:Schema = new Schema<MongoUserInterface>(
   {
     email: {
       type: String,
@@ -27,6 +27,6 @@ const userSchema = new Schema<MongoUserInterface>(
   }
 )
 
-const User = model<MongoUserInterface>('User', userSchema)
+const User:Model<any, object> = model<MongoUserInterface>('User', userSchema)
 
 export default User

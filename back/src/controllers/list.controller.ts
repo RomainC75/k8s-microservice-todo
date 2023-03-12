@@ -4,6 +4,8 @@ import Todo from'../models/todo.model'
 
 import { AuthenticatedRequest } from '../@types/authenticatedRequest'
 import { ListInterface } from '../@types/list'
+import ListService from '../services/list.service'
+
 
 
 export const getAllLists = async (
@@ -12,15 +14,10 @@ export const getAllLists = async (
   next: NextFunction
 ) => {
   try {
-    const foundLists: ListInterface[] = await List.find({ userId: req.user.id })
-    const data:ListInterface[] = await Promise.all(foundLists.map(async(list:ListInterface)=>{
-        const todosNumber = await Todo.countDocuments({listId:list._id})
-        return {
-          ...list.toObject(),
-          todosNumber
-        }
-    }))
+    const listService = new ListService()
+    const data = await listService.getAll(req.user.id)
     res.status(200).json(data)
+
   } catch (error) {
     next(error)
   }
@@ -43,10 +40,10 @@ export const createList = async (
     if (foundList) {
       return res.status(409).json({ message: 'name already exists' })
     }
-    const ans: ListInterface = await List.create({
-      name: req.body.name,
-      userId,
-    })
+
+    const listService = new ListService()
+    const ans: ListInterface = await listService.post(userId, req.body.name)
+    
     res.status(201).json({
       message: 'todo created',
       list: {
@@ -80,11 +77,8 @@ export const putList = async (
       return res.status(401).json({ message: 'unauthorized' })
     }
 
-    const { _id, name }: ListInterface = await List.findByIdAndUpdate(
-      listId,
-      { name: req.body.name },
-      { new: true }
-    )
+    const listService = new ListService()
+    const {_id, name}: ListInterface = await listService.putNewName(listId,req.body.name)
 
     res.status(202).json({
       _id,
@@ -104,7 +98,6 @@ export const deleteList = async (
     const { listId } = req.params
     const userId: string = req.user.id
     const foundList: ListInterface | null = await List.findById(listId)
-
     if (!foundList) {
       return res.status(409).json({ message: 'list not found' })
     }
@@ -112,10 +105,10 @@ export const deleteList = async (
     if (foundList.userId.toString() !== userId) {
       return res.status(401).json({ message: 'unauthorized' })
     }
-    
-    await Todo.deleteMany({listId})
 
-    await List.findByIdAndDelete(listId)
+    const listService = new ListService()
+    await listService.deleteListAndTodos(listId)
+    
     res.status(202).json({message: 'list deleted'})
   } catch (error) {
     next(error)

@@ -2,13 +2,10 @@ import chai from 'chai'
 const expect = chai.expect
 import { describe, it, after, before } from 'mocha'
 import {
-  new_user_info,
-  new_user_info2,
   new_users,
 } from './utils/constants/user.utils'
 require('../db')
 import axios, { AxiosResponse } from 'axios'
-import bcrypt from 'bcrypt'
 
 import User from '../models/user.model'
 
