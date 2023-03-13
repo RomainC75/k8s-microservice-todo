@@ -1,10 +1,12 @@
 import { Request } from 'express'
 
-interface AuthenticatedRequest extends Request {
-  user?: {
-    id: string
-    email: string
-  }
+interface AuthenticatedUser {
+  id: string,
+  email: string
 }
 
-export { AuthenticatedRequest }
+interface AuthenticatedRequest extends Request {
+  user?: AuthenticatedUser
+}
+
+export { AuthenticatedRequest, AuthenticatedUser }
