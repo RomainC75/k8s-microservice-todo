@@ -2,3 +2,5 @@
 **/.env
 
 back/dist
+mongodb
+database
