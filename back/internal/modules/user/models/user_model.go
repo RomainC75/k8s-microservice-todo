@@ -13,5 +13,4 @@ type User struct {
 	Password string    `gorm:"varchar:191"`
 	FirstName     string    `gorm:"varchar:191"`
 	LastName     string    `gorm:"varchar:191"`
-	// Books	[]*bookModels.Book	`gorm:"foreignKey:UserRefer"`
 }
