@@ -21,5 +21,3 @@ func New() *Controller {
 func (controller *Controller) HandleSignup(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "register form"})
 }
-
-
