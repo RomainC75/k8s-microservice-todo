@@ -3,6 +3,7 @@ package controllers
 import (
 	"net/http"
 
+	UserRequests "github.com/saegus/test-technique-romain-chenard/internal/modules/user/requests"
 	// UserService "github.com/saegus/test-technique-romain-chenard/internal/modules/user/services"
 
 	"github.com/gin-gonic/gin"
@@ -19,5 +20,14 @@ func New() *Controller {
 }
 
 func (controller *Controller) HandleSignup(c *gin.Context) {
+	var newUser UserRequests.SignupRequest
+
+	if err := c.ShouldBind(&newUser); err != nil{
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+		return
+	}
+
+	
+
 	c.JSON(http.StatusOK, gin.H{"message": "register form"})
 }
