@@ -21,8 +21,14 @@ func New() *UserService{
 
 func (userService *UserService) CreateUserSrv (user UserRequest.SignupRequest) (UserModel.User, error){
 	fmt.Println("=>", user)
+	var newUser UserModel.User
 
-	createdUser, err := userService.userRepository.CreateUser(user)
+	newUser.Email= user.Email
+	newUser.Password= user.Password
+	newUser.FirstName= user.FirstName
+	newUser.LastName= user.LastName
+
+	createdUser, err := userService.userRepository.CreateUser(newUser)
 	if err != nil {
 		return UserModel.User{}, err
 	}

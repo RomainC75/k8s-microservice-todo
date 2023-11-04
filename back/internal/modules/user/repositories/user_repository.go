@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	models "github.com/saegus/test-technique-romain-chenard/internal/modules/user/models"
-	UserRequest "github.com/saegus/test-technique-romain-chenard/internal/modules/user/requests"
 	database "github.com/saegus/test-technique-romain-chenard/pkg/database"
 	"gorm.io/gorm"
 )
@@ -20,10 +19,10 @@ func New() *UserRepository{
 	}
 }
 
-func (UserRepository *UserRepository) CreateUser(user UserRequest.SignupRequest) (models.User, error){
+func (UserRepository *UserRepository) CreateUser(user models.User) (models.User, error){
 	var newUser models.User
-	
-	result := UserRepository.DB.Create(user).Scan(&newUser)
+	fmt.Println("user : ", user)
+	result := UserRepository.DB.Create(&user).Scan(&newUser)
 	fmt.Println("==> ", result.RowsAffected)
 	fmt.Println("==> ", newUser)
 	if result.RowsAffected == 0 {
