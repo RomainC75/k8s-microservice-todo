@@ -1,22 +1,24 @@
 version: '3.4'
 services:
-  back:
-    container_name: saegus-back
+  db:
+    image: postgres:12
     restart: always
-    build:
-      context: ./back
-      dockerfile: Dockerfile.dev
-    ports:
-      - ${BACK_PORT}:${BACK_PORT}
-    volumes:
-      - ./back/src:/app/src
     environment:
-      - PORT=${BACK_PORT}
-      - DOMAIN=${BACK_DOMAIN}
-      - ORIGIN=${ORIGIN}
-      - MONGODB_URI=${BACK_MONGODB_URI}
-      - TOKEN_SECRET=${BACK_TOKEN_SECRET}
-    
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB_NAME}
+    ports:
+      - '5432:5432'
+    volumes: 
+      - ./data:/var/lib/postgresql/data
+      - ./data:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8081:8080
+
   front:
     container_name: saegus-front
     restart: always
@@ -51,3 +53,7 @@ services:
   #   depends_on:
   #     - front
   #   command: ["npm", "run", "test:watch"]
+
+# volumes:
+#   data:
+#     driver: local

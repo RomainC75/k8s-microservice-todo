@@ -1,6 +1,7 @@
 **/node_modules
 **/.env
 
+/database
 back/dist
-mongodb
-database
+/mongodb
+/data

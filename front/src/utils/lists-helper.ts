@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios'
+import { AxiosParamsInterface } from '../@types/axios.type'
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000'
 
