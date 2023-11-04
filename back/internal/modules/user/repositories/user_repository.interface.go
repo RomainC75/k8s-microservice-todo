@@ -6,4 +6,5 @@ import (
 
 type UserRepositoryInterface interface {
 	CreateUser(user models.User) (models.User, error)
+	FindUserByEmail(email string) (models.User, error)
 }

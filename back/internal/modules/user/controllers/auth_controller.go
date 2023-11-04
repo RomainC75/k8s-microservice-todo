@@ -1,12 +1,10 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 
 	UserRequests "github.com/saegus/test-technique-romain-chenard/internal/modules/user/requests"
 	UserService "github.com/saegus/test-technique-romain-chenard/internal/modules/user/services"
-	"github.com/saegus/test-technique-romain-chenard/pkg/encrypt"
 	"github.com/saegus/test-technique-romain-chenard/pkg/utils"
 
 	"github.com/gin-gonic/gin"
@@ -36,15 +34,12 @@ func (controller *Controller) HandleSignup(c *gin.Context) {
 		return
 	}
 
-	hashedPassword, err := encrypt.HashAndSalt(newUserReceived.Email)
+	
+	recordedUser, err := controller.userService.CreateUserSrv(newUserReceived)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
 		return
 	}
-	newUserReceived.Password = hashedPassword
-
-	fmt.Println("==> ", hashedPassword)
-	recordedUser, err := controller.userService.CreateUserSrv(newUserReceived)
 
 	c.JSON(http.StatusOK, gin.H{"message": recordedUser})
 }

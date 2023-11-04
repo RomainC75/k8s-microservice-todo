@@ -2,7 +2,6 @@ package repositories
 
 import (
 	"errors"
-	"fmt"
 
 	models "github.com/saegus/test-technique-romain-chenard/internal/modules/user/models"
 	database "github.com/saegus/test-technique-romain-chenard/pkg/database"
@@ -21,12 +20,18 @@ func New() *UserRepository{
 
 func (UserRepository *UserRepository) CreateUser(user models.User) (models.User, error){
 	var newUser models.User
-	fmt.Println("user : ", user)
 	result := UserRepository.DB.Create(&user).Scan(&newUser)
-	fmt.Println("==> ", result.RowsAffected)
-	fmt.Println("==> ", newUser)
 	if result.RowsAffected == 0 {
 		return models.User{}, errors.New("error trying to creat a new user")
 	}
 	return newUser, nil
+}
+
+func (UserRepository *UserRepository) FindUserByEmail(email string) (models.User, error){
+	var foundUser models.User
+	result := UserRepository.DB.Where("email = ?", email).First(&foundUser)
+	if result.RowsAffected == 0 {
+		return models.User{}, errors.New("error trying to creat a new user")
+	}
+	return foundUser, nil
 }

@@ -1,12 +1,14 @@
 package services
 
 import (
+	"errors"
 	"fmt"
 
 	UserModel "github.com/saegus/test-technique-romain-chenard/internal/modules/user/models"
 	UserRepository "github.com/saegus/test-technique-romain-chenard/internal/modules/user/repositories"
 	UserRequest "github.com/saegus/test-technique-romain-chenard/internal/modules/user/requests"
 	SignupResponse "github.com/saegus/test-technique-romain-chenard/internal/modules/user/responses"
+	"github.com/saegus/test-technique-romain-chenard/pkg/encrypt"
 )
 
 type UserService struct {
@@ -23,10 +25,24 @@ func (userService *UserService) CreateUserSrv (user UserRequest.SignupRequest) (
 	fmt.Println("=>", user)
 	var newUser UserModel.User
 
+	hashedPassword, err := encrypt.HashAndSalt(user.Email)
+	if err != nil {
+		return UserModel.User{}, err
+	}
+	
+
+	fmt.Println("==> ", hashedPassword)
+
 	newUser.Email= user.Email
-	newUser.Password= user.Password
+	newUser.Password= hashedPassword
 	newUser.FirstName= user.FirstName
 	newUser.LastName= user.LastName
+
+	_, err = userService.userRepository.FindUserByEmail(user.Email)
+	if err == nil {
+		fmt.Println("ALREADY USED !!!!!")
+		return UserModel.User{}, errors.New("email already used")
+	}
 
 	createdUser, err := userService.userRepository.CreateUser(newUser)
 	if err != nil {
