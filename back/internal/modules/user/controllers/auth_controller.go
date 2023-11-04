@@ -5,6 +5,7 @@ import (
 
 	UserRequests "github.com/saegus/test-technique-romain-chenard/internal/modules/user/requests"
 	// UserService "github.com/saegus/test-technique-romain-chenard/internal/modules/user/services"
+	"github.com/saegus/test-technique-romain-chenard/pkg/utils"
 
 	"github.com/gin-gonic/gin"
 )
@@ -27,7 +28,11 @@ func (controller *Controller) HandleSignup(c *gin.Context) {
 		return
 	}
 
-	
+	err := utils.PasswordConstrainsValidator(newUser.Password)
+	if err != nil {
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+		return
+	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "register form"})
 }
