@@ -2,11 +2,11 @@ package repositories
 
 import (
 	"errors"
+	"fmt"
 
-	"github.com/google/uuid"
 	models "github.com/saegus/test-technique-romain-chenard/internal/modules/list/models"
-	ListRequest "github.com/saegus/test-technique-romain-chenard/internal/modules/list/requests"
 	database "github.com/saegus/test-technique-romain-chenard/pkg/database"
+	"github.com/saegus/test-technique-romain-chenard/pkg/utils"
 	"gorm.io/gorm"
 )
 
@@ -22,15 +22,11 @@ func New() *ListRepository{
 
 	
 
-func (ListRepository *ListRepository) CreateList(list ListRequest.CreateListRequest, userId string) (models.List, error){
-	userUuid, _ := uuid.Parse(userId)
-	listToCreate := models.List{
-		Name: list.Name,
-		UserId: userUuid,
-	}
-	
+func (ListRepository *ListRepository) CreateList(list models.List) (models.List, error){
+	fmt.Println("REPO : ", list)
+	utils.PrettyDisplay(list)
 	var newList models.List
-	result := ListRepository.DB.Create(&listToCreate).Scan(&newList)
+	result := ListRepository.DB.Create(&list).Scan(&newList)
 	if result.RowsAffected == 0 {
 		return models.List{}, errors.New("error trying to creat a new user")
 	}

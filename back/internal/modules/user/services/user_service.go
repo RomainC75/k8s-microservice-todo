@@ -22,17 +22,18 @@ func New() *UserService{
 }
 
 func (userService *UserService) CreateUserSrv (user UserRequest.SignupRequest) (UserModel.User, error){
-	var newUser UserModel.User
-
+	
 	_, err := userService.userRepository.FindUserByEmail(user.Email)
 	if err == nil {
 		return UserModel.User{}, errors.New("email already used")
 	}
-
+	
 	hashedPassword, err := encrypt.HashAndSalt(user.Password)
 	if err != nil {
 		return UserModel.User{}, err
 	}
+	
+	var newUser UserModel.User
 
 	newUser.Email= user.Email
 	newUser.Password= hashedPassword
@@ -49,7 +50,6 @@ func (userService *UserService) CreateUserSrv (user UserRequest.SignupRequest) (
 }
 
 func (userService *UserService) LoginSrv (user UserRequest.LoginRequest) (UserResponse.LoginResponse, error){
-	
 	foundUser, err := userService.userRepository.FindUserByEmail(user.Email)
 	if err != nil {
 		return UserResponse.LoginResponse{}, errors.New("wrong email/password 1")
