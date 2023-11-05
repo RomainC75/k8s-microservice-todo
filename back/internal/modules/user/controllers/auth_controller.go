@@ -59,11 +59,14 @@ func (controller *Controller) HandleSignin(c *gin.Context){
 		return
 	}
 
-	fmt.Println("=> infos : ", userResponse)
 	utils.PrettyDisplay(userResponse)
 	c.JSON(http.StatusAccepted, userResponse)
 }
 
 func (controller *Controller) Verify(c *gin.Context){
+	id, _ := c.Get("user_id")
+	fmt.Println("==> id: ", id)
 
+
+	c.JSON(http.StatusAccepted, gin.H{"id": id})
 }

@@ -41,6 +41,7 @@ func Generate(user UserModel.User) (string, error) {
 
 func GetClaimsFromToken(tokenString string) (jwt.MapClaims, error) {
 	secret := configu.Get().Jwt.Secret
+	fmt.Println("secret : ", secret)
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
