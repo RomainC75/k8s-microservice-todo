@@ -26,9 +26,7 @@ func (listService *ListService) CreateList (list ListRequest.CreateListRequest, 
 	if err != nil{
 		return ListModel.List{}, err
 	}
-
 	return newList, nil
-
 }
 
 func (listService *ListService) GetLists (userId string) ([]ListModel.List, error){
@@ -37,4 +35,12 @@ func (listService *ListService) GetLists (userId string) ([]ListModel.List, erro
 		return []ListModel.List{}, err
 	}
 	return lists, nil
+}
+
+func (listService *ListService) DeleteList (userId string, listId string) (ListModel.List, error){
+	list, err := listService.listRepository.DeleteList(userId, listId)
+	if err != nil {
+		return ListModel.List{}, err
+	}
+	return list, nil
 }

@@ -18,8 +18,6 @@ func New() *ListRepository{
 	}
 }
 
-	
-
 func (ListRepository *ListRepository) CreateList(list models.List) (models.List, error){
 	var newList models.List
 	result := ListRepository.DB.Create(&list).Scan(&newList)
@@ -38,12 +36,19 @@ func (ListRepository *ListRepository) GetLists(userId string) ([]models.List, er
 	return foundLists, nil
 }
 
-// func (ListRepository *ListRepository) GetLists(userId string) ([]models.List, error){
-// 	fmt.Println("user_id : ", userId)
-// 	var foundUser models.List
-// 	result := ListRepository.DB.Where("user_id = ?", userId).First(&foundUser)
-// 	if result.RowsAffected == 0 {
-// 		return []models.List{}, errors.New("error trying to creat a new user")
-// 	}
-// 	return []models.List{}, nil
-// }
+func (ListRepository *ListRepository) DeleteList(userId string, listId string) (models.List, error){
+	var deletedList models.List
+
+	if err := ListRepository.DB.Where("user_id = ?", userId).Where("id = ?", listId).First(&deletedList).Error; err != nil {
+        if gorm.ErrRecordNotFound == err {
+            return models.List{}, errors.New("List item not found")
+        }
+        return models.List{}, err
+    }
+
+	if err := ListRepository.DB.Delete(&deletedList).Error; err != nil {
+        return models.List{}, err
+    }
+
+	return deletedList, nil
+}

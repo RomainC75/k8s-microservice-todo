@@ -42,7 +42,6 @@ func (controller *Controller) CreateList(c *gin.Context) {
 func (controller *Controller) GetLists(c *gin.Context) {
 	userId, _ := c.Get("user_id")
 	userIdStr, _ := userId.(string)
-	fmt.Println("=> GET LISTS : ", userIdStr)
 
 	lists, err := controller.listService.GetLists(userIdStr)
 	if err != nil {
@@ -52,4 +51,19 @@ func (controller *Controller) GetLists(c *gin.Context) {
 	fmt.Println("lists : ====> ")
 	utils.PrettyDisplay(lists)
 	c.JSON(http.StatusOK, ListResponse.ToListArrayResponse(lists))
+}
+
+
+func (controller *Controller) DeleteList(c *gin.Context) {
+	userId, _ := c.Get("user_id")
+	userIdStr, _ := userId.(string)
+	listId := c.Param("listId")
+
+	deletedList, err := controller.listService.DeleteList(userIdStr, listId)
+	if err != nil {
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, ListResponse.ToListResponse(deletedList))
 }
