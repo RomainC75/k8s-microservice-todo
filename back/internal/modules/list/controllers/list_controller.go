@@ -1,12 +1,14 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
-	ListRequest "github.com/saegus/test-technique-romain-chenard/internal/modules/list/requests"
-	ListService "github.com/saegus/test-technique-romain-chenard/internal/modules/list/services"
-
 	"github.com/gin-gonic/gin"
+	ListRequest "github.com/saegus/test-technique-romain-chenard/internal/modules/list/requests"
+	ListResponse "github.com/saegus/test-technique-romain-chenard/internal/modules/list/responses"
+	ListService "github.com/saegus/test-technique-romain-chenard/internal/modules/list/services"
+	"github.com/saegus/test-technique-romain-chenard/pkg/utils"
 )
 
 type Controller struct {
@@ -40,12 +42,14 @@ func (controller *Controller) CreateList(c *gin.Context) {
 func (controller *Controller) GetLists(c *gin.Context) {
 	userId, _ := c.Get("user_id")
 	userIdStr, _ := userId.(string)
+	fmt.Println("=> GET LISTS : ", userIdStr)
 
 	lists, err := controller.listService.GetLists(userIdStr)
 	if err != nil {
 		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
 		return
 	}
-
-	c.JSON(http.StatusOK, lists)
+	fmt.Println("lists : ====> ")
+	utils.PrettyDisplay(lists)
+	c.JSON(http.StatusOK, ListResponse.ToListArrayResponse(lists))
 }
