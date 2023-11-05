@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 
 	UserRequests "github.com/saegus/test-technique-romain-chenard/internal/modules/user/requests"
@@ -65,8 +64,5 @@ func (controller *Controller) HandleSignin(c *gin.Context){
 
 func (controller *Controller) Verify(c *gin.Context){
 	id, _ := c.Get("user_id")
-	fmt.Println("==> id: ", id)
-
-
 	c.JSON(http.StatusAccepted, gin.H{"id": id})
 }

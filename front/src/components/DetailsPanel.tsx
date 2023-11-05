@@ -21,7 +21,7 @@ const DetailsPanel = () => {
 
   useEffect(() => {
     const foundTodo: TodoInterface | undefined = todos.find(
-      todo => todo._id.toString() === selectedTodoId
+      todo => todo.id === selectedTodoId
     )
     setSelectedTodo(foundTodo ? foundTodo : null)
   }, [selectedTodoId, todos])

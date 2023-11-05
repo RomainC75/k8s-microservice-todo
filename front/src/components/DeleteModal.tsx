@@ -29,9 +29,9 @@ const DeleteModal = () => {
   const getTargetName = (): string => {
     let name = null
     if (isDeleteModalSupposedToDeleteList && selectedListId) {
-      name = lists.find(list => list._id.toString() === selectedListId)?.name
+      name = lists.find(list => list.id === selectedListId)?.name
     } else if (selectedListId) {
-      name = todos.find(todo => todo._id.toString() === selectedTodoId)?.name
+      name = todos.find(todo => todo.id === selectedTodoId)?.name
     }
     return name ? name : 'error'
   }

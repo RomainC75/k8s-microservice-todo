@@ -2,6 +2,7 @@ package models
 
 import (
 	"github.com/google/uuid"
+	"github.com/saegus/test-technique-romain-chenard/internal/modules/list/models"
 	"gorm.io/gorm"
 )
 
@@ -13,4 +14,5 @@ type User struct {
 	Password string    `gorm:"varchar:191"`
 	FirstName     string    `gorm:"varchar:191"`
 	LastName     string    `gorm:"varchar:191"`
+	Lists  []models.List `gorm:"foreignKey:UserId"`
 }

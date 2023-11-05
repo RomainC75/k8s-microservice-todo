@@ -1,5 +1,5 @@
 export interface ListInterface {
-  _id: string
+  id: string
   name: string
   createdAt: Date
   updatedAt: Date

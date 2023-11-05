@@ -1,4 +1,3 @@
-import { ObjectId } from 'mongoose'
 
 export interface NewTodoInterface {
   name: string
@@ -8,8 +7,8 @@ export interface NewTodoInterface {
 }
 
 export interface TodoInterface extends NewTodoInterface {
-  _id: ObjectId
-  listId: ObjectId
+  id: string
+  listId: string
   createdAt: string
   updatedAt: string
   __v: number

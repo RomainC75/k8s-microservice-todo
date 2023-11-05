@@ -11,7 +11,7 @@ const TodosList = ({ todos }: TodosListInterface): JSX.Element => {
   return (
     <ul className="TodosList unDone">
       {todos &&
-        todos.map(todo => <TodoItem key={todo._id.toString()} todo={todo} />)}
+        todos.map(todo => <TodoItem key={todo.id} todo={todo} />)}
     </ul>
   )
 }

@@ -25,12 +25,12 @@ const ListItem = ({
   const handleDelete = () => {
     setIsDeleteModalSupposedToDeleteList(true)
     setShowDeleteModal(true)
-    setSelectedListId(listItem._id)
+    setSelectedListId(listItem.id)
   }
 
   return (
-    <li className={`ListItem ${listItem._id === selectedListId && 'selected'}`}>
-      <p onClick={() => setSelectedListId(listItem._id)}>
+    <li className={`ListItem ${listItem.id === selectedListId && 'selected'}`}>
+      <p onClick={() => setSelectedListId(listItem.id)}>
         {listItem.name}{' '}
         <span className="">
           {'todosNumber' in listItem ? listItem.todosNumber : '?'}

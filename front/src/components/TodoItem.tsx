@@ -23,7 +23,7 @@ const TodoItem = ({ todo }: TodoItemInterface): JSX.Element => {
   } = useContext(DataContext) as DataContextInterface
 
   const handleClickOnTodo = () => {
-    setSelectedTodoId(todo._id.toString())
+    setSelectedTodoId(todo.id)
     setIsDetailsPanelDisplayed(true)
   }
 
@@ -32,7 +32,7 @@ const TodoItem = ({ todo }: TodoItemInterface): JSX.Element => {
       // ref={(li)=>(liRefs.current[todos.findIndex(todoo=>todoo._id===todo._id)]=li)}
       ref={li => liRefs.current.push(li)}
       className={`TodoItem ${
-        selectedTodoId === todo._id.toString() ? 'selected' : ''
+        selectedTodoId === todo.id ? 'selected' : ''
       }`}
       onClick={() => handleClickOnTodo()}
     >

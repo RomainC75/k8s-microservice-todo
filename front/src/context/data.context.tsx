@@ -184,7 +184,7 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
 
   const handleToggleIsDone = (todo: TodoInterface) => {
     selectedListId &&
-      putTodo(todo._id.toString(), {
+      putTodo(todo.id, {
         ...todo,
         isDone: !todo.isDone,
       })

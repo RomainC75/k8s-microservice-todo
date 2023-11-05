@@ -28,7 +28,7 @@ const ListPanel = () => {
 
   useEffect(() => {
     const isSelecteListStillInLists: boolean = lists.some(
-      list => list._id === selectedListId
+      list => list.id === selectedListId
     )
     if (!isSelecteListStillInLists) {
       setSelectedListId(null)
@@ -46,7 +46,7 @@ const ListPanel = () => {
         <ul className="list">
           {lists.map(list => (
             <ListItem
-              key={list._id}
+              key={list.id}
               listItem={list}
               handleDeleteList={handleDeleteList}
               selectedListId={selectedListId}
