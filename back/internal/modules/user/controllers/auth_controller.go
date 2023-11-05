@@ -59,6 +59,11 @@ func (controller *Controller) HandleSignin(c *gin.Context){
 		return
 	}
 
-	fmt.Println("=> infos : ", signinInfo)
+	fmt.Println("=> infos : ", userResponse)
+	utils.PrettyDisplay(userResponse)
 	c.JSON(http.StatusAccepted, userResponse)
+}
+
+func (controller *Controller) Verify(c *gin.Context){
+
 }

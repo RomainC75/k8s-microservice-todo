@@ -57,7 +57,6 @@ func (userService *UserService) LoginSrv (user UserRequest.LoginRequest) (UserRe
 	
 	err = encrypt.ComparePasswords(foundUser.Password, user.Password)
 	if err != nil {
-		fmt.Println("===> ", err.Error())
 		return UserResponse.LoginResponse{}, errors.New("wrong email/password 2")
 	}
 
@@ -65,6 +64,7 @@ func (userService *UserService) LoginSrv (user UserRequest.LoginRequest) (UserRe
 	if err != nil {
 		return UserResponse.LoginResponse{}, errors.New("error trying to generate the token")
 	}
+	fmt.Println("=> token : ", token)
 
 	return UserResponse.LoginResponse{
 		ID: foundUser.ID,

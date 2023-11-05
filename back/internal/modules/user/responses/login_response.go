@@ -6,6 +6,6 @@ import (
 
 type LoginResponse struct {
 	ID uuid.UUID `json:"id"`
-	Email string `json:"token"`
-	Token string `json:"email"`
+	Email string `json:"email"`
+	Token string `json:"token"`
 }

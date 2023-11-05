@@ -45,6 +45,7 @@ const Login = (): JSX.Element => {
     axios
       .post(`${API_URL}/auth/signin`, inputsState)
       .then(ans => {
+        console.log("=> ans : ", ans)
         storeToken(ans.data.token)
         authenticateUser()
         navigate('/')

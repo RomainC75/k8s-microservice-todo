@@ -45,6 +45,7 @@ const AuthProviderWrapper = (props: PropsWithChildren): JSX.Element => {
       return
     }
     setIsLoading(true)
+    console.log("=> VERIRY : ", storedToken)
     axios
       .get(`${API_URL}/auth/verify`, {
         headers: {
