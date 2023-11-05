@@ -6,7 +6,7 @@ import (
 
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/google/uuid"
-	Responses "github.com/saegus/test-technique-romain-chenard/internal/modules/user/responses"
+	UserModel "github.com/saegus/test-technique-romain-chenard/internal/modules/user/models"
 	"github.com/saegus/test-technique-romain-chenard/pkg/configu"
 	"github.com/saegus/test-technique-romain-chenard/pkg/utils"
 )
@@ -17,7 +17,7 @@ type Claims struct {
 	Email string
 }
 
-func Generate(user Responses.User) (string, error) {
+func Generate(user UserModel.User) (string, error) {
 	secret := configu.Get().Jwt.Secret
 
 	token := jwt.New(jwt.GetSigningMethod("HS256"))

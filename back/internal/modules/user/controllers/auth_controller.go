@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
 	UserRequests "github.com/saegus/test-technique-romain-chenard/internal/modules/user/requests"
@@ -42,4 +43,22 @@ func (controller *Controller) HandleSignup(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": recordedUser})
+}
+
+func (controller *Controller) HandleSignin(c *gin.Context){
+	var signinInfo UserRequests.LoginRequest
+
+	if err := c.ShouldBind(&signinInfo); err != nil{
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+		return
+	}
+
+	userResponse, err := controller.userService.LoginSrv(signinInfo)
+	if err != nil {
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+		return
+	}
+
+	fmt.Println("=> infos : ", signinInfo)
+	c.JSON(http.StatusUnprocessableEntity, gin.H{"error": userResponse})
 }
