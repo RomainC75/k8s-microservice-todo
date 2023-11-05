@@ -36,9 +36,13 @@ func (controller *Controller) CreateList(c *gin.Context) {
 		return
 	}
 
-	controller.listService.CreateList(newList, userIdStr)
+	recordedList, err := controller.listService.CreateList(newList, userIdStr)
+	if err != nil {
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+		return
+	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "createList"})
+	c.JSON(http.StatusOK, recordedList)
 }
 
 func (controller *Controller) GetLists(c *gin.Context) {

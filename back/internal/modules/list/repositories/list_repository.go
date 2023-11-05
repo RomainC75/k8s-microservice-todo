@@ -30,6 +30,7 @@ func (ListRepository *ListRepository) CreateList(list models.List) (models.List,
 	if result.RowsAffected == 0 {
 		return models.List{}, errors.New("error trying to creat a new user")
 	}
+	fmt.Println("new LIst : ", newList)
 	return newList, nil
 }
 
