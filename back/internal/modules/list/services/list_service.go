@@ -32,5 +32,9 @@ func (listService *ListService) CreateList (list ListRequest.CreateListRequest, 
 }
 
 func (listService *ListService) GetLists (userId string) ([]ListModel.List, error){
-	return []ListModel.List{}, nil
+	lists, err := listService.listRepository.GetLists(userId)
+	if err != nil {
+		return []ListModel.List{}, err
+	}
+	return lists, nil
 }

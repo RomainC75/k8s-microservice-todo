@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 
 	ListRequest "github.com/saegus/test-technique-romain-chenard/internal/modules/list/requests"
@@ -22,13 +21,7 @@ func New() *Controller {
 
 func (controller *Controller) CreateList(c *gin.Context) {
 	userId, _ := c.Get("user_id")
-	userIdStr, ok := userId.(string)
-	if !ok{
-		fmt.Println("++++++++++++++++++++++++++++")
-		fmt.Println("++++++++++++++++++++++++++++")
-		fmt.Println("Error trying to get the userIdStr")
-	}
-	fmt.Println("id : ", userId)
+	userIdStr, _ := userId.(string)
 
 	var newList ListRequest.CreateListRequest
 	if err := c.ShouldBind(&newList); err != nil{
@@ -41,10 +34,18 @@ func (controller *Controller) CreateList(c *gin.Context) {
 		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
 		return
 	}
-
 	c.JSON(http.StatusOK, recordedList)
 }
 
 func (controller *Controller) GetLists(c *gin.Context) {
+	userId, _ := c.Get("user_id")
+	userIdStr, _ := userId.(string)
 
+	lists, err := controller.listService.GetLists(userIdStr)
+	if err != nil {
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, lists)
 }

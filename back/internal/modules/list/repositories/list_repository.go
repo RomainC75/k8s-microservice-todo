@@ -35,10 +35,21 @@ func (ListRepository *ListRepository) CreateList(list models.List) (models.List,
 }
 
 func (ListRepository *ListRepository) GetLists(userId string) ([]models.List, error){
-	var foundUser models.List
-	result := ListRepository.DB.Where("user_id = ?", userId).First(&foundUser)
+	fmt.Println("user_id : ", userId)
+	var foundLists []models.List
+	result := ListRepository.DB.Where("user_id = ?", userId).Find(&foundLists)
 	if result.RowsAffected == 0 {
 		return []models.List{}, errors.New("error trying to creat a new user")
 	}
-	return []models.List{}, nil
+	return foundLists, nil
 }
+
+// func (ListRepository *ListRepository) GetLists(userId string) ([]models.List, error){
+// 	fmt.Println("user_id : ", userId)
+// 	var foundUser models.List
+// 	result := ListRepository.DB.Where("user_id = ?", userId).First(&foundUser)
+// 	if result.RowsAffected == 0 {
+// 		return []models.List{}, errors.New("error trying to creat a new user")
+// 	}
+// 	return []models.List{}, nil
+// }

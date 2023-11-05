@@ -15,6 +15,6 @@ func Routes(router *gin.Engine) {
 	guestGroup := router.Group("/todo/list")
 	{
 		guestGroup.POST("/", middlewares.IsAuth(), listController.CreateList)
-		// guestGroup.GET("/", middlewares.IsAuth(), userController.Verify)
+		guestGroup.GET("/", middlewares.IsAuth(), listController.GetLists)
 	}	
 }
