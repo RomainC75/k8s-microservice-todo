@@ -17,5 +17,6 @@ func Routes(router *gin.Engine) {
 		guestGroup.POST("", middlewares.IsAuth(), listController.CreateList)
 		guestGroup.GET("", middlewares.IsAuth(), listController.GetLists)
 		guestGroup.DELETE("/:listId", middlewares.IsAuth(), listController.DeleteList)
+		guestGroup.PUT("/:listId", middlewares.IsAuth(), listController.UpdateList)
 	}	
 }

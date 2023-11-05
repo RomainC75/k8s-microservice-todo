@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/saegus/test-technique-romain-chenard/internal/modules/list/models"
 	ListRequest "github.com/saegus/test-technique-romain-chenard/internal/modules/list/requests"
 	ListResponse "github.com/saegus/test-technique-romain-chenard/internal/modules/list/responses"
 	ListService "github.com/saegus/test-technique-romain-chenard/internal/modules/list/services"
@@ -64,6 +65,26 @@ func (controller *Controller) DeleteList(c *gin.Context) {
 		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
 		return
 	}
-
 	c.JSON(http.StatusOK, ListResponse.ToListResponse(deletedList))
+}
+
+func (controller *Controller) UpdateList(c *gin.Context) {
+	userId, _ := c.Get("user_id")
+	userIdStr, _ := userId.(string)
+	// listId := c.Param("listId")
+
+	var updateList models.List
+	if err := c.ShouldBind(&updateList); err != nil{
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+		return
+	}
+
+	updatedList, err := controller.listService.UpdateList(userIdStr, updateList)
+
+	if err != nil{
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, updatedList)
 }

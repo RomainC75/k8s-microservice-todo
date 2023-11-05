@@ -52,3 +52,22 @@ func (ListRepository *ListRepository) DeleteList(userId string, listId string) (
 
 	return deletedList, nil
 }
+
+func (ListRepository *ListRepository) UpdateList(userId string, list models.List) (models.List, error){
+	var updatedList models.List
+
+	if err := ListRepository.DB.First(&updatedList, list.ID).Error; err != nil {
+        if gorm.ErrRecordNotFound == err {
+            return models.List{}, errors.New("List item not found")
+        }
+        return models.List{}, err
+    }
+
+    updatedList.Name = list.Name
+    
+    if err := ListRepository.DB.Save(&updatedList).Error; err != nil {
+        return models.List{}, err
+    }
+
+	return updatedList, nil
+}

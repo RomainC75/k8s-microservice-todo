@@ -44,3 +44,11 @@ func (listService *ListService) DeleteList (userId string, listId string) (ListM
 	}
 	return list, nil
 }
+
+func (listService *ListService) UpdateList (userId string, list ListModel.List) (ListModel.List, error){
+	list, err := listService.listRepository.UpdateList(userId, list)
+	if err != nil {
+		return ListModel.List{}, err
+	}
+	return list, nil
+}
