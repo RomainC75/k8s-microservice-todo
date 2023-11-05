@@ -65,11 +65,10 @@ func (userService *UserService) LoginSrv (user UserRequest.LoginRequest) (UserRe
 	if err != nil {
 		return UserResponse.LoginResponse{}, errors.New("error trying to generate the token")
 	}
-	fmt.Println("=> token : ", token)
 
-
-	// encrypt.Generate()
-
-
-	return UserResponse.LoginResponse{}, nil
+	return UserResponse.LoginResponse{
+		ID: foundUser.ID,
+		Email: foundUser.Email,
+		Token: token,
+	}, nil
 }
