@@ -16,3 +16,4 @@ type User struct {
 	LastName     string    `gorm:"varchar:191"`
 	Lists  []models.List `gorm:"foreignKey:UserId"`
 }
+
