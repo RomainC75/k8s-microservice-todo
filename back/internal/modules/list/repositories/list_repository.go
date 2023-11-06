@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"errors"
+	"fmt"
 
 	models "github.com/saegus/test-technique-romain-chenard/internal/modules/list/models"
 	database "github.com/saegus/test-technique-romain-chenard/pkg/database"
@@ -31,9 +32,19 @@ func (ListRepository *ListRepository) GetLists(userId string) ([]models.List, er
 	var foundLists []models.List
 	result := ListRepository.DB.Where("user_id = ?", userId).Find(&foundLists)
 	if result.RowsAffected == 0 {
-		return []models.List{}, errors.New("error trying to creat a new user")
+		return []models.List{}, errors.New("error trying to get the lists")
 	}
 	return foundLists, nil
+}
+
+func (ListRepository *ListRepository) GetListById(listId string) (models.List, error){
+	fmt.Println("==> ", listId)
+	var foundList models.List
+	result := ListRepository.DB.Where("id = ?", listId).First(&foundList)	
+	if result.RowsAffected == 0 {
+		return models.List{}, errors.New(fmt.Sprintf("error trying to get the list : %s ", listId))
+	}
+	return foundList, nil
 }
 
 func (ListRepository *ListRepository) DeleteList(userId string, listId string) (models.List, error){
@@ -71,3 +82,4 @@ func (ListRepository *ListRepository) UpdateList(userId string, list models.List
 
 	return updatedList, nil
 }
+

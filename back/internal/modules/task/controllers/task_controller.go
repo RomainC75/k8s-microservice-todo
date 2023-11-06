@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -17,29 +18,34 @@ type Controller struct {
 func New() *Controller {
 	return &Controller{
 		taskService: TaskService.New(),
+		listService: ListService.New(),
 	}
 }
 
 func (controller *Controller) CreateTask(c *gin.Context) {
-	userId, _ := c.Get("user_id")
-	userIdStr, _ := userId.(string)
+	// userId, _ := c.Get("user_id")
+	// userIdStr, _ := userId.(string)
 
-	
 	var newTask TaskRequest.CreateTaskRequest
 	if err := c.ShouldBind(&newTask); err != nil{
 		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
 		return
 	}
 
-	// taskId := c.Param("taskId")
-	// foundList, err := controller.listService.
-
-	recordedList, err := controller.taskService.CreateTask(newTask, userIdStr)
-	if err != nil {
+	listId := c.Param("listId")
+	foundList, err := controller.listService.GetList(listId)
+	if  err != nil{
 		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, recordedList)
+	fmt.Printf("foundLIst : ", foundList)
+
+	// recordedList, err := controller.taskService.CreateTask(newTask, userIdStr)
+	// if err != nil {
+	// 	c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+	// 	return
+	// }
+	// c.JSON(http.StatusOK, recordedList)
 
 	c.JSON(http.StatusUnprocessableEntity, gin.H{"error": "createtodo"})
 }

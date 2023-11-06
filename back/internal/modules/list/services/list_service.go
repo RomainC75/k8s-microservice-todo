@@ -37,6 +37,14 @@ func (listService *ListService) GetLists (userId string) ([]ListModel.List, erro
 	return lists, nil
 }
 
+func (listService *ListService) GetList (listId string) (ListModel.List, error){
+	list, err := listService.listRepository.GetListById(listId)
+	if err != nil {
+		return ListModel.List{}, err
+	}
+	return list, nil
+}
+
 func (listService *ListService) DeleteList (userId string, listId string) (ListModel.List, error){
 	list, err := listService.listRepository.DeleteList(userId, listId)
 	if err != nil {

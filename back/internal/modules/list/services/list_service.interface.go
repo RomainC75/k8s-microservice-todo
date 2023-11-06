@@ -7,8 +7,8 @@ import (
 
 type ListServiceInterface interface {
 	CreateList (list ListRequest.CreateListRequest, userId string) (ListModel.List, error)
+	GetList (listId string) (ListModel.List, error)
 	GetLists (userId string) ([]ListModel.List, error)
-	GetList (userId string, listId string) (ListModel.List, error)
 	DeleteList (userId string, listId string) (ListModel.List, error)
 	UpdateList (userId string, list ListModel.List) (ListModel.List, error)
 }
