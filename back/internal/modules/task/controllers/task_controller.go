@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	ListService "github.com/saegus/test-technique-romain-chenard/internal/modules/list/services"
 	TaskRequest "github.com/saegus/test-technique-romain-chenard/internal/modules/task/requests"
+	TaskResponse "github.com/saegus/test-technique-romain-chenard/internal/modules/task/responses"
 	TaskService "github.com/saegus/test-technique-romain-chenard/internal/modules/task/services"
 )
 
@@ -74,6 +75,6 @@ func (controller *Controller) GetTasks(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, controller.taskService.GetTasks(listId))
+	c.JSON(http.StatusOK, TaskResponse.ToTaskArrayResponse(controller.taskService.GetTasks(listId)))
 
 }

@@ -25,6 +25,8 @@ func (taskService *TaskService) CreateTask (task TaskRequest.CreateTaskRequest, 
 	newTask.Name = task.Name
 	newTask.ListId = listUuid
 	newTask.DeadLine = task.DeadLine
+	newTask.Description = task.Description
+	newTask.IsDone = false
 	
 	newTask, err := taskService.taskRepository.CreateTask(newTask)
 

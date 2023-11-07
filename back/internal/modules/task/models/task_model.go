@@ -14,5 +14,6 @@ type Task struct {
 	Name    string    `gorm:"varchar:191"`
 	Description string `gorm:"varchar:300"`
 	DeadLine time.Time `gorm:"type:date"`
+	IsDone bool `gorm:"type:boolean"`
 	ListId	uuid.UUID 
 }

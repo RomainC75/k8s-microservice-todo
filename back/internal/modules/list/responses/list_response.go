@@ -26,7 +26,7 @@ func ToListResponse (list ListModel.List)ListResponse{
 	}
 }
 
-func ToListArrayResponse (listArray []ListModel.List)[]ListResponse{
+func ToListArrayResponse (listArray []ListModel.List) []ListResponse{
 	listRes := make([]ListResponse, 0)
 	for _, l := range listArray{
 		listRes = append(listRes, ToListResponse(l))
