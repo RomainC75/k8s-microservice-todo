@@ -17,12 +17,16 @@ func New() *TaskService{
 	}
 }
 
-func (taskService *TaskService) CreateTask (task TaskRequest.CreateTaskRequest, userId string) (TaskModel.Task, error){
+func (taskService *TaskService) CreateTask (task TaskRequest.CreateTaskRequest, listId string) (TaskModel.Task, error){
 	var newTask TaskModel.Task
-	userUuid, _ := uuid.Parse(userId)
+	listUuid := uuid.MustParse(listId)
+
 	newTask.Name = task.Name
-	newTask.ListId = userUuid
+	newTask.ListId = listUuid
+	newTask.DeadLine = task.DeadLine
+	
 	newTask, err := taskService.taskRepository.CreateTask(newTask)
+
 	if err != nil{
 		return TaskModel.Task{}, err
 	}

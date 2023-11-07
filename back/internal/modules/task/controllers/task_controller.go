@@ -23,8 +23,8 @@ func New() *Controller {
 }
 
 func (controller *Controller) CreateTask(c *gin.Context) {
-	// userId, _ := c.Get("user_id")
-	// userIdStr, _ := userId.(string)
+	userId, _ := c.Get("user_id")
+	userIdStr, _ := userId.(string)
 
 	var newTask TaskRequest.CreateTaskRequest
 	if err := c.ShouldBind(&newTask); err != nil{
@@ -38,15 +38,22 @@ func (controller *Controller) CreateTask(c *gin.Context) {
 		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
 		return
 	}
+
+	fmt.Printf("found LIst : ", foundList)
+
+	if userIdStr != foundList.UserId.String(){
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": "not authorized to modify this list"})
+		return
+	}
+
 	fmt.Printf("foundLIst : ", foundList)
 
-	// recordedList, err := controller.taskService.CreateTask(newTask, userIdStr)
-	// if err != nil {
-	// 	c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
-	// 	return
-	// }
-	// c.JSON(http.StatusOK, recordedList)
+	recordedList, err := controller.taskService.CreateTask(newTask, listId)
+	if err != nil {
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+		return
+	}
 
-	c.JSON(http.StatusUnprocessableEntity, gin.H{"error": "createtodo"})
+	c.JSON(http.StatusOK, recordedList)
 }
 
