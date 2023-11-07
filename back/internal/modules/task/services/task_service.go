@@ -40,3 +40,11 @@ func (taskService *TaskService) CreateTask (task TaskRequest.CreateTaskRequest, 
 func (taskService *TaskService) GetTasks (listId string) []models.Task{
 	return taskService.taskRepository.GetTasks(listId)
 }
+
+func (taskService *TaskService) GetTask (taskId string) (models.Task, error){
+	return taskService.taskRepository.GetTaskById(taskId)
+}
+
+func (taskService *TaskService) ToggleTaskIsDone (taskId string) (models.Task, error){
+	return taskService.taskRepository.ToggleTaskIsDoneById(taskId)
+}

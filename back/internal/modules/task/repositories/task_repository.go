@@ -34,3 +34,23 @@ func (taskRepository *TaskRepository) GetTasks(listId string) []models.Task{
 	taskRepository.DB.Where("list_id = ? ", listId).Find(&foundTasks)
 	return foundTasks
 }
+
+func (taskRepository *TaskRepository) GetTaskById(taskId string) (models.Task, error){
+	var foundTask models.Task
+	if err := taskRepository.DB.Where("id = ?", taskId).First(&foundTask).Error; err != nil {
+		return models.Task{}, err
+	}
+	return foundTask, nil
+}
+
+func (TaskRepository *TaskRepository) ToggleTaskIsDoneById (taskId string) (models.Task, error) {
+	var foundTask models.Task
+	if err := TaskRepository.DB.Where("id = ?", taskId).First(&foundTask).Error; err != nil{
+		return models.Task{}, errors.New("error trying to get the task")
+	}
+	foundTask.IsDone = !foundTask.IsDone
+	if err := TaskRepository.DB.Save(&foundTask); err != nil {
+		return models.Task{}, errors.New("error trying to update the task")
+	}
+	return foundTask, nil
+}
