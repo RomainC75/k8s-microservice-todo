@@ -6,4 +6,5 @@ import (
 
 type TaskRepositoryInterface interface {
 	CreateTask(task models.Task) (models.Task, error)
+	GetTasks(userId string) []models.Task
 }

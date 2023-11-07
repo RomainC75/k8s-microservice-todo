@@ -2,6 +2,7 @@ package services
 
 import (
 	"github.com/google/uuid"
+	"github.com/saegus/test-technique-romain-chenard/internal/modules/task/models"
 	TaskModel "github.com/saegus/test-technique-romain-chenard/internal/modules/task/models"
 	TaskRepository "github.com/saegus/test-technique-romain-chenard/internal/modules/task/repositories"
 	TaskRequest "github.com/saegus/test-technique-romain-chenard/internal/modules/task/requests"
@@ -31,4 +32,9 @@ func (taskService *TaskService) CreateTask (task TaskRequest.CreateTaskRequest, 
 		return TaskModel.Task{}, err
 	}
 	return newTask, nil
+}
+
+
+func (taskService *TaskService) GetTasks (listId string) []models.Task{
+	return taskService.taskRepository.GetTasks(listId)
 }

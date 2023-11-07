@@ -7,4 +7,5 @@ import (
 
 type TaskServiceInterface interface {
 	CreateTask (task TaskRequest.CreateTaskRequest, listId string) (TaskModel.Task, error)
+	GetTasks (userId string) []TaskModel.Task
 }

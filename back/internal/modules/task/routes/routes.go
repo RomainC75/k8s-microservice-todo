@@ -15,7 +15,7 @@ func Routes(router *gin.Engine) {
 	guestGroup := router.Group("/todo/task")
 	{
 		guestGroup.POST("/:listId", middlewares.IsAuth(), taskController.CreateTask)
-		// guestGroup.GET("/:listId", userController.HandleSignin)
+		guestGroup.GET("/:listId", middlewares.IsAuth(), taskController.GetTasks)
 		// guestGroup.PUT("/toggle/:taskId", userController.HandleSignin)
 		// guestGroup.PUT("/:taskId", userController.HandleSignin)
 		// guestGroup.DELETE("/:taskId", middlewares.IsAuth(), userController.Verify)

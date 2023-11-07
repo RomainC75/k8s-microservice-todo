@@ -57,3 +57,23 @@ func (controller *Controller) CreateTask(c *gin.Context) {
 	c.JSON(http.StatusOK, recordedList)
 }
 
+func (controller *Controller) GetTasks(c *gin.Context) {
+	userId, _ := c.Get("user_id")
+	userIdStr, _ := userId.(string)
+
+	listId := c.Param("listId")
+	foundList, err := controller.listService.GetList(listId)
+	
+	if  err != nil{
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+		return
+	}
+	
+	if userIdStr != foundList.UserId.String(){
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": "not authorized to modify this list"})
+		return
+	}
+
+	c.JSON(http.StatusOK, controller.taskService.GetTasks(listId))
+
+}
