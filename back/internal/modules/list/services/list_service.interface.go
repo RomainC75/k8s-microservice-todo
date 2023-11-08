@@ -11,4 +11,5 @@ type ListServiceInterface interface {
 	GetLists (userId string) ([]ListModel.List, error)
 	DeleteList (userId string, listId string) (ListModel.List, error)
 	UpdateList (userId string, list ListModel.List) (ListModel.List, error)
+	IsUserTheOwnerOfTHeList(userId string, listId string) (bool, error)
 }

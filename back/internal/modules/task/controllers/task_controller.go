@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -10,6 +9,7 @@ import (
 	TaskRequest "github.com/saegus/test-technique-romain-chenard/internal/modules/task/requests"
 	TaskResponse "github.com/saegus/test-technique-romain-chenard/internal/modules/task/responses"
 	TaskService "github.com/saegus/test-technique-romain-chenard/internal/modules/task/services"
+	"github.com/saegus/test-technique-romain-chenard/pkg/utils"
 )
 
 type Controller struct {
@@ -41,14 +41,11 @@ func (controller *Controller) CreateTask(c *gin.Context) {
 		return
 	}
 
-	fmt.Printf("found LIst : ", foundList)
 
 	if userIdStr != foundList.UserId.String(){
 		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": "not authorized to modify this list"})
 		return
 	}
-
-	fmt.Printf("foundLIst : ", foundList)
 
 	recordedList, err := controller.taskService.CreateTask(newTask, listId)
 	if err != nil {
@@ -90,6 +87,8 @@ func (controller *Controller) ToogleTask(c *gin.Context) {
 	userIdStr, _ := userId.(string)
 
 	taskId := c.Param("taskId")
+
+	//// test task
 	foundTask, err := controller.taskService.GetTask(taskId)
 	
 	if  err != nil{
@@ -97,7 +96,7 @@ func (controller *Controller) ToogleTask(c *gin.Context) {
 		return
 	}
 
-	////
+	//// test list
 
 	foundList, err := controller.listService.GetList(foundTask.ListId.String())
 	
@@ -119,4 +118,40 @@ func (controller *Controller) ToogleTask(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, newTask)
+}
+
+func (controller *Controller) UpdateTask(c *gin.Context) {
+	userId, _ := c.Get("user_id")
+	userIdStr, _ := userId.(string)
+
+	taskId := c.Param("taskId")
+	var newTask models.Task
+	if err := c.ShouldBind(&newTask); err != nil{
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+		return
+	}
+	utils.PrettyDisplay(newTask)
+
+	//// test task
+	foundTask, err := controller.taskService.GetTask(taskId)
+	if  err != nil{
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+		return
+	}
+
+	//// test list
+
+	isUserTheOwner, err := controller.listService.IsUserTheOwnerOfTHeList(userIdStr, foundTask.ListId.String())
+	if  err != nil || !isUserTheOwner{
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": "unauthorized to change this list"})
+		return
+	}
+
+	updatedTask, err := controller.taskService.UpdateTask(newTask)
+	if err != nil {
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusUnprocessableEntity, updatedTask)
 }

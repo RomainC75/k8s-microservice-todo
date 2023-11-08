@@ -49,8 +49,25 @@ func (TaskRepository *TaskRepository) ToggleTaskIsDoneById (taskId string) (mode
 		return models.Task{}, errors.New("error trying to get the task")
 	}
 	foundTask.IsDone = !foundTask.IsDone
-	if err := TaskRepository.DB.Save(&foundTask); err != nil {
+	if err := TaskRepository.DB.Save(&foundTask).Error; err != nil {
 		return models.Task{}, errors.New("error trying to update the task")
 	}
+	return foundTask, nil
+}
+
+func (TaskRepository *TaskRepository) UpdateTask (task models.Task) (models.Task, error) {
+	var foundTask models.Task
+	if err := TaskRepository.DB.Where("id = ?", task.ID.String()).First(&foundTask).Error ; err != nil {
+		return models.Task{}, errors.New("error trying to get the task")
+	}
+	foundTask.Name = task.Name
+	foundTask.Description = task.Description
+	foundTask.IsDone = task.IsDone
+	foundTask.DeadLine = task.DeadLine
+
+	if err := TaskRepository.DB.Save(&foundTask).Error ; err != nil {
+		return models.Task{}, errors.New("error trying to update the task")
+	}
+
 	return foundTask, nil
 }

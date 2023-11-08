@@ -48,3 +48,7 @@ func (taskService *TaskService) GetTask (taskId string) (models.Task, error){
 func (taskService *TaskService) ToggleTaskIsDone (taskId string) (models.Task, error){
 	return taskService.taskRepository.ToggleTaskIsDoneById(taskId)
 }
+
+func (TaskService *TaskService) UpdateTask(task models.Task) (models.Task, error){
+	return TaskService.taskRepository.UpdateTask(task)
+}

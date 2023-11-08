@@ -60,3 +60,15 @@ func (listService *ListService) UpdateList (userId string, list ListModel.List) 
 	}
 	return list, nil
 }
+
+func (listService *ListService) IsUserTheOwnerOfTHeList (userId string, listId string) (bool, error){
+	foundList, err := listService.listRepository.GetListById(listId)
+	if  err != nil{
+		return false, err
+	}
+	
+	if userId != foundList.UserId.String(){
+		return false, nil
+	}
+	return true, nil
+}
