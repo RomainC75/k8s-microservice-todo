@@ -28,6 +28,7 @@ func ToTaskResponse (task TaskModel.Task)TaskResponse{
 		UpdatedAt: task.UpdatedAt,
 		DeadLine: task.DeadLine,
 		Description: task.Description,
+		IsDone: task.IsDone,
 	}
 }
 

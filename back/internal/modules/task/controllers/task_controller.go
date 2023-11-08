@@ -94,7 +94,7 @@ func (controller *Controller) ToogleTask(c *gin.Context) {
 
 	taskId := c.Param("taskId")
 
-	//// test task
+	// test task
 	foundTask, err := controller.taskService.GetTask(taskId)
 	
 	if  err != nil{
@@ -102,7 +102,7 @@ func (controller *Controller) ToogleTask(c *gin.Context) {
 		return
 	}
 
-	//// test list
+	// test list
 
 	foundList, err := controller.listService.GetList(foundTask.ListId.String())
 	
@@ -116,7 +116,7 @@ func (controller *Controller) ToogleTask(c *gin.Context) {
 		return
 	}
 
-	////
+	//
 	
 	newTask, err := controller.taskService.ToggleTaskIsDone(taskId)
 	if err != nil {
@@ -138,14 +138,14 @@ func (controller *Controller) UpdateTask(c *gin.Context) {
 	}
 	utils.PrettyDisplay(newTask)
 
-	//// test task
+	// test task 
 	foundTask, err := controller.taskService.GetTask(taskId)
 	if  err != nil{
 		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
 		return
 	}
 
-	//// test list
+	// test list
 
 	isUserTheOwner, err := controller.listService.IsUserTheOwnerOfTHeList(userIdStr, foundTask.ListId.String())
 	if  err != nil || !isUserTheOwner{

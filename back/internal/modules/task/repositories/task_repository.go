@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"errors"
+	"fmt"
 
 	models "github.com/saegus/test-technique-romain-chenard/internal/modules/task/models"
 	database "github.com/saegus/test-technique-romain-chenard/pkg/database"
@@ -56,14 +57,20 @@ func (TaskRepository *TaskRepository) ToggleTaskIsDoneById (taskId string) (mode
 }
 
 func (TaskRepository *TaskRepository) UpdateTask (task models.Task) (models.Task, error) {
+	fmt.Printf("=> task i'm about to update : ")
+	utils.PrettyDisplay(task)
 	var foundTask models.Task
 	if err := TaskRepository.DB.Where("id = ?", task.ID.String()).First(&foundTask).Error ; err != nil {
 		return models.Task{}, errors.New("error trying to get the task")
 	}
+	fmt.Println("FOUND IN DB")
+	utils.PrettyDisplay(foundTask)
 	foundTask.Name = task.Name
 	foundTask.Description = task.Description
 	foundTask.IsDone = task.IsDone
 	foundTask.DeadLine = task.DeadLine
+	fmt.Println("After modification ")
+	utils.PrettyDisplay(foundTask)
 
 	if err := TaskRepository.DB.Save(&foundTask).Error ; err != nil {
 		return models.Task{}, errors.New("error trying to update the task")
