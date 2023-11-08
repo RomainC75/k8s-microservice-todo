@@ -18,6 +18,6 @@ func Routes(router *gin.Engine) {
 		guestGroup.POST("/:listId", middlewares.IsAuth(), taskController.CreateTask)
 		guestGroup.GET("/:listId", middlewares.IsAuth(), taskController.GetTasks)
 		guestGroup.PUT("/:taskId", middlewares.IsAuth(), taskController.UpdateTask)
-		// guestGroup.DELETE("/:taskId", middlewares.IsAuth(), userController.Verify)
+		guestGroup.DELETE("/:taskId", middlewares.IsAuth(), taskController.DeleteTask)
 	}	
 }

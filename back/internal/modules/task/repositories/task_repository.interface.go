@@ -10,4 +10,5 @@ type TaskRepositoryInterface interface {
 	GetTaskById(taskId string) (models.Task, error)
 	ToggleTaskIsDoneById(taskId string) (models.Task, error)
 	UpdateTask (task models.Task) (models.Task, error)
+	DeleteTaskById (taskId string) (models.Task, error)
 }

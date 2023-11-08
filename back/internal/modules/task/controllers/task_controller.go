@@ -161,3 +161,16 @@ func (controller *Controller) UpdateTask(c *gin.Context) {
 
 	c.JSON(http.StatusOK, TaskResponse.ToTaskResponse(updatedTask))
 }
+
+func (controller *Controller) DeleteTask(c *gin.Context) {
+	taskId := c.Param("taskId")
+
+	deletedTask, err := controller.taskService.Delete(taskId)
+	if  err != nil{
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusAccepted, TaskResponse.ToTaskResponse(deletedTask))
+	
+}

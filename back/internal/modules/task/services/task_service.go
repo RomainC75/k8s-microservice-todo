@@ -52,3 +52,8 @@ func (taskService *TaskService) ToggleTaskIsDone (taskId string) (models.Task, e
 func (TaskService *TaskService) UpdateTask(task models.Task) (models.Task, error){
 	return TaskService.taskRepository.UpdateTask(task)
 }
+
+func (TaskService *TaskService) Delete(taskId string) (models.Task, error){
+	return TaskService.taskRepository.DeleteTaskById(taskId)
+}
+
