@@ -13,4 +13,5 @@ type TaskServiceInterface interface {
 	ToggleTaskIsDone (taskId string) (models.Task, error)
 	UpdateTask(task models.Task) (models.Task, error)
 	Delete(taskId string) (models.Task, error)
+	DeleteTasksListId (listId string) ([]models.Task, error)
 }

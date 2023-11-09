@@ -82,3 +82,13 @@ func (TaskRepository *TaskRepository) DeleteTaskById (taskId string) (models.Tas
 	}
 	return foundTask, nil
 }
+
+func (TaskRepository *TaskRepository) DeleteTasksByListId (listId string) ([]models.Task, error){
+	var deletedTasks []models.Task
+	if err := TaskRepository.DB.Where("list_id = ?", listId).Delete(deletedTasks).Error; err != nil {
+		return []models.Task{}, err
+	}
+
+	return deletedTasks, nil
+	
+}

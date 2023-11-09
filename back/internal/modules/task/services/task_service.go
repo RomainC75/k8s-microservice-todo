@@ -57,3 +57,7 @@ func (TaskService *TaskService) Delete(taskId string) (models.Task, error){
 	return TaskService.taskRepository.DeleteTaskById(taskId)
 }
 
+func (TaskService *TaskService) DeleteTasksListId (listId string) ([]models.Task, error){
+	return TaskService.taskRepository.DeleteTasksByListId(listId)
+}
+

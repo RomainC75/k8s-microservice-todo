@@ -1,8 +1,6 @@
 package controllers
 
 import (
-	"fmt"
-	"net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -29,9 +27,6 @@ var upgrader = websocket.Upgrader{
    }
 
 func (controller *Controller) Socket(c *gin.Context) {
-
-		fmt.Println("=======================================")
-		fmt.Println("=======================================")
 	conn, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
 	 return
@@ -41,7 +36,4 @@ func (controller *Controller) Socket(c *gin.Context) {
 	 conn.WriteMessage(websocket.TextMessage, []byte("Hello, WebSocket!"))
 	 time.Sleep(time.Second)
 	}
-
-
-	c.JSON(http.StatusOK, gin.H{"message : ": "mlksdjf"})
 }

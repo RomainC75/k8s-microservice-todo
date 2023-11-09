@@ -9,16 +9,19 @@ import (
 	ListRequest "github.com/saegus/test-technique-romain-chenard/internal/modules/list/requests"
 	ListResponse "github.com/saegus/test-technique-romain-chenard/internal/modules/list/responses"
 	ListService "github.com/saegus/test-technique-romain-chenard/internal/modules/list/services"
+	TaskService "github.com/saegus/test-technique-romain-chenard/internal/modules/task/services"
 	"github.com/saegus/test-technique-romain-chenard/pkg/utils"
 )
 
 type Controller struct {
 	listService ListService.ListServiceInterface
+	taskService TaskService.TaskServiceInterface
 }
 
 func New() *Controller {
 	return &Controller{
 		listService: ListService.New(),
+		taskService: TaskService.New(),
 	}
 }
 
@@ -43,7 +46,7 @@ func (controller *Controller) CreateList(c *gin.Context) {
 func (controller *Controller) GetLists(c *gin.Context) {
 	userId, _ := c.Get("user_id")
 	userIdStr, _ := userId.(string)
-
+	
 	lists, err := controller.listService.GetLists(userIdStr)
 	if err != nil {
 		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
@@ -54,15 +57,20 @@ func (controller *Controller) GetLists(c *gin.Context) {
 	c.JSON(http.StatusOK, ListResponse.ToListArrayResponse(lists))
 }
 
-
 func (controller *Controller) DeleteList(c *gin.Context) {
 	userId, _ := c.Get("user_id")
 	userIdStr, _ := userId.(string)
 	listId := c.Param("listId")
 
+	_, err := controller.taskService.DeleteTasksListId(listId)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	deletedList, err := controller.listService.DeleteList(userIdStr, listId)
 	if err != nil {
-		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, ListResponse.ToListResponse(deletedList))
@@ -71,7 +79,6 @@ func (controller *Controller) DeleteList(c *gin.Context) {
 func (controller *Controller) UpdateList(c *gin.Context) {
 	userId, _ := c.Get("user_id")
 	userIdStr, _ := userId.(string)
-	// listId := c.Param("listId")
 
 	var updateList models.List
 	if err := c.ShouldBind(&updateList); err != nil{
