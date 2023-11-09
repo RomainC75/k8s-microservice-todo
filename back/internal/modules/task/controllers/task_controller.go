@@ -1,9 +1,7 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
-	"time"
 
 	"github.com/gin-gonic/gin"
 	ListService "github.com/saegus/test-technique-romain-chenard/internal/modules/list/services"
@@ -35,10 +33,10 @@ func (controller *Controller) CreateTask(c *gin.Context) {
 		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
 		return
 	}
+
 	// s1, _:= time.Parse(time.RFC3339, “2018-12-12”)
-	parsedDate, _ := time.Parse("2006-01-01T00:00:00Z", newTask.DeadLine.String() )
-	fmt.Println("PARSED DATE / ", parsedDate)
-	newTask.DeadLine = parsedDate
+	// parsedDate, _ := time.Parse("2006-01-01T00:00:00Z", newTask.DeadLine.String() )
+	// newTask.DeadLine = parsedDate
 
 	listId := c.Param("listId")
 	foundList, err := controller.listService.GetList(listId)

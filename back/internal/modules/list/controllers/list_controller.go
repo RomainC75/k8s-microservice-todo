@@ -62,7 +62,13 @@ func (controller *Controller) DeleteList(c *gin.Context) {
 	userIdStr, _ := userId.(string)
 	listId := c.Param("listId")
 
-	_, err := controller.taskService.DeleteTasksListId(listId)
+	isOwner, err := controller.listService.IsUserTheOwnerOfTHeList(userIdStr, listId)
+	if err != nil || !isOwner{
+		c.JSON(http.StatusBadRequest, gin.H{"error": "user cannot delete this list and this content"})
+		return
+	}
+
+	_, err = controller.taskService.DeleteTasksListId(listId)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
