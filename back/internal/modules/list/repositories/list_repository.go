@@ -30,10 +30,10 @@ func (ListRepository *ListRepository) CreateList(list models.List) (models.List,
 
 func (ListRepository *ListRepository) GetLists(userId string) ([]models.List, error){
 	var foundLists []models.List
-	result := ListRepository.DB.Where("user_id = ?", userId).Find(&foundLists)
-	if result.RowsAffected == 0 {
-		return []models.List{}, errors.New("error trying to get the lists")
-	}
+	ListRepository.DB.Where("user_id = ?", userId).Find(&foundLists)
+	// if result.RowsAffected == 0 {
+	// 	return []models.List{}, errors.New("error trying to get the lists")
+	// }
 	return foundLists, nil
 }
 

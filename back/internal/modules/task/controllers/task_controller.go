@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -29,12 +30,15 @@ func (controller *Controller) CreateTask(c *gin.Context) {
 	userIdStr, _ := userId.(string)
 
 	var newTask TaskRequest.CreateTaskRequest
+	fmt.Printf("---------------------------------------")
 	if err := c.ShouldBind(&newTask); err != nil{
 		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
 		return
 	}
 
 	// s1, _:= time.Parse(time.RFC3339, “2018-12-12”)
+	// fmt.Printf("---------------------------------------")
+	// fmt.Println("------------> ", newTask.DeadLine)
 	// parsedDate, _ := time.Parse("2006-01-01T00:00:00Z", newTask.DeadLine.String() )
 	// newTask.DeadLine = parsedDate
 

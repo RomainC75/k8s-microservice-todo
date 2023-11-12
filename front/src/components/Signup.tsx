@@ -160,7 +160,7 @@ const Signup = ({
             !isPasswordsEquals
           }
         >
-          Login
+          Signup
         </PurpleButton>
         {isSignupError && (
           <Alert severity="error">

@@ -168,6 +168,7 @@ const DataProviderWrapper = (props: PropsWithChildren): JSX.Element => {
   }
 
   const handleCreateNewTodo = (newTodo: NewTodoInterface): void => {
+    newTodo.deadLine = newTodo.deadLine+"T00:00:00Z"
     selectedListId &&
       createTodo(selectedListId, newTodo)
         .then(() => {
