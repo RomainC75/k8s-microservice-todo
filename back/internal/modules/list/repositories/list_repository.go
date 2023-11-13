@@ -83,3 +83,10 @@ func (ListRepository *ListRepository) UpdateList(userId string, list models.List
 	return updatedList, nil
 }
 
+func (ListRepository *ListRepository) DeleteSoftDeleted()([]models.List,error){
+	var deletedTasks []models.List
+	if err := ListRepository.DB.Unscoped().Where("deleted_at IS NOT NULL").Delete(&deletedTasks).Error; err != nil{
+		return []models.List{}, err
+	}
+	return deletedTasks, nil
+}

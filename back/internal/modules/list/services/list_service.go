@@ -12,8 +12,10 @@ type ListService struct {
 }
 
 func New() *ListService{
+	listRepo := ListRepository.New()
+	listRepo.DeleteSoftDeleted()
 	return &ListService{
-		listRepository: ListRepository.New(),
+		listRepository: listRepo,
 	}
 }
 

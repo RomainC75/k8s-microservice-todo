@@ -13,26 +13,24 @@ func init() {
 
 var versionCmd = &cobra.Command{
 	Use:   "version",
-	Short: "Print the version number of Hugo",
+	Short: "Todo server 1",
 	Long:  "All software has version",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("Hhugo static generator")
+		fmt.Println("Todo API")
 	},
 }
 
 var rootCmd = &cobra.Command{
-	Use:   "hugo",
-	Short: "Hugo is a very fast static site generator",
-	Long: `A Fast and Flexible Static Site Generator built with
-				  love by spf13 and friends in Go.
-				  Complete documentation is available at https://gohugo.io/documentation/`,
+	Use:   "root",
+	Short: "root command",
+	Long: `we'll see !`,
 	Run: func(cmd *cobra.Command, args []string) {
-		// Do Stuff Here
+		// ...
 	},
 }
 
 func Execute() {
-	if err := rootCmd.Execute(); err != nil {
+	if err := versionCmd.Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}

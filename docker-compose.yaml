@@ -32,6 +32,16 @@ services:
     environment:
       - REACT_APP_API_URL=${BACK_DOMAIN}:${BACK_PORT}
 
+  back:
+    build: ./back
+    image: football-coach-backend:latest
+    depends_on:
+      - db
+    ports: 
+      - 5000:5000
+    # volumes:
+    #   - ./back:/app/
+
   # back_test:
   #   container_name: saegus-test
   #   restart: always

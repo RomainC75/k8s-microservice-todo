@@ -89,6 +89,13 @@ func (TaskRepository *TaskRepository) DeleteTasksByListId (listId string) ([]mod
 		return []models.Task{}, err
 	}
 
+	return deletedTasks, nil	
+}
+
+func (TaskRepository *TaskRepository) DeleteSoftDeleted()([]models.Task,error){
+	var deletedTasks []models.Task
+	if err := TaskRepository.DB.Unscoped().Where("deleted_at IS NOT NULL").Delete(&deletedTasks).Error; err != nil{
+		return []models.Task{}, err
+	}
 	return deletedTasks, nil
-	
 }

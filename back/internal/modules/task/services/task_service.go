@@ -13,8 +13,10 @@ type TaskService struct {
 }
 
 func New() *TaskService{
+	taskRepo := TaskRepository.New()
+	taskRepo.DeleteSoftDeleted()
 	return &TaskService{
-		taskRepository: TaskRepository.New(),
+		taskRepository: taskRepo,
 	}
 }
 
