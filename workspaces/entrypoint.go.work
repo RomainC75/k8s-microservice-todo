@@ -3,5 +3,4 @@ go 1.23.5
 use (
     ./entrypoint-srv
     ./shared
-    ./auth-srv
 )
