@@ -41,3 +41,25 @@ spec:
         hostPath:
           path: /Users/rom/Work/saegus/test-technique-romain-chenard/shared
           type: Directory 
+
+---          
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: entrypoint
+  name: entrypoint-nodeport
+  namespace: todo-ms
+spec:
+  ports:
+  - port: 3000
+    protocol: TCP
+    nodePort: 31000
+    targetPort: 3000
+    
+  selector:
+    app: entrypoint
+  type: NodePort
+status:
+  loadBalancer: {}
