@@ -1,12 +1,10 @@
 package main
 
 import (
-	"fmt"
-	"time"
+	"entrypoint-srv/cmd"
 )
 
 func main(){
+	cmd.Serve()
 	
-	fmt.Println("----> started ssdfsdfds")
-	time.Sleep(time.Second*3600)
 }
