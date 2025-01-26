@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: todo-ms
+  name: entrypoint
+  labels:
+    app: entrypoint
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: entrypoint
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: entrypoint
+    spec:
+      containers:
+      - image: todo-ms/entrypoint
+        imagePullPolicy: IfNotPresent
+        name: entrypoint
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "500m"
+        volumeMounts:
+        - mountPath: /entrypoint-srv
+          name: entrypoint-code
+        - mountPath: /shared
+          name: shared-code
+      volumes:
+      - name: entrypoint-code
+        hostPath:
+          path: /Users/rom/Work/saegus/test-technique-romain-chenard/entrypoint-srv
+          type: Directory
+      - name: shared-code
+        hostPath:
+          path: /Users/rom/Work/saegus/test-technique-romain-chenard/shared
+          type: Directory 
