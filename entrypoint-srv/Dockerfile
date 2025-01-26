@@ -10,7 +10,7 @@ RUN go install github.com/air-verse/air@latest
 
 COPY ./entrypoint-srv .
 COPY ./shared /shared
-COPY go.work / 
+COPY ./workspaces/entrypoint.go.work /go.work 
 
 RUN ls -l
 
