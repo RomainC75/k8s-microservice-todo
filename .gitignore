@@ -1,5 +1,6 @@
 **/node_modules
 **/.env
+**/*/tmp
 
 /database
 back/dist
