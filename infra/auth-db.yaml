@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: todo-ms
+  labels:
+    app: auth-db
+  name: auth-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-db
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: auth-db
+    spec:
+      containers:
+      - image: postgres:17.2-alpine3.20
+        name: postgres
+        resources: {}
+        env:
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: todo-secret
+                key: AUTH_DB_PASSWORD
+          - name: POSTGRES_USER
+            valueFrom:
+              configMapKeyRef:
+                name: todo-configmap
+                key: AUTH_DB_USER
+          - name: POSTGRES_DB
+            valueFrom:
+              configMapKeyRef:
+                name: todo-configmap
+                key: AUTH_DB_NAME
+status: {}
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: todo-ms
+  labels:
+    app: auth-db
+  name: auth-db
+spec:
+  ports:
+  - port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    app: auth-db
+  type: ClusterIP
+status:
+  loadBalancer: {}

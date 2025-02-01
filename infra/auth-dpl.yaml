@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: todo-ms
+  name: auth
+  labels:
+    app: auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+      - image: todo-ms/auth
+        imagePullPolicy: IfNotPresent
+        name: auth
+        envFrom:
+        - configMapRef:
+            name: todo-configmap
+        env:
+          - name: AUTH_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: todo-secret
+                key: AUTH_DB_PASSWORD
+          - name: JWT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: todo-secret
+                key: JWT_SECRET
+        # livenessProbe:
+        #   httpGet:
+        #     path: /ping
+        #     port: 3000
+        #   initialDelaySeconds: 3
+        #   periodSeconds: 3
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "500m"
+        volumeMounts:
+        - mountPath: /auth-srv
+          name: auth-code
+        - mountPath: /shared
+          name: shared-code
+      volumes:
+      - name: auth-code
+        hostPath:
+          path: /Users/rom/Work/saegus/test-technique-romain-chenard/auth-srv
+          type: Directory
+      - name: shared-code
+        hostPath:
+          path: /Users/rom/Work/saegus/test-technique-romain-chenard/shared
+          type: Directory
+
+---          
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: auth
+  name: auth-service
+  namespace: todo-ms
+spec:
+  ports:
+  - port: 3000
+    protocol: TCP
+    targetPort: 3000
+    
+  selector:
+    app: auth
+  type: ClusterIP
+status:
+  loadBalancer: {}
