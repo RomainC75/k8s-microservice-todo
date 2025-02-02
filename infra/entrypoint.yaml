@@ -27,6 +27,9 @@ spec:
           limits:
             memory: "2Gi"
             cpu: "500m"
+        envFrom:
+        - configMapRef:
+            name: todo-configmap
         volumeMounts:
         - mountPath: /entrypoint-srv
           name: entrypoint-code

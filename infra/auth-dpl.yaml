@@ -34,12 +34,12 @@ spec:
               secretKeyRef:
                 name: todo-secret
                 key: JWT_SECRET
-        # livenessProbe:
-        #   httpGet:
-        #     path: /ping
-        #     port: 3000
-        #   initialDelaySeconds: 3
-        #   periodSeconds: 3
+        livenessProbe:
+          httpGet:
+            path: /ping
+            port: 3006
+          initialDelaySeconds: 50
+          periodSeconds: 3
         resources:
           requests:
             memory: "2Gi"
@@ -73,9 +73,9 @@ metadata:
   namespace: todo-ms
 spec:
   ports:
-  - port: 3000
+  - port: 3006
     protocol: TCP
-    targetPort: 3000
+    targetPort: 3006
     
   selector:
     app: auth

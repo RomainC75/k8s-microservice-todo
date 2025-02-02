@@ -4,27 +4,27 @@ metadata:
   name: todo-configmap
   namespace: todo-ms
 data:
-  .env: |+
-    NODE_ENV=development
+  NODE_ENV: development
+  NAMESPACE: todo-ms
 
-    AUTH_SERVICE_DOMAIN=auth-service
-    AUTH_SERVICE_PORT=3006
+  AUTH_MICROSERVICE_DOMAIN: auth-service
+  AUTH_MICROSERVICE_PORT: "3006"
 
-    AUTH_DB_USER=user
-    AUTH_DB_NAME=todo
-    AUTH_DB_HOST=auth-db
-    AUTH_DB_PORT=5432
+  AUTH_DB_USER: user
+  AUTH_DB_NAME: todo
+  AUTH_DB_HOST: auth-db
+  AUTH_DB_PORT: "5432"
 
-    TODO_SERVICE_DOMAIN=todo-service
-    TODO_SERVICE_PORT=3007
+  TODO_MICROSERVICE_DOMAIN: todo-service
+  TODO_MICROSERVICE_PORT: "3007"
 
-    TODO_DB_USER=user
-    TODO_DB_NAME=todo
-    TODO_DB_HOST=todo-db
-    TODO_DB_PORT=5432
+  TODO_DB_USER: user
+  TODO_DB_NAME: todo
+  TODO_DB_HOST: todo-db
+  TODO_DB_PORT: "5432"
 
-    EXTERNAL_DOMAIN=localhost
-    ENTRYPOINT_PORT=3005
+  EXTERNAL_DOMAIN: localhost
+  ENTRYPOINT_PORT: "3005"
 
-    BCRYPT_SALT_ROUND=10
+  BCRYPT_SALT_ROUND: "10"
 
