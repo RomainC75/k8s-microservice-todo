@@ -1,7 +1,9 @@
 package utils
 
 import (
+	"bufio"
 	"encoding/json"
+	"io"
 	"net/http"
 )
 
@@ -17,4 +19,16 @@ func SendError(w http.ResponseWriter, status int, err error) {
 	json.NewEncoder(w).Encode(map[string]any{
 		"error": err.Error(),
 	})
+}
+
+func GetJsonFromBody(rawBody io.ReadCloser)string{
+	var fullJson string
+	scanner := bufio.NewScanner(rawBody)
+    for i := 0; scanner.Scan() && i < 5; i++ {
+		fullJson+=scanner.Text()
+    }
+    if err := scanner.Err(); err != nil {
+        panic(err)
+    }
+	return fullJson
 }
