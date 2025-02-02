@@ -1,6 +1,6 @@
 FROM golang:1.23.5-bookworm
 
-ENV PROJECT_DIR=/app \
+ENV PROJECT_DIR=/auth-srv \
     GO111MODULE=on \
     CGO_ENABLED=0
 
@@ -17,6 +17,6 @@ RUN ls -l
 RUN go mod download
 
 
-EXPOSE 8080
+EXPOSE 3000
 CMD ["air"]
  

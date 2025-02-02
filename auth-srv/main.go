@@ -1,12 +1,11 @@
 package main
 
 import (
-	"entrypoint-srv/cmd"
-	"time"
+	"auth-srv/cmd"
+	"fmt"
 )
 
 func main(){
-	time.Sleep(time.Second*3600)
+	fmt.Println("---> server ===sdf")
 	cmd.Serve()
-	
 }

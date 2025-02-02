@@ -1,21 +1,30 @@
 package api
 
 import (
+	db "auth-srv/db/sqlc"
+	"auth-srv/internal/dto"
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 )
 
 func RunApi(mux *http.ServeMux){
+	db.Connect()
+	dto.SetValidate()
+
+	PORT := os.Getenv("AUTH_MICROSERVICE_PORT")
+
+	fmt.Printf("--> Running on port %s\n", PORT)
 	s := &http.Server{
-		Addr:           ":3000",
+		// TODO set variable as port
+		Addr:           fmt.Sprintf(":%s", PORT),
 		Handler:        mux,
 		ReadTimeout:    10 * time.Second,
 		WriteTimeout:   10 * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
-	fmt.Println("--> Running on port 3000")
 	err := s.ListenAndServe()
 	
 	if err != nil {

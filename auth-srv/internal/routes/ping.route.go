@@ -1,10 +1,10 @@
 package routes
 
 import (
-	"entrypoint-srv/internal/controller"
+	"auth-srv/internal/controller"
 	"net/http"
 )
 
-func SetHelloRoutes(mux *http.ServeMux){
+func PingRoutes(mux *http.ServeMux){
 	mux.HandleFunc("/ping",controller.HandlePing)
 }
