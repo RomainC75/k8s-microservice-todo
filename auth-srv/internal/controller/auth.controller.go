@@ -1,7 +1,9 @@
 package controller
 
 import (
-	db "auth-srv/db/sqlc"
+	db "shared/db/sqlc"
+	"shared/utils"
+
 	"auth-srv/internal/dto"
 	"auth-srv/internal/services"
 	"encoding/json"
@@ -38,4 +40,14 @@ func (ac *AuthCtrl) HandleSignup(w http.ResponseWriter, r *http.Request){
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+
+	newUser, err := ac.authSrv.CreateUserSrv(u)
+	if err != nil {
+		logrus.Warnf("ERROR : %s \n", err.Error())
+		return 
+	}
+
+	utils.SendJson(w, http.StatusCreated, map[string]any{
+		"user_created": newUser,
+	})
 }

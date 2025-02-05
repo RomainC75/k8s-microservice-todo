@@ -1,7 +1,6 @@
 package api
 
 import (
-	db "auth-srv/db/sqlc"
 	"auth-srv/internal/dto"
 	"fmt"
 	"log"
@@ -11,7 +10,6 @@ import (
 )
 
 func RunApi(mux *http.ServeMux){
-	db.Connect()
 	dto.SetValidate()
 
 	PORT := os.Getenv("AUTH_MICROSERVICE_PORT")

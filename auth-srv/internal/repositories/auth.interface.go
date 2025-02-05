@@ -1,10 +1,10 @@
 package repo
 
 import (
-	db "auth-srv/db/sqlc"
+	db "shared/db/sqlc"
 )
 
 type IAuthRepo interface{
-	SetUser(email string, password string) (db.User,error)
+	SetUser(newUser db.CreateUserParams) (db.User,error)
 	GetUser(userEmail string) (db.User, error)
 }

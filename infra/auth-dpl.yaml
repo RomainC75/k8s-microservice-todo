@@ -20,6 +20,12 @@ spec:
       - image: todo-ms/auth
         imagePullPolicy: IfNotPresent
         name: auth
+        command: ["/bin/bash", "-c"]
+        args: 
+          - printenv;
+            which migrate;
+            /go/bin/migrate --path  ../shared/db/migration --database postgresql://$(AUTH_DB_USER):$(AUTH_DB_PASSWORD)@$(AUTH_DB_HOST):$(AUTH_DB_PORT)/$(AUTH_DB_NAME)?sslmode=disable up;
+            air;
         envFrom:
         - configMapRef:
             name: todo-configmap
@@ -34,12 +40,12 @@ spec:
               secretKeyRef:
                 name: todo-secret
                 key: JWT_SECRET
-        livenessProbe:
-          httpGet:
-            path: /ping
-            port: 3006
-          initialDelaySeconds: 50
-          periodSeconds: 3
+        # livenessProbe:
+        #   httpGet:
+        #     path: /ping
+        #     port: 3006
+        #   initialDelaySeconds: 50
+        #   periodSeconds: 3
         resources:
           requests:
             memory: "2Gi"

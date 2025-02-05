@@ -1,8 +1,8 @@
 package repo
 
 import (
-	db "auth-srv/db/sqlc"
 	"context"
+	db "shared/db/sqlc"
 )
 
 type AuthRepo struct {
@@ -16,14 +16,9 @@ func NewAuthRepo() *AuthRepo{
 }
 
 
-func (ar *AuthRepo) SetUser(email string, password string) (db.User,error){
-	createUserParams := db.CreateUserParams{
-		Email: email,
-		Password: password,
-	}
-
+func (ar *AuthRepo) SetUser(newUser db.CreateUserParams) (db.User,error){
 	ctx := context.Background()
-	return (*ar.store).CreateUser(ctx, createUserParams)
+	return (*ar.store).CreateUser(ctx, newUser)
 }
 
 func (ar *AuthRepo) GetUser(userEmail string) (db.User, error){

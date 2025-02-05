@@ -7,6 +7,6 @@ import (
 
 
 func HandlePing(w http.ResponseWriter, r *http.Request){
-	fmt.Println("Got a ping")
+	fmt.Println("-->Got a ping")
 	fmt.Fprintf(w,"Pong/n")
 }

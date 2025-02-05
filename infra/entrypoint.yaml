@@ -35,12 +35,12 @@ spec:
           name: entrypoint-code
         - mountPath: /shared
           name: shared-code
-        livenessProbe:
-          httpGet:
-            path: /ping
-            port: 3000
-          initialDelaySeconds: 3
-          periodSeconds: 3
+        # livenessProbe:
+        #   httpGet:
+        #     path: /ping
+        #     port: 3000
+        #   initialDelaySeconds: 50
+        #   periodSeconds: 3
       volumes:
       - name: entrypoint-code
         hostPath:

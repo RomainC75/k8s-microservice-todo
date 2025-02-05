@@ -1,8 +1,8 @@
 package services
 
 import (
-	db "auth-srv/db/sqlc"
 	repo "auth-srv/internal/repositories"
+	db "shared/db/sqlc"
 )
 
 
@@ -16,8 +16,8 @@ func NewAuthSrv() *AuthSrv{
 	}
 }
 
-func (as *AuthSrv) CreateUserSrv(email string, password string) (db.User, error){
-	return as.AuthRepo.SetUser(email, password)
+func (as *AuthSrv) CreateUserSrv(newUser db.CreateUserParams) (db.User, error){
+	return as.AuthRepo.SetUser(newUser)
 }
 
 func (as *AuthSrv) GetUserSrv(email string) (db.User, error){
