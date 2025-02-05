@@ -47,18 +47,13 @@ func NewStore(db *sql.DB) Store {
 
 func Connect() {
 	dsn := fmt.Sprintf("postgresql://%s:%s@%s:%s/%s?sslmode=disable",
-		// viper.GetString(string(config.POSTGRES_USER)),
-		// viper.GetString(string(config.POSTGRES_PASSWORD)),
-		// viper.GetString(string(config.POSTGRES_HOST)),
-		// viper.GetString(string(config.POSTGRES_PORT)),
-		// viper.GetString(string(config.POSTGRES_DB_NAME)),
 		os.Getenv("AUTH_DB_USER"),
 		os.Getenv("AUTH_DB_PASSWORD"),
-		fmt.Sprintf("%s.ms-todo.svc.cluster.local",os.Getenv("AUTH_SERVICE_DOMAIN")),
+		fmt.Sprintf("%s.%s.svc.cluster.local",os.Getenv("AUTH_DB_HOST"), os.Getenv("NAMESPACE")),
 		os.Getenv("AUTH_DB_PORT"),
 		os.Getenv("AUTH_DB_NAME"),
 	)
-	fmt.Println("--->", dsn)
+	fmt.Println("---> DB URL : ", dsn)
 
 	conn, err := sql.Open("postgres", dsn)
 	store := NewStore(conn)

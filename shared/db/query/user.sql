@@ -8,9 +8,9 @@ ORDER BY email;
 
 -- name: CreateUser :one
 INSERT INTO users (
-    email, password, created_at, updated_at
+    email, password, firstname, lastname, created_at, updated_at
 ) VALUES (
-    $1, $2, NOW(), NOW()
+    $1, $2, $3, $4, NOW(), NOW()
 )
 RETURNING *;
 
