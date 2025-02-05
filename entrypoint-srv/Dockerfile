@@ -1,6 +1,6 @@
 FROM golang:1.23.5-bookworm
 
-ENV PROJECT_DIR=/app \
+ENV PROJECT_DIR=/entrypoint-srv \
     GO111MODULE=on \
     CGO_ENABLED=0
 

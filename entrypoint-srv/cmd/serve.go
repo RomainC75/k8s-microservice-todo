@@ -5,6 +5,7 @@ import (
 	api "entrypoint-srv/internal"
 	"entrypoint-srv/internal/routes"
 	"log"
+	"shared/validate"
 )
 
 func Serve(){
@@ -12,6 +13,8 @@ func Serve(){
 	if err != nil {
 		log.Fatal(err.Error())
 	}
+
+	validate.SetValidator()
 
 	mux := routes.ConnectRoutes()
 

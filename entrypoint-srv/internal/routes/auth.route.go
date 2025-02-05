@@ -6,5 +6,6 @@ import (
 )
 
 func SetAuthRoutes(mux *http.ServeMux){
-	mux.HandleFunc("POST /auth/signup",controller.HandleSignup)
+	authCtrl := controller.NewAuthCtrl()
+	mux.HandleFunc("POST /auth/signup",authCtrl.HandleSignup)
 }
