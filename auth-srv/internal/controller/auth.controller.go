@@ -80,5 +80,15 @@ func (ac *AuthCtrl) HandleSignin(w http.ResponseWriter, r *http.Request){
 }
 
 func (ac *AuthCtrl) WhoAmI(w http.ResponseWriter, r *http.Request){
+	userId := r.Context().Value("user_id")
+	userEmail := r.Context().Value("user_email")
 
+	utils.SendJsonMessage(w, http.StatusOK, dto.JSONMessage[map[string]any]{
+		Error: false,
+		Message: "jwt Data",
+		Data: map[string]any{
+			"userId": userId,
+			"userEmail": userEmail,
+		},
+	})
 }

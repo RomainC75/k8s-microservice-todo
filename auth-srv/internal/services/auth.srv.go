@@ -2,7 +2,7 @@ package services
 
 import (
 	repo "auth-srv/internal/repositories"
-	"auth-srv/utils"
+	auth_utils "auth-srv/utils"
 	db "shared/db/sqlc"
 	"shared/dto"
 
@@ -45,7 +45,7 @@ func (as *AuthSrv) Signin(user dto.UserSigninDto)(string, error){
 		return  "", err
 	}
         
-	token, err := utils.GenerateToken(foundUser)
+	token, err := auth_utils.GenerateToken(foundUser)
 	if err != nil {
 		return "", err
 	}
