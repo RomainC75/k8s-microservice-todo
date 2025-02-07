@@ -4,10 +4,11 @@ import (
 	db "shared/db/sqlc"
 	"shared/utils"
 
-	"auth-srv/internal/dto"
 	"auth-srv/internal/services"
 	"encoding/json"
 	"net/http"
+
+	"shared/dto"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/sirupsen/logrus"
@@ -36,7 +37,6 @@ func (ac *AuthCtrl) HandleSignup(w http.ResponseWriter, r *http.Request){
 
 	err = ac.v.Struct(u)
 	if err != nil {
-		logrus.Warnf("validator error : %s \n", err.Error())
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
@@ -47,7 +47,33 @@ func (ac *AuthCtrl) HandleSignup(w http.ResponseWriter, r *http.Request){
 		return 
 	}
 
-	utils.SendJson(w, http.StatusCreated, map[string]any{
-		"user_created": newUser,
+	utils.SendJsonMessage(w, http.StatusCreated, dto.JSONMessage[db.User]{
+		Error: false,
+		Message: "user_created",
+		Data: newUser,
 	})
+}
+
+func (ac *AuthCtrl) HandleSignin(w http.ResponseWriter, r *http.Request){
+	var u dto.UserSigninDto
+
+	err := json.NewDecoder(r.Body).Decode(&u)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	
+	token, err := ac.authSrv.Signin(u)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	utils.SendJsonMessage(w, http.StatusOK, dto.JSONMessage[string]{
+		Error: false,
+		Message: "token",
+		Data: token,
+	})
+
+	// foundUser, err := ac.authSrv.GetUserSrv()
 }

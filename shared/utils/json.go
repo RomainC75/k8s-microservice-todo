@@ -5,9 +5,10 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"shared/dto"
 )
 
-func SendJson(w http.ResponseWriter, status int, content map[string]any){
+func SendJson(w http.ResponseWriter, status int, content dto.JSONResponse){
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
 	json.NewEncoder(w).Encode(content)

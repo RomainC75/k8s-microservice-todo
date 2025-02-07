@@ -1,7 +1,6 @@
 package api
 
 import (
-	"auth-srv/internal/dto"
 	"fmt"
 	"log"
 	"net/http"
@@ -10,7 +9,6 @@ import (
 )
 
 func RunApi(mux *http.ServeMux){
-	dto.SetValidate()
 
 	PORT := os.Getenv("AUTH_MICROSERVICE_PORT")
 
