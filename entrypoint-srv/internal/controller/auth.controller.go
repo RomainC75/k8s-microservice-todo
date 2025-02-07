@@ -3,10 +3,10 @@ package controller
 import (
 	"bytes"
 	"encoding/json"
-	"entrypoint-srv/dto"
 	"fmt"
 	"net/http"
 	"os"
+	"shared/dto"
 	"shared/utils"
 	"shared/validate"
 
@@ -16,11 +16,17 @@ import (
 
 type AuthCtrl struct {
 	v *validator.Validate
+	auth_base_url string
 }
 
 func NewAuthCtrl() *AuthCtrl{
+	authServiceDomain:=os.Getenv("AUTH_MICROSERVICE_DOMAIN")
+	namespace:=os.Getenv("NAMESPACE")
+	authServicePort:= os.Getenv("AUTH_MICROSERVICE_PORT")
+	AUTH_SERVICE_BASE_URL := fmt.Sprintf("http://%s.%s.svc.cluster.local:%s",authServiceDomain, namespace, authServicePort)
 	return &AuthCtrl{
 		v: validate.GetValidator(),
+		auth_base_url: AUTH_SERVICE_BASE_URL,
 	}
 }
 
@@ -48,17 +54,8 @@ func (c *AuthCtrl) HandleSignup(w http.ResponseWriter, r *http.Request){
 		return
 	}
 
-	// envConfig := config.Getenv()
-
-	authServiceDomain:=os.Getenv("AUTH_MICROSERVICE_DOMAIN")
-	namespace:=os.Getenv("NAMESPACE")
-	authServicePort:= os.Getenv("AUTH_MICROSERVICE_PORT")
-	authUrl := fmt.Sprintf("http://%s.%s.svc.cluster.local:%s/signup",authServiceDomain, namespace, authServicePort)
-	
-	// authUrl := fmt.Sprintf("http://%s.%s.svc.cluster.local:%s/test", envConfig[config.AUTH_MICROSERVICE_DOMAIN], envConfig[config.NAMESPACE], envConfig[config.AUTH_MICROSERVICE_PORT])
-	
-	fmt.Println("-----> authUrl := ", authUrl)
-	request, err := http.NewRequest("POST", authUrl, bytes.NewBuffer(b))
+	signupUrl := fmt.Sprintf("%s/signup", c.auth_base_url)
+	request, err := http.NewRequest("POST", signupUrl, bytes.NewBuffer(b))
 	if err != nil {
 		logrus.Warnf("request error : %s\n", err.Error())
 	}
@@ -66,7 +63,7 @@ func (c *AuthCtrl) HandleSignup(w http.ResponseWriter, r *http.Request){
 	client := &http.Client{}
 	response, err := client.Do(request)
 	if err != nil {
-		// app.errorJSON(w, err)
+		utils.SendError(w, http.StatusInternalServerError, err)
 		return
 	}
 	defer response.Body.Close()
@@ -74,7 +71,66 @@ func (c *AuthCtrl) HandleSignup(w http.ResponseWriter, r *http.Request){
 
 	fmt.Println("-> JSON : ", json)
 
-	utils.SendJson(w, 200, map[string]any{
-		"response": "hello",
+	utils.SendJsonMessage(w, 200, dto.JSONMessage[string]{
+		Error: false,
+		Message: "",
+		Data: json,
+	})
+}
+
+func (c *AuthCtrl) HandleSignin(w http.ResponseWriter, r *http.Request){
+	var u dto.UserSigninDto
+
+	err := json.NewDecoder(r.Body).Decode(&u)
+	if err != nil {
+		utils.SendError(w, http.StatusBadRequest, err)
+		return
+	}
+
+	err = c.v.Struct(u)
+	if err != nil {
+		utils.SendError(w, http.StatusBadRequest, err)
+		return
+	}
+
+	b, err := json.Marshal(u)
+	if err != nil {
+		utils.SendError(w, http.StatusBadRequest, err)
+		return
+	}
+
+	
+	// authUrl := fmt.Sprintf("http://%s.%s.svc.cluster.local:%s/signin",authServiceDomain, namespace, authServicePort)
+	signinUrl := fmt.Sprintf("%s/signin", c.auth_base_url)
+	request, err := http.NewRequest("POST", signinUrl, bytes.NewBuffer(b))
+	if err != nil {
+		utils.SendError(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	client := &http.Client{}
+	response, err := client.Do(request)
+	if err != nil {
+		utils.SendError(w, http.StatusInternalServerError, err)
+		return
+	}
+	defer response.Body.Close()
+
+	// modify the body head
+	// jsonResp := utils.GetJsonFromBody(response.Body)
+	// fmt.Println("--> GetJsonFromBody() : ", jsonResp)
+	
+	var t dto.JSONMessage[string]
+	err = json.NewDecoder(response.Body).Decode(&t)
+	if err != nil {
+		fmt.Println("----- ERR EOF", err.Error())
+		utils.SendError(w, http.StatusInternalServerError, err)
+		return 
+	}
+
+	utils.SendJsonMessage(w, http.StatusCreated, dto.JSONMessage[string]{
+		Error: false,
+		Message: t.Message,
+		Data: t.Data,
 	})
 }

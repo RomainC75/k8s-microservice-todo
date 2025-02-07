@@ -1,7 +1,7 @@
 package dto
 
-type JSONResponse struct {
-	Error bool `json:"error" validate:"boolean"`
-	Message string `json:"message" validate:"string"`
-	Data any `json:"data"`
+type JSONMessage[D any] struct {
+	Error bool `json:"error"`
+	Message string `json:"message"`
+	Data D `json:"data"`
 }

@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"shared/dto"
 	"shared/utils"
 )
 
@@ -29,7 +30,9 @@ func HandleAuthPing(w http.ResponseWriter, r *http.Request){
 	}
 	defer resp.Body.Close()
 	json:=utils.GetJsonFromBody(resp.Body)
-	utils.SendJson(w, 200, map[string]any{
-		"ping response": json,
+	utils.SendJsonMessage(w, 200, dto.JSONMessage[string]{
+		Error: false,
+		Message: "pong",
+		Data: json,
 	})
 }
