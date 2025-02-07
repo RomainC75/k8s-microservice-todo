@@ -37,13 +37,14 @@ func (ac *AuthCtrl) HandleSignup(w http.ResponseWriter, r *http.Request){
 
 	err = ac.v.Struct(u)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		utils.SendErrorMessage(w, http.StatusBadRequest, err)
 		return
 	}
 
 	newUser, err := ac.authSrv.CreateUserSrv(u)
 	if err != nil {
 		logrus.Warnf("ERROR : %s \n", err.Error())
+		utils.SendErrorMessage(w, http.StatusInternalServerError, err, "user could not be created !")
 		return 
 	}
 
@@ -76,4 +77,8 @@ func (ac *AuthCtrl) HandleSignin(w http.ResponseWriter, r *http.Request){
 	})
 
 	// foundUser, err := ac.authSrv.GetUserSrv()
+}
+
+func (ac *AuthCtrl) WhoAmI(w http.ResponseWriter, r *http.Request){
+
 }

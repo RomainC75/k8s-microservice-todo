@@ -63,7 +63,7 @@ func (c *AuthCtrl) HandleSignup(w http.ResponseWriter, r *http.Request){
 	client := &http.Client{}
 	response, err := client.Do(request)
 	if err != nil {
-		utils.SendError(w, http.StatusInternalServerError, err)
+		utils.SendErrorMessage(w, http.StatusInternalServerError, err)
 		return
 	}
 	defer response.Body.Close()
@@ -83,19 +83,19 @@ func (c *AuthCtrl) HandleSignin(w http.ResponseWriter, r *http.Request){
 
 	err := json.NewDecoder(r.Body).Decode(&u)
 	if err != nil {
-		utils.SendError(w, http.StatusBadRequest, err)
+		utils.SendErrorMessage(w, http.StatusBadRequest, err)
 		return
 	}
 
 	err = c.v.Struct(u)
 	if err != nil {
-		utils.SendError(w, http.StatusBadRequest, err)
+		utils.SendErrorMessage(w, http.StatusBadRequest, err)
 		return
 	}
 
 	b, err := json.Marshal(u)
 	if err != nil {
-		utils.SendError(w, http.StatusBadRequest, err)
+		utils.SendErrorMessage(w, http.StatusBadRequest, err)
 		return
 	}
 
@@ -104,14 +104,14 @@ func (c *AuthCtrl) HandleSignin(w http.ResponseWriter, r *http.Request){
 	signinUrl := fmt.Sprintf("%s/signin", c.auth_base_url)
 	request, err := http.NewRequest("POST", signinUrl, bytes.NewBuffer(b))
 	if err != nil {
-		utils.SendError(w, http.StatusInternalServerError, err)
+		utils.SendErrorMessage(w, http.StatusInternalServerError, err)
 		return
 	}
 
 	client := &http.Client{}
 	response, err := client.Do(request)
 	if err != nil {
-		utils.SendError(w, http.StatusInternalServerError, err)
+		utils.SendErrorMessage(w, http.StatusInternalServerError, err)
 		return
 	}
 	defer response.Body.Close()
@@ -124,7 +124,7 @@ func (c *AuthCtrl) HandleSignin(w http.ResponseWriter, r *http.Request){
 	err = json.NewDecoder(response.Body).Decode(&t)
 	if err != nil {
 		fmt.Println("----- ERR EOF", err.Error())
-		utils.SendError(w, http.StatusInternalServerError, err)
+		utils.SendErrorMessage(w, http.StatusInternalServerError, err)
 		return 
 	}
 
