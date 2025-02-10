@@ -17,9 +17,6 @@ func Serve(){
 	validate.SetValidator()
 
 	mux := routes.ConnectRoutes()
-
-	routes.SetHelloRoutes(mux)
-	routes.SetAuthRoutes(mux)
 	
 	api.RunApi(mux)
 }

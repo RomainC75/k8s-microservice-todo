@@ -1,14 +1,16 @@
 package controller
 
 import (
-	"bytes"
 	"encoding/json"
+	entrypoint_utils "entrypoint-srv/utils"
+	"errors"
 	"fmt"
 	"net/http"
 	"os"
 	"shared/dto"
 	"shared/utils"
 	"shared/validate"
+	"strings"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/sirupsen/logrus"
@@ -54,27 +56,19 @@ func (c *AuthCtrl) HandleSignup(w http.ResponseWriter, r *http.Request){
 		return
 	}
 
-	signupUrl := fmt.Sprintf("%s/signup", c.auth_base_url)
-	request, err := http.NewRequest("POST", signupUrl, bytes.NewBuffer(b))
-	if err != nil {
-		logrus.Warnf("request error : %s\n", err.Error())
-	}
-	
-	client := &http.Client{}
-	response, err := client.Do(request)
+	signupUrl := fmt.Sprintf("%s/signupp", c.auth_base_url)
+	messageClient := entrypoint_utils.NewMessageClient[dto.JSONMessage[map[string]any]]("POST", signupUrl, b)
+	t, err := messageClient.SendMessageRequest()
+	logrus.Warn("--> T", t)
 	if err != nil {
 		utils.SendErrorMessage(w, http.StatusInternalServerError, err)
 		return
 	}
-	defer response.Body.Close()
-	json:=utils.GetJsonFromBody(request.Body)
 
-	fmt.Println("-> JSON : ", json)
-
-	utils.SendJsonMessage(w, 200, dto.JSONMessage[string]{
+	utils.SendJsonMessage(w, 200, dto.JSONMessage[map[string]any]{
 		Error: false,
 		Message: "",
-		Data: json,
+		Data: t.Data,
 	})
 }
 
@@ -98,30 +92,12 @@ func (c *AuthCtrl) HandleSignin(w http.ResponseWriter, r *http.Request){
 		utils.SendErrorMessage(w, http.StatusBadRequest, err)
 		return
 	}
-
 	
 	// authUrl := fmt.Sprintf("http://%s.%s.svc.cluster.local:%s/signin",authServiceDomain, namespace, authServicePort)
 	signinUrl := fmt.Sprintf("%s/signin", c.auth_base_url)
-	request, err := http.NewRequest("POST", signinUrl, bytes.NewBuffer(b))
-	if err != nil {
-		utils.SendErrorMessage(w, http.StatusInternalServerError, err)
-		return
-	}
 
-	client := &http.Client{}
-	response, err := client.Do(request)
-	if err != nil {
-		utils.SendErrorMessage(w, http.StatusInternalServerError, err)
-		return
-	}
-	defer response.Body.Close()
-
-	// modify the body head
-	// jsonResp := utils.GetJsonFromBody(response.Body)
-	// fmt.Println("--> GetJsonFromBody() : ", jsonResp)
-	
-	var t dto.JSONMessage[string]
-	err = json.NewDecoder(response.Body).Decode(&t)
+	messageClient := entrypoint_utils.NewMessageClient[dto.JSONMessage[string]]("POST", signinUrl, b)
+	t, err := messageClient.SendMessageRequest()
 	if err != nil {
 		fmt.Println("----- ERR EOF", err.Error())
 		utils.SendErrorMessage(w, http.StatusInternalServerError, err)
@@ -131,6 +107,30 @@ func (c *AuthCtrl) HandleSignin(w http.ResponseWriter, r *http.Request){
 	utils.SendJsonMessage(w, http.StatusCreated, dto.JSONMessage[string]{
 		Error: false,
 		Message: t.Message,
+		Data: t.Data,
+	})
+}
+
+func (c *AuthCtrl)HandleWhoAmI(w http.ResponseWriter, r *http.Request){
+	authorization := r.Header["Authorization"][0]
+	splitter := strings.Split(authorization, " ")
+	if len(splitter)!=2 || splitter[0]!="Bearer" {
+		utils.SendErrorMessage(w, http.StatusBadRequest, errors.New("header/authorization malformed"))
+		return
+	}
+
+	url := fmt.Sprintf("%s/verify", c.auth_base_url)
+	messageClient := entrypoint_utils.NewMessageClient[dto.JSONMessage[map[string]any]]("GET", url, []byte{})
+	messageClient.AddBearer(authorization)
+	t, err := messageClient.SendMessageRequest()
+	if err != nil {
+		utils.SendErrorMessage(w, http.StatusInternalServerError, err)
+		return
+	}
+	
+	utils.SendJsonMessage(w, http.StatusAccepted, dto.JSONMessage[map[string]any]{
+		Error: false,
+		Message: "token information",
 		Data: t.Data,
 	})
 }
