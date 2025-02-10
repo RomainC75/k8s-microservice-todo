@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: todo-ms
+  name: task
+  labels:
+    app: task
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: task
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: task
+    spec:
+      containers:
+      - image: todo-ms/task
+        imagePullPolicy: IfNotPresent
+        name: task-srv
+        command: ["/bin/bash", "-c"]
+        args: 
+          - printenv;
+            which migrate;
+            /go/bin/migrate --path  ../shared/db/migration --database postgresql://$(TASK_DB_USER):$(TASK_DB_PASSWORD)@$(TASK_DB_HOST):$(TASK_DB_PORT)/$(TASK_DB_NAME)?sslmode=disable up;
+            air;
+        envFrom:
+        - configMapRef:
+            name: todo-configmap
+        env:
+          - name: TASK_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: todo-secret
+                key: TASK_DB_PASSWORD
+        # livenessProbe:
+        #   httpGet:
+        #     path: /ping
+        #     port: 3006
+        #   initialDelaySeconds: 50
+        #   periodSeconds: 3
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "500m"
+        volumeMounts:
+        - mountPath: /task-srv
+          name: task-code
+        - mountPath: /shared
+          name: shared-code
+      volumes:
+      - name: task-code
+        hostPath:
+          path: /Users/rom/Work/saegus/test-technique-romain-chenard/task-srv
+          type: Directory
+      - name: shared-code
+        hostPath:
+          path: /Users/rom/Work/saegus/test-technique-romain-chenard/shared
+          type: Directory
+
+---          
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: task
+  name: task-service
+  namespace: todo-ms
+spec:
+  ports:
+  - port: 3006
+    protocol: TCP
+    targetPort: 3006
+    
+  selector:
+    app: task
+  type: ClusterIP
+status:
+  loadBalancer: {}
