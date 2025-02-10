@@ -7,6 +7,8 @@ import (
 	"net/http"
 	"shared/utils"
 	"strings"
+
+	"github.com/sirupsen/logrus"
 )
 
 func AuthMiddleware(next http.Handler) http.Handler {
@@ -17,16 +19,19 @@ func AuthMiddleware(next http.Handler) http.Handler {
             utils.SendErrorMessage(w, http.StatusBadRequest,  errors.New("Header/Authorization malformed"))
             return
         }
-
+        // logrus.Warn("-->", authorization)
         tokenString := splitted[1]
         claim, err  := auth_utils.ParseToken(tokenString)
         if err != nil {
+            logrus.Error("auth.mid error : ", err)
             utils.SendErrorMessage(w, http.StatusBadRequest, err)
+            return
         }
 
         userId, userEmail, err := auth_utils.GetClaimValues(claim)
         if err != nil {
             utils.SendErrorMessage(w, http.StatusBadRequest, err)
+            return
         }
 
         ctx := context.WithValue(r.Context(), "user_email", userEmail)

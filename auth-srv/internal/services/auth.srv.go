@@ -3,6 +3,8 @@ package services
 import (
 	repo "auth-srv/internal/repositories"
 	auth_utils "auth-srv/utils"
+	"database/sql"
+	"errors"
 	db "shared/db/sqlc"
 	"shared/dto"
 
@@ -31,7 +33,12 @@ func (as *AuthSrv) CreateUserSrv(newUser db.CreateUserParams) (db.User, error){
 }
 
 func (as *AuthSrv) GetUserSrv(email string) (db.User, error){
-	return as.AuthRepo.GetUser(email)
+	
+	user, err := as.AuthRepo.GetUser(email)
+	if err == sql.ErrNoRows{
+		return db.User{}, errors.New("user not found")
+	}
+	return user, err
 }
 
 func (as *AuthSrv) Signin(user dto.UserSigninDto)(string, error){

@@ -83,6 +83,11 @@ func (ac *AuthCtrl) WhoAmI(w http.ResponseWriter, r *http.Request){
 	userId := r.Context().Value("user_id")
 	userEmail := r.Context().Value("user_email")
 
+	_, err := ac.authSrv.GetUserSrv(userEmail.(string))
+	if err != nil {
+		utils.SendErrorMessage(w, http.StatusBadRequest, err)
+		return
+	}
 	utils.SendJsonMessage(w, http.StatusOK, dto.JSONMessage[map[string]any]{
 		Error: false,
 		Message: "jwt Data",

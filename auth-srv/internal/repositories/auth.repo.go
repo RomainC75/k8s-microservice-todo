@@ -23,5 +23,7 @@ func (ar *AuthRepo) SetUser(newUser db.CreateUserParams) (db.User,error){
 
 func (ar *AuthRepo) GetUser(userEmail string) (db.User, error){
 	ctx := context.Background()
-	return (*ar.store).GetUser(ctx, userEmail)
+	user, err := (*ar.store).GetUser(ctx, userEmail)
+	
+	return user, err
 }
