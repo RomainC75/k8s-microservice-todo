@@ -1,0 +1,4 @@
+DROP TABLE IF EXISTS tasks;
+DROP TABLE IF EXISTS lists;
+
+DROP TABLE IF EXISTS schema_migrations;
