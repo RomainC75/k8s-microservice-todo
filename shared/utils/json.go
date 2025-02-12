@@ -7,6 +7,8 @@ import (
 	"io"
 	"net/http"
 	"shared/dto"
+
+	"github.com/sirupsen/logrus"
 )
 
 func SendJsonMessage[T any](w http.ResponseWriter, status int, content dto.JSONMessage[T]){
@@ -31,8 +33,10 @@ func SendErrorMessage(w http.ResponseWriter, status int, err error, customMessag
 	message := dto.JSONMessage[string]{
 		Error: true,
 		Message: "internal error",
-		Data: err.Error(),
+		ErrorMessage: err.Error(),
 	}
+	logrus.Error("SendErrorMessage()")
+	PrettyDisplay("-< sendErrorMessage()", message)
 	if len(customMessages)>0 {
 		message.Message=customMessages[0]
 	}
