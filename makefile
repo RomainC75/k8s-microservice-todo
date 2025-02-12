@@ -63,5 +63,8 @@ open-auth-db:
 # 	migrate --path auth-srv/db/migration --database "postgresql://$(AUTH_DB_USER):$(AUTH_DB_PASSWORD)@localhost:$(AUTH_DB_PORT)/$(AUTH_DB_NAME)?sslmode=disable" --verbose up;
 # 	kill -9 $(SERVER_PID)
 
-sqlc:
-	cd shared && sqlc generate && ./comment-cleaner.sh 
+sqlc_auth:
+	cd auth-srv && sqlc generate && ./comment-cleaner.sh 
+
+sqlc_task:
+	cd task-srv && sqlc generate && ./comment-cleaner.sh 
