@@ -1,9 +1,9 @@
 package controller
 
 import (
-	db "shared/db/sqlc"
 	"shared/utils"
 
+	db "auth-srv/db/sqlc"
 	"auth-srv/internal/services"
 	"encoding/json"
 	"net/http"

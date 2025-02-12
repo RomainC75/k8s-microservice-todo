@@ -1,8 +1,6 @@
 package repo
 
-import (
-	db "shared/db/sqlc"
-)
+import db "auth-srv/db/sqlc"
 
 type IAuthRepo interface{
 	SetUser(newUser db.CreateUserParams) (db.User,error)

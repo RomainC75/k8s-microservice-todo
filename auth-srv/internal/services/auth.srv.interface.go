@@ -1,7 +1,7 @@
 package services
 
 import (
-	db "shared/db/sqlc"
+	db "auth-srv/db/sqlc"
 	"shared/dto"
 )
 

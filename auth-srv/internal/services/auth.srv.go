@@ -1,11 +1,11 @@
 package services
 
 import (
+	db "auth-srv/db/sqlc"
 	repo "auth-srv/internal/repositories"
 	auth_utils "auth-srv/utils"
 	"database/sql"
 	"errors"
-	db "shared/db/sqlc"
 	"shared/dto"
 
 	"golang.org/x/crypto/bcrypt"

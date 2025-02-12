@@ -1,8 +1,8 @@
 package repo
 
 import (
+	db "auth-srv/db/sqlc"
 	"context"
-	db "shared/db/sqlc"
 )
 
 type AuthRepo struct {

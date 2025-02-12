@@ -1,8 +1,8 @@
 package auth_utils
 
 import (
+	db "auth-srv/db/sqlc"
 	"os"
-	db "shared/db/sqlc"
 	"shared/utils"
 	"strconv"
 	"time"
