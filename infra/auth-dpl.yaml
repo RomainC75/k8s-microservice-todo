@@ -24,7 +24,7 @@ spec:
         args: 
           - printenv;
             which migrate;
-            /go/bin/migrate --path  ../shared/db/migration --database postgresql://$(AUTH_DB_USER):$(AUTH_DB_PASSWORD)@$(AUTH_DB_HOST):$(AUTH_DB_PORT)/$(AUTH_DB_NAME)?sslmode=disable up;
+            /go/bin/migrate --path  db/migration --database postgresql://$(AUTH_DB_USER):$(AUTH_DB_PASSWORD)@$(AUTH_DB_HOST):$(AUTH_DB_PORT)/$(AUTH_DB_NAME)?sslmode=disable up;
             air;
         envFrom:
         - configMapRef:
