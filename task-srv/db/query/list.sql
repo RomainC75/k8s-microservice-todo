@@ -1,8 +1,8 @@
--- name: GetList :one
+-- name: GetListByName :one
 SELECT * FROM lists
 WHERE user_id = $1 AND name = $2 LIMIT 1;
 
--- name: ListLists :many
+-- name: ListListsByUserId :many
 SELECT * FROM lists
 WHERE user_id = $1
 ORDER BY created_at;
@@ -22,7 +22,7 @@ WHERE id = $1 AND user_id = $2;
 -- name: UpdateList :one
 UPDATE lists
 SET 
-    name = $2,
+    name = $3,
     updated_at = NOW()
-WHERE id = $1
+WHERE id = $1 AND user_id = $2
 RETURNING *;
